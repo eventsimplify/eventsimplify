@@ -1,11 +1,12 @@
 import React from 'react';
 import Layout from '../components/Layout';
+import LandingView from '../components/pageComponents/LandingView';
 
 const index = () => {
   return (
-    <div>
+    <div className="px-20">
       <Layout>
-        <div className="text-3xl font-bold underline">Content</div>
+        <LandingView />
       </Layout>
     </div>
   );
