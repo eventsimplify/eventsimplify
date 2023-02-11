@@ -5,19 +5,29 @@ import Link from "next/link";
 import styles from "./Login.module.css";
 
 import { AuthService } from "@/services";
+import { useRouter } from "next/router";
 
-const Login = () => {
+const Register = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState("");
 
+  const router = useRouter();
+
   const onFinish = async (values: any) => {
     setLoading("login");
-    await AuthService.login({
-      email: values.email,
-      password: values.password,
-    });
 
-    setLoading("");
+    try {
+      await AuthService.login({
+        email: values.email,
+        password: values.password,
+      });
+
+      router.push("/dashboard");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading("");
+    }
   };
 
   return (
@@ -31,6 +41,30 @@ const Login = () => {
           size="large"
           validateTrigger="onBlur"
         >
+          <Form.Item
+            label="First name"
+            name="firstName"
+            rules={[
+              {
+                required: true,
+                message: "Please input your first name!",
+              },
+            ]}
+          >
+            <Input placeholder="First name" />
+          </Form.Item>
+          <Form.Item
+            label="Last name"
+            name="lastName"
+            rules={[
+              {
+                required: true,
+                message: "Please input your last name!",
+              },
+            ]}
+          >
+            <Input placeholder="Last name" />
+          </Form.Item>
           <Form.Item
             label="Email"
             name="email"
@@ -68,13 +102,11 @@ const Login = () => {
               Login
             </Button>
           </Form.Item>
-          <Link href="/auth/register">
-            Don't have an account? Register here
-          </Link>
+          <Link href="/auth/login">Already have a account? Login</Link>
         </Form>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;
