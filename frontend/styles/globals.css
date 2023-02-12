@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mende+Kikakui&display=swap');
+
+.home_page {
+  width: 120rem;
+  height: 443rem;
+  background: #ffffff;
+}
+body {
+  font-family: 'Inter';
+  font-style: normal;
+}
+.vector_line {
+  position: absolute;
+  width: 132.2813rem;
+  height: 0rem;
+  /* left: -3.0313rem; */
+  top: 992.5008px;
+  border: 0.0625rem solid #000000;
+}

@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.cdnfonts.com/css/cabinet-grotesk');
+
+body {
+  font-family: 'Cabinet Grotesk', sans-serif;
+}

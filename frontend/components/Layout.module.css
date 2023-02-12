@@ -1,13 +1,10 @@
-.site_layout_content {
-  min-height: 280px;
-  padding: 24px;
-}
 .logo {
-  float: left;
-  width: 120px;
-  height: 31px;
-}
-.ant-row-rtl .logo {
-  float: right;
-  margin: 16px 0 16px 24px;
+  box-sizing: border-box;
+  position: absolute;
+  width: 158px;
+  height: 73px;
+  left: 119px;
+  top: 47px;
+  border: 8px solid black;
+  color: #000000;
 }

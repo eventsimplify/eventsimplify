@@ -1,0 +1,91 @@
+.landing_page_form {
+  position: absolute;
+  width: 1180px;
+  height: 561px;
+  left: 108px;
+  top: 295px;
+}
+.title {
+  position: absolute;
+  width: 1180px;
+  height: 170px;
+
+  font-style: normal;
+  font-weight: 800;
+  font-size: 70px;
+  line-height: 85px;
+  letter-spacing: 0.05em;
+
+  color: #000000;
+}
+
+.description {
+  position: absolute;
+  width: 908px;
+  height: 120px;
+  top: 192px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 30px;
+  letter-spacing: 0.05em;
+
+  color: #535353;
+}
+
+.input_box_one {
+  position: absolute;
+  width: 262px;
+  height: 65px;
+  top: 21.75rem;
+  text-align: center;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 30px;
+  color: #000000;
+  background: #d9d9d9;
+}
+
+.input_box_two {
+  position: absolute;
+  width: 318px;
+  height: 65px;
+  left: 17.625rem;
+  top: 21.75rem;
+  text-align: center;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 30px;
+  color: #000000;
+  background: #d9d9d9;
+}
+.input_box_three {
+  position: absolute;
+  width: 600px;
+  height: 65px;
+  top: 26.625rem;
+  text-align: center;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 30px;
+  color: #000000;
+  background: #d9d9d9;
+}
+
+.button {
+  position: absolute;
+  width: 180px;
+  height: 56px;
+  top: 31.5rem;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 36px;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  background: #1e1e1e;
+}

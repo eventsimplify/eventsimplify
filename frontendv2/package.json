@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "frontendv2",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,12 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.0.1",
-    "@headlessui/react": "^1.7.10",
-    "@heroicons/react": "^2.0.15",
-    "@next/font": "^13.1.6",
-    "antd": "^5.2.0",
-    "heroicons-react": "^1.4.1",
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -22,7 +16,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
-    "eslint": "8.33.0",
+    "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.2.6"
