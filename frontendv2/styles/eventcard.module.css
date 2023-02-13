@@ -1,0 +1,17 @@
+.event_card {
+  box-sizing: border-box;
+
+  width: 285px;
+  height: 288px;
+
+  /* Gray 4 */
+
+  border: 1px solid #bdbdbd;
+  border-radius: 4px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}

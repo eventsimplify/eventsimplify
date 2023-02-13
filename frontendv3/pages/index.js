@@ -1,13 +1,12 @@
 import React from 'react';
-import BannerView from '../components/BannerView';
-import EventSlider from '../components/EventSlider';
+import Banner from '../components/Banner';
 import Layout from '../components/Layout';
 
 const index = () => {
   return (
     <div>
       <Layout>
-        <BannerView />
+        <Banner />
       </Layout>
     </div>
   );

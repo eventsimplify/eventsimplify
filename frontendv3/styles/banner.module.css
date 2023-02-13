@@ -1,0 +1,56 @@
+.img_one {
+  /* position: absolute; */
+  width: 101.46px;
+  height: 118.78px;
+  /* right: 200px; */
+}
+.img_two {
+  /* position: absolute; */
+  width: 101.46px;
+  height: 118.78px;
+  /* left: 200px; */
+}
+
+.img_three {
+  position: absolute;
+  width: 120px;
+  height: 166.9px;
+  left: 945px;
+  top: 268px;
+}
+
+.img_five {
+  position: absolute;
+  width: 150.23px;
+  height: 158.02px;
+  left: 537px;
+  top: 268px;
+}
+.img_four {
+  width: 334px;
+  height: 222.67px;
+  /* left: 0px; */
+  /* bottom: 0px; */
+}
+.img_six {
+  width: 171px;
+  height: 150.97px;
+  /* left: 350px; */
+  /* bottom: 0px; */
+}
+.img_seven {
+  width: 175.88px;
+  height: 201.03px;
+  /* left: 537px; */
+  /* bottom: 0px; */
+
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+.img_eight {
+  /* position: absolute; */
+  width: 347px;
+  height: 231.33px;
+  /* bottom: 0px; */
+
+  /* right: 0px; */
+}
