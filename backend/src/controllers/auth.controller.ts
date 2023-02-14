@@ -3,7 +3,14 @@ import bcrypt from "bcryptjs";
 
 import { IUser } from "../interfaces";
 import { User } from "../entity";
-import { errorHandler, generateToken, sendError, sendSuccess } from "../utils";
+import {
+  errorHandler,
+  generateToken,
+  sendError,
+  sendSuccess,
+  setCookie,
+  removeCookie,
+} from "../utils";
 
 // @desc    User login
 // @route   POST /users/login
@@ -50,6 +57,8 @@ export const login = async (req, res) => {
 
     const token = generateToken(user.id);
 
+    await setCookie(res, token);
+
     return sendSuccess({
       res,
       message: "User has been logged in successfully.",
@@ -66,13 +75,12 @@ export const login = async (req, res) => {
 // @route   POST /users/register
 // @access  Public
 export const register = async (req, res) => {
-  const { email, password, firstName, lastName, type } = req.body;
+  const { email, password, name, type } = req.body;
 
   const schema = Yup.object().shape({
     email: Yup.string().required("Email is a required field"),
     password: Yup.string().required("Password is a required field"),
-    firstName: Yup.string().required("First name is a required field"),
-    lastName: Yup.string().required("Last name is a required field"),
+    name: Yup.string().required("Name is a required field"),
     type: Yup.string()
       .required("Type is a required field")
       .oneOf(["user", "organizer", "admin"], "User type is invalid"),
@@ -82,8 +90,7 @@ export const register = async (req, res) => {
     await schema.validate({
       email,
       password,
-      firstName,
-      lastName,
+      name,
       type,
     });
 
@@ -103,8 +110,7 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      firstName,
-      lastName,
+      name,
       email,
       password: hashedPassword,
       type,
@@ -122,7 +128,57 @@ export const register = async (req, res) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    errorHandler(res, err);
+  }
+};
+
+// @desc    Get user
+// @route   GET auth/me
+// @access  Private
+export const me = async (req, res) => {
+  try {
+    const user = await User.findOneBy({ id: req.user.id });
+
+    if (!user) {
+      return sendError({
+        res,
+        status: 404,
+        data: null,
+        message: "User not found.",
+      });
+    }
+
+    return sendSuccess({
+      res,
+      message: "User has been fetched successfully.",
+      data: {
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          type: user.type,
+        },
+      },
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};
+
+// @desc    User logout
+// @route   POST /users/logout
+// @access  Private
+
+export const logout = async (req, res) => {
+  try {
+    await removeCookie(res);
+
+    return sendSuccess({
+      res,
+      message: "User has been logged out successfully.",
+      data: null,
+    });
+  } catch (err) {
     errorHandler(res, err);
   }
 };
