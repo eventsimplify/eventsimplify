@@ -1,0 +1,17 @@
+.mainContainer:hover img {
+  opacity: 0.3;
+}
+.mainContainer:hover .texts {
+  /* display hidden */
+  display: none;
+}
+.onHoverComponents {
+  display: none;
+  position: absolute;
+  bottom: 22px;
+  left: 18px;
+}
+.mainContainer:hover .onHoverComponents {
+  /* display hidden */
+  display: block;
+}

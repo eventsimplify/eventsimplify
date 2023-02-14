@@ -8,8 +8,13 @@
   border: 2px solid #4f4cee;
   /* Card/Hover */
 
-  filter: drop-shadow(6px 8px 0px #0022ba);
+  /* filter: drop-shadow(6px 8px 0px #0022ba); */
   border-radius: 4px;
+}
+.container:hover {
+  /* Card/Hover */
+
+  filter: drop-shadow(6px 8px 0px #0022ba);
 }
 .image_container {
   position: absolute;
@@ -22,18 +27,13 @@
   object-position: left top;
 }
 .event_details {
-  box-sizing: border-box;
-
   position: absolute;
-  width: 285px;
-  height: 104px;
   left: 0px;
-  bottom: 10px;
-
+  bottom: 0px;
+  height: 30%;
+  right: 0px;
   /* White */
 
   background: #ffffff;
   /* Text/Default */
-
-  border: 1px solid #1b1b25;
 }
