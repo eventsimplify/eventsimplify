@@ -4,7 +4,7 @@ import SearchBar from './SearchBar';
 const Banner = () => {
   return (
     <div className="relative flex justify-center">
-      <h1 className="absolute top-16 text-4xl font-bold">
+      <h1 className="absolute top-32 text-4xl font-bold text-primary_color">
         Exclusive events, priceless moments
       </h1>
       <div className="flex flex-col w-full">

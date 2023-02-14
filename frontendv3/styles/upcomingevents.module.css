@@ -1,0 +1,17 @@
+.wrapper {
+  margin-top: 126px;
+  margin-left: 64px;
+  margin-right: 64px;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+.upcoming_events_title {
+  font-family: 'Cabinet Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 37px;
+  color: #1b1b25;
+}
