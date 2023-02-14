@@ -2,8 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 
 // entity imports
-import { User, Event } from "../entity";
-import { Organization } from "../entity/organization.entity";
+import { User, Event, OrganizationUser, Organization } from "../entity";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -14,7 +13,7 @@ export const AppDataSource = new DataSource({
   database: "eventsimplify",
   synchronize: true,
   logging: false,
-  entities: [User, Event, Organization],
+  entities: [User, Event, Organization, OrganizationUser],
   migrations: [],
   subscribers: [],
 });

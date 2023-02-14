@@ -15,8 +15,19 @@ const create = async (formData: Partial<IEvent>) => {
   }
 };
 
+const list = async () => {
+  try {
+    const { data } = await axios.get(`${API_URL}/list`);
+
+    return data?.data?.events;
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
 const exportedObject = {
   create,
+  list,
 };
 
 export default exportedObject;

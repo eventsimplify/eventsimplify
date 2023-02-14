@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { Event } from "../entity";
+import { Event, Organization } from "../entity";
 import { errorHandler, sendSuccess } from "../utils";
 
 // @desc    Event create
@@ -38,14 +38,42 @@ export const create = async (req, res) => {
       endDate,
       summary,
       description,
+      organizationId: req.organization.id,
+      addedBy: req.user.id,
+      updatedBy: req.user.id,
     }).save();
 
-    console.log(event);
+    // await event.delete({
+    //   id: event.id,
+    //   userId: req.user.id,
+    // });
 
     return sendSuccess({
       res,
       data: event,
       message: "Event created successfully!",
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};
+
+// @desc    Event list
+// @route   POST /events/list
+// @access  Private
+
+export const list = async (req, res) => {
+  try {
+    const events = await Event.find({
+      where: { organizationId: req.organization.id },
+    });
+
+    return sendSuccess({
+      res,
+      data: {
+        events,
+      },
+      message: "Events fetched successfully!",
     });
   } catch (err) {
     errorHandler(res, err);

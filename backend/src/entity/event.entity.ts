@@ -7,7 +7,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
+  PrimaryColumn,
+  OneToOne,
+  BeforeRemove,
+  BeforeUpdate,
+  DeleteDateColumn,
 } from "typeorm";
+import { Organization } from "./organization.entity";
 
 @Entity({ name: "events" })
 export class Event extends BaseEntity {
@@ -46,6 +52,31 @@ export class Event extends BaseEntity {
   @Column({ nullable: false, type: "text", default: "saved" })
   status: "draft" | "published" | "saved" | "scheduled";
 
+  @PrimaryColumn({ nullable: false })
+  organizationId: number;
+  @OneToOne(() => Organization, (organization) => organization.id)
+  organization: Organization;
+
+  // default columns
+
+  @Column({ nullable: true, type: "text" })
+  addedBy?: number;
+
+  @Column({ nullable: true, type: "text" })
+  updatedBy?: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
+
+  @Column({ nullable: true, type: "text" })
+  deletedBy?: number;
+
   //create slug before inserting into database
   @BeforeInsert()
   async beforeInsert() {
@@ -54,28 +85,30 @@ export class Event extends BaseEntity {
       strict: true,
     });
 
-    const eventExists = await Event.findOneBy({
-      slug,
-    });
-
-    if (eventExists) {
-      const lastId = await Event.find({
-        where: {},
-        order: {
-          id: "DESC",
-        },
-        take: 1,
-      });
-
-      this.slug = `${slug}-${lastId[0].id + 1}`;
-    } else {
-      this.slug = slug;
-    }
+    this.slug = slug + "-" + new Date().getTime();
   }
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @BeforeRemove()
+  async beforeRemove({ req }) {
+    this.deletedAt = new Date();
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+    //get user id from request
+    this.deletedBy = req.user.id;
+  }
+
+  public async delete({ id, userId }) {
+    const event = await Event.findOne({
+      where: { id: id },
+    });
+
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    event.deletedBy = userId;
+
+    await event.save();
+
+    await event.softRemove();
+  }
 }

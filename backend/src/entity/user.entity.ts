@@ -5,7 +5,9 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
 } from "typeorm";
+import { OrganizationUser } from "./organization-user.entity";
 
 @Entity({ name: "users" })
 export class User extends BaseEntity {
@@ -23,6 +25,9 @@ export class User extends BaseEntity {
 
   @Column({ nullable: false, enum: ["user", "admin", "organizer"] })
   type: "user" | "organizer" | "admin";
+
+  @OneToOne(() => OrganizationUser, (organizationUser) => organizationUser.user)
+  organization: OrganizationUser;
 
   @CreateDateColumn()
   createdAt: Date;
