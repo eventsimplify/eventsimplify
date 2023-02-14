@@ -1,0 +1,25 @@
+.mainContainer {
+  height: 344px;
+}
+.mainContainer:hover {
+  box-shadow: 4px 4px 1px #0022ba;
+  background-color: #000000;
+  /* scale */
+  transform: scale(1.02);
+}
+
+.mainContainer:hover img {
+  opacity: 0.2;
+}
+.button {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  box-shadow: 0 3px 10px #000000;
+}
+.mainContainer:hover .button {
+  display: block;
+}

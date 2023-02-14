@@ -1,13 +1,9 @@
 import React from 'react';
-
+import styles from '../styles/hotoffer.module.css';
+import Button from './Button';
 const HotOfferCard = () => {
   return (
-    <div
-      className="border-2"
-      style={{
-        height: '344px',
-      }}
-    >
+    <div className={`${styles.mainContainer}`}>
       <img
         src="/assets/card_image/offer.png"
         alt=""
@@ -18,6 +14,9 @@ const HotOfferCard = () => {
           overflow: 'hidden',
         }}
       />
+      <div className={`${styles.button}`}>
+        <Button>Buy Tickets</Button>
+      </div>
     </div>
   );
 };
