@@ -2,7 +2,7 @@ import React from "react";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 
-import styles from "./Sidebar.module.css";
+import styles from "./layout.module.css";
 import { sidebarItems } from "@/bootstrap/config";
 
 const Sidebar: React.FC = () => {

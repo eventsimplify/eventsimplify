@@ -1,11 +1,10 @@
 import axios from "axios";
-
-import { IEvent } from "@/interfaces";
+import { IOrganization } from "@/interfaces";
 import { handleAxiosError, handleSuccess } from "@/utils";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL + "/events";
+const API_URL = process.env.NEXT_PUBLIC_API_URL + "/organizations";
 
-const create = async (formData: Partial<IEvent>) => {
+const create = async (formData: Partial<IOrganization>) => {
   try {
     const { data } = await axios.post(`${API_URL}/create`, formData);
 

@@ -10,6 +10,7 @@ import {
   UploadProps,
   Input,
 } from "antd";
+import RichText from "@/form-controls/RichText";
 
 const Details = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -50,19 +51,14 @@ const Details = () => {
         </Form.Item>
       </Col>
       <Col span={24}>
-        <Form.Item
+        <RichText
           name="description"
           label="Event description"
-          extra="Add more details to your event like your schedule, sponsors, or featured guests."
+          placeholder="Please input your event description!"
           rules={[
-            { required: true, message: "Please input your event summary!" },
+            { required: true, message: "Please input your event description!" },
           ]}
-        >
-          <Input.TextArea
-            placeholder="Please input your event summary!"
-            autoSize={{ minRows: 3 }}
-          />
-        </Form.Item>
+        />
       </Col>
     </Row>
   );

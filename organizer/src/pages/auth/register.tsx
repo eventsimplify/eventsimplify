@@ -5,29 +5,23 @@ import Link from "next/link";
 import styles from "./Login.module.css";
 
 import { AuthService } from "@/services";
-import { useRouter } from "next/router";
+import { IUser } from "@/interfaces";
 
 const Register = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState("");
 
-  const router = useRouter();
+  const onFinish = async (values: IUser) => {
+    setLoading("register");
 
-  const onFinish = async (values: any) => {
-    setLoading("login");
+    await AuthService.register({
+      email: values.email,
+      name: values.name,
+      password: values.password,
+      type: "organizer",
+    });
 
-    try {
-      await AuthService.login({
-        email: values.email,
-        password: values.password,
-      });
-
-      router.push("/dashboard");
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading("");
-    }
+    setLoading("");
   };
 
   return (
@@ -39,31 +33,19 @@ const Register = () => {
           onFinish={onFinish}
           layout="vertical"
           size="large"
-          validateTrigger="onBlur"
+          validateTrigger="onSubmit"
         >
           <Form.Item
-            label="First name"
-            name="firstName"
+            label="Full name"
+            name="name"
             rules={[
               {
                 required: true,
-                message: "Please input your first name!",
+                message: "Please input your full name!",
               },
             ]}
           >
-            <Input placeholder="First name" />
-          </Form.Item>
-          <Form.Item
-            label="Last name"
-            name="lastName"
-            rules={[
-              {
-                required: true,
-                message: "Please input your last name!",
-              },
-            ]}
-          >
-            <Input placeholder="Last name" />
+            <Input placeholder="Full name" />
           </Form.Item>
           <Form.Item
             label="Email"
@@ -97,9 +79,9 @@ const Register = () => {
               style={{
                 width: "100%",
               }}
-              loading={loading === "login"}
+              loading={loading === "register"}
             >
-              Login
+              Register
             </Button>
           </Form.Item>
           <Link href="/auth/login">Already have a account? Login</Link>

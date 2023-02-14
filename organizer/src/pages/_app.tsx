@@ -1,6 +1,5 @@
 import Router from "next/router";
 import type { AppProps } from "next/app";
-import { SessionProvider } from "next-auth/react";
 import NProgress from "nprogress";
 
 // import css
@@ -11,10 +10,7 @@ import "nprogress/nprogress.css";
 import { App as AntDesignApp, ConfigProvider, theme } from "antd";
 import { useEffect } from "react";
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const handleRouteStart = () => NProgress.start();
     const handleRouteDone = () => NProgress.done();
@@ -32,16 +28,14 @@ export default function App({
   }, []);
 
   return (
-    <SessionProvider session={session}>
-      <ConfigProvider
-        theme={{
-          algorithm: theme.defaultAlgorithm,
-        }}
-      >
-        <AntDesignApp>
-          <Component {...pageProps} />
-        </AntDesignApp>
-      </ConfigProvider>
-    </SessionProvider>
+    <ConfigProvider
+      theme={{
+        algorithm: theme.defaultAlgorithm,
+      }}
+    >
+      <AntDesignApp>
+        <Component {...pageProps} />
+      </AntDesignApp>
+    </ConfigProvider>
   );
 }

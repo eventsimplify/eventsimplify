@@ -1,37 +1,55 @@
-import { AxiosError } from "axios";
-import { signIn } from "next-auth/react";
+import axios from "axios";
 
-import { handleAxiosError, handleError, handleSuccess } from "@/utils";
+import { handleAxiosError, handleSuccess } from "@/utils";
+import { IUser } from "@/interfaces";
 
-const login = async ({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-  redirect?: string;
-}) => {
+const API_URL = process.env.NEXT_PUBLIC_API_URL + "/auth";
+
+const login = async (formData: any) => {
   try {
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+    const { data } = await axios.post(`${API_URL}/login`, formData);
 
-    if (result && result.ok === true) {
-      return handleSuccess("Login successful");
-    }
-
-    return handleError("Login failed");
-  } catch (error) {
-    const err = error as AxiosError;
+    return handleSuccess(data?.message);
+  } catch (err: any) {
     handleAxiosError(err);
-    throw err;
+  }
+};
+
+const register = async (formData: Partial<IUser>) => {
+  try {
+    const { data } = await axios.post(`${API_URL}/register`, formData);
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
+const getUser = async () => {
+  try {
+    const { data } = await axios.get(`${API_URL}/me`);
+
+    return data?.data?.user;
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
+const logout = async () => {
+  try {
+    const { data } = await axios.get(`${API_URL}/logout`);
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
   }
 };
 
 const exportedObject = {
   login,
+  getUser,
+  register,
+  logout,
 };
 
 export default exportedObject;

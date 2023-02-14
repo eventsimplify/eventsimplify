@@ -3,9 +3,15 @@ import React from "react";
 import { QuestionOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 
+import useAuth from "@/hooks/useAuth";
+
 const UserMenu = () => {
+  const { user, loading, logout } = useAuth();
+
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
+    if (e.key === "logout") {
+      logout();
+    }
   };
 
   const userMenuItems = [
@@ -15,7 +21,7 @@ const UserMenu = () => {
       icon: <QuestionOutlined />,
     },
     {
-      label: "Bipul Poudel",
+      label: user?.name,
       key: "user",
       icon: <UserOutlined />,
       children: [
@@ -32,14 +38,16 @@ const UserMenu = () => {
   ];
 
   return (
-    <div>
-      <Menu
-        onClick={onClick}
-        mode="horizontal"
-        items={userMenuItems}
-        style={{ height: "60px", lineHeight: "60px", width: "100%" }}
-      />
-    </div>
+    <Menu
+      onClick={onClick}
+      mode="horizontal"
+      items={userMenuItems}
+      style={{
+        height: "60px",
+        lineHeight: "60px",
+        minWidth: "200px",
+      }}
+    />
   );
 };
 

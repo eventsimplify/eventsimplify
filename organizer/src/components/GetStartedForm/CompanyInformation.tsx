@@ -8,7 +8,7 @@ const CompanyInformation = () => {
     <Row gutter={[16, 16]}>
       <Col span={24}>
         <Typography>
-          <Title>What will your organization's name be?</Title>
+          <Title>Provide some basic information about your organization.</Title>
           <Paragraph>
             Choose a name that will give people a clear idea of what the
             organization is about. Feel free to get creative! You can edit this

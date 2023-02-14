@@ -3,6 +3,7 @@ import { DataSource } from "typeorm";
 
 // entity imports
 import { User, Event } from "../entity";
+import { Organization } from "../entity/organization.entity";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -10,10 +11,10 @@ export const AppDataSource = new DataSource({
   port: 5432,
   username: "bipulpoudel",
   password: "paramount10",
-  database: "event-simplify",
+  database: "eventsimplify",
   synchronize: true,
   logging: false,
-  entities: [User, Event],
+  entities: [User, Event, Organization],
   migrations: [],
   subscribers: [],
 });

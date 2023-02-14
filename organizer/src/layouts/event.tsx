@@ -13,7 +13,7 @@ const EventLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={styles.dashboard}>
       <Sidebar />
-      <div className={styles.dashboardContent}>
+      <div className={styles.eventContent}>
         <Content className={styles.content}>
           <Navbar />
           <div className={styles.contentBody}>

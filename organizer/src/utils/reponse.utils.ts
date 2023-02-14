@@ -14,11 +14,13 @@ export const handleAxiosError = (err: AxiosError) => {
   }
 
   if (err?.response?.status === 500) {
-    return notification.open({
+    notification.open({
       message: "Error",
       description: "Internal server error",
       type: "error",
     });
+
+    return null;
   }
 
   notification.open({
@@ -26,6 +28,8 @@ export const handleAxiosError = (err: AxiosError) => {
     description: "Unexcepted error occurred. Please try again.",
     type: "error",
   });
+
+  return null;
 };
 
 export const handleError = (message: string) => {

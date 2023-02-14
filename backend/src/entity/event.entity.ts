@@ -7,7 +7,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
-  AfterInsert,
 } from "typeorm";
 
 @Entity({ name: "events" })
@@ -47,6 +46,7 @@ export class Event extends BaseEntity {
   @Column({ nullable: false, type: "text", default: "saved" })
   status: "draft" | "published" | "saved" | "scheduled";
 
+  //create slug before inserting into database
   @BeforeInsert()
   async beforeInsert() {
     const slug = slugify(this.name, {
