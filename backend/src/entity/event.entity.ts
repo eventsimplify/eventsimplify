@@ -9,11 +9,10 @@ import {
   BeforeInsert,
   PrimaryColumn,
   OneToOne,
-  BeforeRemove,
-  BeforeUpdate,
-  DeleteDateColumn,
+  OneToMany,
 } from "typeorm";
 import { Organization } from "./organization.entity";
+import { Ticket } from "./ticket.entity";
 
 @Entity({ name: "events" })
 export class Event extends BaseEntity {
@@ -23,10 +22,8 @@ export class Event extends BaseEntity {
   @Column({ nullable: false, type: "text" })
   name: string;
 
-  @Column({
+  @PrimaryColumn({
     type: "text",
-    default: new Date().getTime(),
-    primary: true,
     unique: true,
   })
   slug: string;
@@ -52,15 +49,22 @@ export class Event extends BaseEntity {
   @Column({ nullable: false, type: "text", default: "saved" })
   status: "draft" | "published" | "saved" | "scheduled";
 
-  @PrimaryColumn({ nullable: false })
+  @PrimaryColumn({ nullable: false, type: "int" })
   organizationId: number;
   @OneToOne(() => Organization, (organization) => organization.id)
   organization: Organization;
 
-  // default columns
+  @PrimaryColumn("int", { nullable: false, array: true, default: [] })
+  ticketIds: number[];
+  @OneToMany(() => Ticket, (ticket) => ticket.id, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
+  tickets: Ticket[];
 
+  // default columns
   @Column({ nullable: true, type: "text" })
-  addedBy?: number;
+  createdBy?: number;
 
   @Column({ nullable: true, type: "text" })
   updatedBy?: number;
@@ -71,7 +75,7 @@ export class Event extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @DeleteDateColumn()
+  @Column({ nullable: true, type: "text" })
   deletedAt?: Date;
 
   @Column({ nullable: true, type: "text" })
@@ -86,29 +90,5 @@ export class Event extends BaseEntity {
     });
 
     this.slug = slug + "-" + new Date().getTime();
-  }
-
-  @BeforeRemove()
-  async beforeRemove({ req }) {
-    this.deletedAt = new Date();
-
-    //get user id from request
-    this.deletedBy = req.user.id;
-  }
-
-  public async delete({ id, userId }) {
-    const event = await Event.findOne({
-      where: { id: id },
-    });
-
-    if (!event) {
-      throw new Error("Event not found");
-    }
-
-    event.deletedBy = userId;
-
-    await event.save();
-
-    await event.softRemove();
   }
 }

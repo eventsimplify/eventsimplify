@@ -3,7 +3,7 @@ import { Breadcrumb as AntDesignBreadcrumb } from "antd";
 
 const Breadcrumb = () => {
   return (
-    <AntDesignBreadcrumb style={{ margin: "0px 0px 1rem 0px" }}>
+    <AntDesignBreadcrumb>
       <AntDesignBreadcrumb.Item>Home</AntDesignBreadcrumb.Item>
       <AntDesignBreadcrumb.Item>
         <a href="">Application Center</a>
