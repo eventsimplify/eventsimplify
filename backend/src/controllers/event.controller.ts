@@ -65,10 +65,26 @@ export const list = async (req, res) => {
 
     return sendSuccess({
       res,
-      data: {
-        events,
-      },
+      data: events,
       message: "Events fetched successfully!",
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};
+
+// @desc    Event detail
+// @route   POST /events/detail/:id
+// @access  Private
+
+export const detail = async (req, res) => {
+  try {
+    const event = req.event;
+
+    return sendSuccess({
+      res,
+      data: event,
+      message: "Event fetched successfully!",
     });
   } catch (err) {
     errorHandler(res, err);

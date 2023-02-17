@@ -8,37 +8,62 @@ import {
   LineChartOutlined,
   AppstoreOutlined,
   CalendarOutlined,
+  BarChartOutlined,
+  IdcardOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 
 export const sidebarItems: MenuProps["items"] = [
   {
     label: "Dashboard",
-    key: "dashboard",
+    key: "/admin/events/[eventId]",
     icon: <DashboardOutlined />,
   },
   {
     label: "Event details",
-    key: "event-details",
+    key: "/admin/events/[eventId]/details",
     icon: <DatabaseOutlined />,
   },
   {
     label: "Orders",
-    key: "orders",
+    key: "/admin/events/[eventId]/orders",
     icon: <FileDoneOutlined />,
   },
   {
     label: "Order options",
-    key: "order-options",
+    key: "/admin/events/[eventId]/order-options",
     icon: <DiffOutlined />,
     children: [
       {
-        label: "Order form",
-        key: "order-form",
+        label: "Event registration form",
+        key: "/admin/events/[eventId]/registration-form",
+      },
+      {
+        label: "Feedback form",
+        key: "/admin/events/[eventId]/feedback-form",
       },
       {
         label: "Tickets",
-        key: "tickets",
+        key: "/admin/events/[eventId]/tickets",
+      },
+    ],
+  },
+  {
+    label: "Analytics",
+    key: "/admin/events/[eventId]/analytics",
+    icon: <BarChartOutlined />,
+    children: [
+      {
+        label: "Demographics",
+        key: "/admin/events/[eventId]/demographics",
+      },
+      {
+        label: "Sales",
+        key: "payout-methods",
+      },
+      {
+        label: "Feedback and reviews",
+        key: "refund-settings",
       },
     ],
   },
@@ -80,14 +105,14 @@ export const sidebarItems: MenuProps["items"] = [
       },
     ],
   },
+  {
+    label: "ID card",
+    key: "id-card",
+    icon: <IdcardOutlined />,
+  },
 ];
 
 export const appBarItems: MenuProps["items"] = [
-  {
-    label: "Dashboard",
-    key: "/admin/dashboard",
-    icon: <DashboardOutlined />,
-  },
   {
     label: "Events",
     key: "/admin/events",

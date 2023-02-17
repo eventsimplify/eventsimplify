@@ -3,14 +3,14 @@ import React from "react";
 import { QuestionOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 
-import useAuth from "@/hooks/useAuth";
+import { useAppContext } from "@/contexts/AppProvider";
 
 const UserMenu = () => {
-  const { user, loading, logout } = useAuth();
+  const { user } = useAppContext();
 
   const onClick: MenuProps["onClick"] = (e) => {
     if (e.key === "logout") {
-      logout();
+      // logout();
     }
   };
 

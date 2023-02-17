@@ -19,7 +19,17 @@ const list = async () => {
   try {
     const { data } = await axios.get(`${API_URL}/list`);
 
-    return data?.data?.events;
+    return data?.data;
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
+const detail = async (id: string) => {
+  try {
+    const { data } = await axios.get(`${API_URL}/detail/${id}`);
+
+    return data?.data;
   } catch (err: any) {
     handleAxiosError(err);
   }
@@ -28,6 +38,7 @@ const list = async () => {
 const exportedObject = {
   create,
   list,
+  detail,
 };
 
 export default exportedObject;

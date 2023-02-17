@@ -1,10 +1,11 @@
 import React from "react";
 
 import { IField, IFieldProps } from "@/interfaces";
-import { TextInput } from "./index";
+import { TextInput, Select, DatePicker, Radio, Textarea } from "./index";
 
 const Field = ({ ...field }: IField) => {
-  const { type, name, label, disabled, placeholder, required } = field;
+  const { type, name, label, disabled, placeholder, required, options, extra } =
+    field;
 
   let validations = [];
 
@@ -21,11 +22,29 @@ const Field = ({ ...field }: IField) => {
     disabled,
     placeholder,
     rules: validations,
+    options,
+    extra,
   };
 
   switch (type) {
     case "text": {
       return <TextInput key={name} {...props} />;
+    }
+
+    case "dropdown": {
+      return <Select key={name} {...props} />;
+    }
+
+    case "date": {
+      return <DatePicker key={name} {...props} />;
+    }
+
+    case "radio": {
+      return <Radio key={name} {...props} />;
+    }
+
+    case "textarea": {
+      return <Textarea key={name} {...props} />;
     }
 
     default:

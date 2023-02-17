@@ -9,6 +9,8 @@ import "nprogress/nprogress.css";
 
 import { App as AntDesignApp, ConfigProvider, theme } from "antd";
 import { useEffect } from "react";
+import AppProvider from "@/contexts/AppProvider";
+import EventProvider from "@/contexts/EventProvider";
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -34,7 +36,11 @@ export default function App({ Component, pageProps }: AppProps) {
       }}
     >
       <AntDesignApp>
-        <Component {...pageProps} />
+        <AppProvider>
+          <EventProvider>
+            <Component {...pageProps} />
+          </EventProvider>
+        </AppProvider>
       </AntDesignApp>
     </ConfigProvider>
   );

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Form } from "antd";
-
-import DashboardLayout from "@/layouts/dashboard";
+import moment from "moment";
 import EventForm from "@/components/EventForm";
+import EventLayout from "@/layouts/event";
 import { EventService } from "@/services";
+import { useEventContext } from "@/contexts/EventProvider";
 
-const Create = () => {
+const details = () => {
+  const { event } = useEventContext();
   const [loading, setLoading] = useState("");
   const [form] = Form.useForm();
 
@@ -27,7 +29,7 @@ const Create = () => {
   };
 
   return (
-    <DashboardLayout>
+    <EventLayout>
       <Form
         form={form}
         name="event-form"
@@ -35,11 +37,20 @@ const Create = () => {
         layout="vertical"
         size="large"
         validateTrigger="onSubmit"
+        initialValues={{
+          name: event?.name,
+          type: event?.type,
+          category: event?.category,
+          summary: event?.summary,
+          description: event?.description,
+          startDate: event?.startDate ? moment(event.startDate) : null,
+          endDate: event?.endDate ? moment(event.endDate) : null,
+        }}
       >
-        <EventForm loading={loading} />
+        <EventForm loading={""} />
       </Form>
-    </DashboardLayout>
+    </EventLayout>
   );
 };
 
-export default Create;
+export default details;

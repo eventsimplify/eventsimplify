@@ -1,18 +1,12 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-import Loader from "@/components/Loader";
 import Redirect from "@/components/Redirect";
-
-import useAuth from "@/hooks/useAuth";
+import { useAppContext } from "@/contexts/AppProvider";
 
 const AuthPageLayout = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth();
+  const { user } = useAppContext();
   const router = useRouter();
-
-  if (loading === "loading") {
-    return <Loader />;
-  }
 
   if (user) {
     return (

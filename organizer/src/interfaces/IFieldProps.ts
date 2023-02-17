@@ -6,4 +6,6 @@ export default interface IFieldProps {
   placeholder?: string;
   rules?: Rule[];
   disabled?: boolean;
+  options?: any[];
+  extra?: string;
 }

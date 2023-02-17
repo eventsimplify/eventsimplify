@@ -9,6 +9,7 @@ import IEvent from "@/interfaces/IEvent";
 import EventFilters from "@/components/Filters/EventFilters";
 import { useRouter } from "next/router";
 import { EventService } from "@/services";
+import Link from "next/link";
 
 const columns: ColumnsType<IEvent> = [
   {
@@ -28,7 +29,16 @@ const columns: ColumnsType<IEvent> = [
     dataIndex: "name",
     width: "40%",
     render: (text, record) => {
-      return <a href="#">{text}</a>;
+      return (
+        <Link
+          href={{
+            pathname: "/admin/events/[id]",
+            query: { id: record.id },
+          }}
+        >
+          {text}
+        </Link>
+      );
     },
   },
   {
