@@ -1,15 +1,14 @@
 import * as Yup from "yup";
 
-import { Event } from "../entity";
+import { OrganizationUser } from "../entity";
 import { Organization } from "../entity/organization.entity";
-import { errorHandler, sendSuccess } from "../utils";
+import { errorHandler, sendError, sendSuccess } from "../utils";
 
 // @desc    Organization create
 // @route   POST /organizations/create
 // @access  Private
 export const create = async (req, res) => {
-  const { name, summary, description} =
-    req.body;
+  const { name, summary, description } = req.body;
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
@@ -24,15 +23,36 @@ export const create = async (req, res) => {
       description,
     });
 
+    const organizationExists = await OrganizationUser.findOne({
+      where: {
+        userId: req.user.id,
+        role: "owner",
+      },
+    });
+
+    if (organizationExists) {
+      return sendError({
+        res,
+        status: 400,
+        data: null,
+        message: "You already have an organization!",
+      });
+    }
+
     const organization = await Organization.create({
-        name,
-        summary,
-        description,
+      name,
+      summary,
+      description,
     });
 
     await organization.save();
 
-    console.log(organization);
+    // create organization user role
+    await OrganizationUser.create({
+      organizationId: organization.id,
+      userId: req.user.id,
+      role: "owner",
+    }).save();
 
     return sendSuccess({
       res,

@@ -7,7 +7,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
+  PrimaryColumn,
+  OneToOne,
+  OneToMany,
 } from "typeorm";
+import { Organization } from "./organization.entity";
+import { Ticket } from "./ticket.entity";
 
 @Entity({ name: "events" })
 export class Event extends BaseEntity {
@@ -17,10 +22,8 @@ export class Event extends BaseEntity {
   @Column({ nullable: false, type: "text" })
   name: string;
 
-  @Column({
+  @PrimaryColumn({
     type: "text",
-    default: new Date().getTime(),
-    primary: true,
     unique: true,
   })
   slug: string;
@@ -46,6 +49,38 @@ export class Event extends BaseEntity {
   @Column({ nullable: false, type: "text", default: "saved" })
   status: "draft" | "published" | "saved" | "scheduled";
 
+  @PrimaryColumn({ nullable: false, type: "int" })
+  organizationId: number;
+  @OneToOne(() => Organization, (organization) => organization.id)
+  organization: Organization;
+
+  @PrimaryColumn("int", { nullable: false, array: true, default: [] })
+  ticketIds: number[];
+  @OneToMany(() => Ticket, (ticket) => ticket.id, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
+  tickets: Ticket[];
+
+  // default columns
+  @Column({ nullable: true, type: "text" })
+  createdBy?: number;
+
+  @Column({ nullable: true, type: "text" })
+  updatedBy?: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @Column({ nullable: true, type: "text" })
+  deletedAt?: Date;
+
+  @Column({ nullable: true, type: "text" })
+  deletedBy?: number;
+
   //create slug before inserting into database
   @BeforeInsert()
   async beforeInsert() {
@@ -54,28 +89,6 @@ export class Event extends BaseEntity {
       strict: true,
     });
 
-    const eventExists = await Event.findOneBy({
-      slug,
-    });
-
-    if (eventExists) {
-      const lastId = await Event.find({
-        where: {},
-        order: {
-          id: "DESC",
-        },
-        take: 1,
-      });
-
-      this.slug = `${slug}-${lastId[0].id + 1}`;
-    } else {
-      this.slug = slug;
-    }
+    this.slug = slug + "-" + new Date().getTime();
   }
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

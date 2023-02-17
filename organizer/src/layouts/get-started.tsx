@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Layout } from "antd";
 
 import styles from "./dashboard.module.css";
@@ -19,6 +18,10 @@ const GetStartedLayout = ({ children }: { children: React.ReactNode }) => {
 
   if (!user) {
     return <Redirect to="/auth/login" redirect="/get-started" />;
+  }
+
+  if (user.organization) {
+    return <Redirect to="/admin/dashboard" />;
   }
 
   return (

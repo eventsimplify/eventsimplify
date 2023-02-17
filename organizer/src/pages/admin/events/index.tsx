@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Divider, Space, Table, Tag } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
@@ -8,14 +8,26 @@ import DashboardLayout from "@/layouts/dashboard";
 import IEvent from "@/interfaces/IEvent";
 import EventFilters from "@/components/Filters/EventFilters";
 import { useRouter } from "next/router";
+import { EventService } from "@/services";
 
 const columns: ColumnsType<IEvent> = [
+  {
+    title: "Event banner",
+    dataIndex: "banner",
+    width: "10%",
+    render: (text) => (
+      <img
+        src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F434879029%2F94212246415%2F1%2Foriginal.20230119-101032?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=09431ea2850f2ed6d4eb01f66dae80a1"
+        alt="banner"
+        width="100%"
+      />
+    ),
+  },
   {
     title: "Event name",
     dataIndex: "name",
     width: "40%",
     render: (text, record) => {
-      console.log(record);
       return <a href="#">{text}</a>;
     },
   },
@@ -41,19 +53,9 @@ const columns: ColumnsType<IEvent> = [
   },
 ];
 
-const data: IEvent[] = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    id: i,
-    name: `Edward King ${i}`,
-    ticketSold: 32,
-    status: "Active",
-    description: "London, Park Lane no. 0",
-  });
-}
-
 const Events: React.FC = () => {
-  const [loading, setLoading] = useState(false);
+  const [events, setEvents] = useState<IEvent[]>([]);
+  const [loading, setLoading] = useState("");
   const router = useRouter();
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
@@ -64,6 +66,17 @@ const Events: React.FC = () => {
     console.log("Create event");
     router.push("/admin/events/create");
   };
+
+  const getEvents = async () => {
+    setLoading("events");
+    const data = await EventService.list();
+    setEvents(data || []);
+    setLoading("");
+  };
+
+  useEffect(() => {
+    getEvents();
+  }, []);
 
   return (
     <DashboardLayout>
@@ -78,8 +91,8 @@ const Events: React.FC = () => {
         <Table
           rowKey={(record) => record.id.toString()}
           columns={columns}
-          dataSource={data}
-          loading={loading}
+          dataSource={events}
+          loading={loading === "events"}
           bordered
           //@ts-ignore
           onChange={handleTableChange}

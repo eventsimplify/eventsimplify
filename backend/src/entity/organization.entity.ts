@@ -21,9 +21,23 @@ export class Organization extends BaseEntity {
   @Column({ nullable: true, type: "text" })
   description?: string;
 
+  // default columns
+
+  @Column({ nullable: true, type: "text" })
+  createdBy?: number;
+
+  @Column({ nullable: true, type: "text" })
+  updatedBy?: number;
+
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ nullable: true, type: "text" })
+  deletedAt?: Date;
+
+  @Column({ nullable: true, type: "text" })
+  deletedBy?: number;
 }

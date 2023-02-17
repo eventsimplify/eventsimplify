@@ -14,8 +14,19 @@ const create = async (formData: Partial<IOrganization>) => {
   }
 };
 
+const getStarted = async () => {
+  try {
+    const { data } = await axios.get(`${API_URL}/get-started`);
+
+    return data?.data?.startups;
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
 const exportedObject = {
   create,
+  getStarted,
 };
 
 export default exportedObject;

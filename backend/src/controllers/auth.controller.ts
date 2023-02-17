@@ -137,7 +137,10 @@ export const register = async (req, res) => {
 // @access  Private
 export const me = async (req, res) => {
   try {
-    const user = await User.findOneBy({ id: req.user.id });
+    const user = await User.findOne({
+      where: { id: req.user.id },
+      relations: ["organization"],
+    });
 
     if (!user) {
       return sendError({
@@ -157,6 +160,7 @@ export const me = async (req, res) => {
           name: user.name,
           email: user.email,
           type: user.type,
+          organization: user.organization.organizationId,
         },
       },
     });
