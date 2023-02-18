@@ -113,7 +113,6 @@ export const register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      type,
     });
 
     user.save();
@@ -155,13 +154,10 @@ export const me = async (req, res) => {
       res,
       message: "User has been fetched successfully.",
       data: {
-        user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          type: user.type,
-          organization: user.organization.organizationId,
-        },
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        organization: user.organization.organizationId,
       },
     });
   } catch (err) {

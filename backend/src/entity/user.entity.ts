@@ -23,9 +23,6 @@ export class User extends BaseEntity {
   @Column({ nullable: false })
   password: string;
 
-  @Column({ nullable: false, enum: ["user", "admin", "organizer"] })
-  type: "user" | "organizer" | "admin";
-
   @OneToOne(() => OrganizationUser, (organizationUser) => organizationUser.user)
   organization: OrganizationUser;
 

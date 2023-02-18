@@ -5,7 +5,7 @@ import {
   DiffOutlined,
   FileDoneOutlined,
   UserOutlined,
-  LineChartOutlined,
+  TeamOutlined,
   AppstoreOutlined,
   CalendarOutlined,
   BarChartOutlined,
@@ -119,9 +119,9 @@ export const appBarItems: MenuProps["items"] = [
     icon: <CalendarOutlined />,
   },
   {
-    label: "Reports",
-    key: "/admin/reports",
-    icon: <LineChartOutlined />,
+    label: "Team management",
+    key: "/admin/team-management",
+    icon: <TeamOutlined />,
   },
   {
     label: "Organization settings",

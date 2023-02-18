@@ -14,6 +14,13 @@ const Field = ({ ...field }: IField) => {
       required: true,
       message: `${label} is required`,
     });
+
+    if (type === "email") {
+      validations.push({
+        type: "email",
+        message: "Please enter a valid email",
+      });
+    }
   }
 
   const props: IFieldProps = {
@@ -28,6 +35,10 @@ const Field = ({ ...field }: IField) => {
 
   switch (type) {
     case "text": {
+      return <TextInput key={name} {...props} />;
+    }
+
+    case "email": {
       return <TextInput key={name} {...props} />;
     }
 

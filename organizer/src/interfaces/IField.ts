@@ -1,6 +1,13 @@
 export default interface IField {
   name: string;
-  type: "text" | "textarea" | "checkbox" | "radio" | "dropdown" | "date";
+  type:
+    | "text"
+    | "textarea"
+    | "checkbox"
+    | "radio"
+    | "dropdown"
+    | "date"
+    | "email";
   label: string;
   placeholder?: string;
   options?: any[];

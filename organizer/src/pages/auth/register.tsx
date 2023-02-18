@@ -18,7 +18,6 @@ const Register = () => {
       email: values.email,
       name: values.name,
       password: values.password,
-      type: "organizer",
     });
 
     setLoading("");
