@@ -6,11 +6,9 @@ import styles from "./Login.module.css";
 
 import { AuthService } from "@/services";
 import AuthPageLayout from "@/layouts/auth-page";
-import useAuth from "@/hooks/useAuth";
 
 const Login = () => {
   const [form] = Form.useForm();
-  const { getUser } = useAuth();
   const [loading, setLoading] = useState("");
 
   const onFinish = async (values: any) => {
@@ -20,7 +18,7 @@ const Login = () => {
       password: values.password,
     });
 
-    await getUser();
+    // await getUser();
     setLoading("");
   };
 

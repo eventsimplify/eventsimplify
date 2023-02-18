@@ -1,10 +1,12 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Tabs } from "antd";
 import type { TabsProps } from "antd";
 
 import DashboardLayout from "@/layouts/dashboard";
 import { useRouter } from "next/router";
+
 import Staffs from "@/components/TeamManagement/Staffs";
+import Roles from "@/components/TeamManagement/Roles";
 
 const items: TabsProps["items"] = [
   {
@@ -15,19 +17,21 @@ const items: TabsProps["items"] = [
   {
     key: "roles",
     label: "Roles / Permissions",
-    children: `Content of Tab Pane 2`,
+    children: <Roles />,
   },
 ];
 
 const TeamManagement = () => {
   const router = useRouter();
 
-  const [activeKey, setActiveKey] = useState(
-    useMemo(() => {
-      const tab = router.query.tab;
-      return tab ? tab.toString() : "staffs";
-    }, [router.query.tab])
-  );
+  const [activeKey, setActiveKey] = useState("staffs");
+
+  useEffect(() => {
+    console.log("router.query.tab", router.query.tab);
+    if (router.query.tab) {
+      setActiveKey(router.query.tab.toString());
+    }
+  }, [router.query.tab]);
 
   const onChange = (key: string) => {
     router.push({
@@ -36,6 +40,10 @@ const TeamManagement = () => {
     });
     setActiveKey(key);
   };
+
+  if (activeKey === "") {
+    return null;
+  }
 
   return (
     <DashboardLayout>

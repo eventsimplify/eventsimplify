@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Button, Form, message, Modal } from "antd";
 
 import Field from "@/form-controls/Field";
+import Permission from "./Permission";
 
-const StaffForm = () => {
+const RoleForm = () => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -31,41 +32,33 @@ const StaffForm = () => {
     <>
       {contextHolder}
       <Button type="primary" onClick={showModal}>
-        Invite new staff
+        Create new role
       </Button>
       <Modal
-        title="Invite New Staff"
+        title="Create new role"
         open={isOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         destroyOnClose
         maskClosable={false}
         centered
+        width={900}
+        bodyStyle={{ paddingTop: "1rem" }}
       >
         <Form form={form} name="basic" layout="vertical" autoComplete="off">
           <Field
-            name="email"
-            label="Email"
+            name="name"
+            label="Role name"
             required
-            placeholder="Enter an email address"
-            type="email"
+            placeholder="Enter a role name"
+            type="text"
           />
 
-          <Field
-            name="role"
-            label="Role"
-            required
-            placeholder="Enter a role"
-            type="dropdown"
-            options={[
-              { label: "Admin", value: "admin" },
-              { label: "Staff", value: "staff" },
-            ]}
-          />
+          <Permission />
         </Form>
       </Modal>
     </>
   );
 };
 
-export default StaffForm;
+export default RoleForm;
