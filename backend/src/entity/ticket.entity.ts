@@ -23,7 +23,7 @@ export class Ticket extends BaseEntity {
   @Column("text", { nullable: false })
   type: string;
 
-  @Column("money", { nullable: false, default: 0 })
+  @Column("numeric", { nullable: false, default: 0 })
   price: number;
 
   @Column("int", { nullable: false, default: 0 })

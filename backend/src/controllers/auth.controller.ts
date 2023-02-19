@@ -75,15 +75,12 @@ export const login = async (req, res) => {
 // @route   POST /users/register
 // @access  Public
 export const register = async (req, res) => {
-  const { email, password, name, type } = req.body;
+  const { email, password, name } = req.body;
 
   const schema = Yup.object().shape({
     email: Yup.string().required("Email is a required field"),
     password: Yup.string().required("Password is a required field"),
     name: Yup.string().required("Name is a required field"),
-    type: Yup.string()
-      .required("Type is a required field")
-      .oneOf(["user", "organizer", "admin"], "User type is invalid"),
   });
 
   try {
@@ -91,7 +88,6 @@ export const register = async (req, res) => {
       email,
       password,
       name,
-      type,
     });
 
     let userExists: IUser = await User.findOneBy({

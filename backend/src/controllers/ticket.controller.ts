@@ -51,6 +51,7 @@ export const create = async (req, res) => {
       visibility,
       minPerOrder,
       maxPerOrder,
+      eventId: req.event.id,
     }).save();
 
     return sendSuccess({
@@ -71,9 +72,11 @@ export const list = async (req, res) => {
   try {
     const tickets = await Ticket.find({
       where: {
-        event: req.params.event,
+        eventId: req.event.id,
       },
     });
+
+    console.log(tickets);
 
     return sendSuccess({
       res,

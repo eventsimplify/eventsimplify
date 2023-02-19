@@ -7,7 +7,8 @@ export default interface IField {
     | "radio"
     | "dropdown"
     | "date"
-    | "email";
+    | "email"
+    | "rich-text";
   label: string;
   placeholder?: string;
   options?: any[];

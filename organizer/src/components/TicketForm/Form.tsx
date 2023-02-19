@@ -11,6 +11,8 @@ import {
 } from "antd";
 
 import { SettingOutlined } from "@ant-design/icons";
+import { useEventContext } from "@/contexts/EventProvider";
+import moment from "moment";
 
 const { Panel } = Collapse;
 
@@ -21,6 +23,7 @@ const options = [
 
 const TicketForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
   const [form] = Form.useForm();
+  const { event } = useEventContext();
   const [ticketType, setTicketType] = useState("free");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -53,6 +56,8 @@ const TicketForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
         quantity: 100,
         minPerOrder: 1,
         maxPerOrder: 10,
+        startDate: moment(),
+        endDate: moment(event?.endDate),
       }}
       onFinish={onSubmit}
       validateTrigger={formSubmitted ? ["onChange"] : ["onSubmit"]}

@@ -1,7 +1,14 @@
 import React from "react";
 
 import { IField, IFieldProps } from "@/interfaces";
-import { TextInput, Select, DatePicker, Radio, Textarea } from "./index";
+import {
+  TextInput,
+  Select,
+  DatePicker,
+  Radio,
+  Textarea,
+  RichText,
+} from "./index";
 
 const Field = ({ ...field }: IField) => {
   const {
@@ -66,6 +73,10 @@ const Field = ({ ...field }: IField) => {
 
     case "textarea": {
       return <Textarea key={name} {...props} />;
+    }
+
+    case "rich-text": {
+      return <RichText key={name} {...props} />;
     }
 
     default:

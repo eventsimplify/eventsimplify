@@ -38,7 +38,9 @@ export const create = async (req, res) => {
       summary,
       description,
       organizationId: req.organization.id,
-    }).save();
+    });
+
+    await event.save();
 
     return sendSuccess({
       res,
@@ -58,6 +60,7 @@ export const list = async (req, res) => {
   try {
     const events = await Event.find({
       where: { organizationId: req.organization.id },
+      relations: ["tickets"],
     });
 
     return sendSuccess({

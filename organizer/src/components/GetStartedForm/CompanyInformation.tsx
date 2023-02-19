@@ -1,5 +1,6 @@
 import React from "react";
-import { Col, Form, Input, Row, Typography } from "antd";
+import { Col, Row, Typography } from "antd";
+import Field from "@/form-controls/Field";
 
 const { Title, Paragraph } = Typography;
 
@@ -17,42 +18,34 @@ const CompanyInformation = () => {
         </Typography>
       </Col>
       <Col span={24}>
-        <Form.Item
+        <Field
           name="name"
           label="Company name"
-          rules={[
-            { required: true, message: "Please input your company name!" },
-          ]}
-        >
-          <Input placeholder="Company name" />
-        </Form.Item>
+          required
+          extra="This is the name that will appear on your organizer profile and on your events."
+          type="text"
+          placeholder="Enter your company name."
+        />
       </Col>
       <Col span={24}>
-        <Form.Item
+        <Field
           name="summary"
           label="Company summary"
-          rules={[
-            { required: true, message: "Please input your company summary!" },
-          ]}
+          required
           extra="Please enter a summary of at least 10 characters and no more than 200 characters."
-        >
-          <Input.TextArea placeholder="Company summary!" rows={4} />
-        </Form.Item>
+          type="textarea"
+          placeholder="Enter a summary of your company."
+        />
       </Col>
       <Col span={24}>
-        <Form.Item
+        <Field
           name="description"
           label="Company description"
-          rules={[
-            {
-              required: true,
-              message: "Please input your company description!",
-            },
-          ]}
+          required
           extra="Describe who you are, the types of events you host, or your mission. The description is displayed on your organizer profile."
-        >
-          <Input.TextArea placeholder="Company description" rows={10} />
-        </Form.Item>
+          type="rich-text"
+          placeholder="Describe your company."
+        />
       </Col>
     </Row>
   );
