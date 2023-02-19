@@ -12,7 +12,6 @@ export default interface IEvent extends IBase {
   startDate: string;
   endDate: string;
   status: "draft" | "published" | "saved" | "scheduled";
-  tags: string[];
   tickets: ITicket[];
   organization: IOrganization;
 }

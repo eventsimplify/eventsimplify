@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
+  DeleteDateColumn,
 } from "typeorm";
 import { OrganizationUser } from "./organization-user.entity";
 
@@ -14,21 +15,25 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column("text", { nullable: false })
   name: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column("text", { nullable: false, unique: true })
   email: string;
 
-  @Column({ nullable: false })
+  @Column("text", { nullable: false })
   password: string;
 
   @OneToOne(() => OrganizationUser, (organizationUser) => organizationUser.user)
   organization: OrganizationUser;
 
+  // default columns
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

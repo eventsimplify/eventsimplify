@@ -6,4 +6,5 @@ export default interface IFieldProps {
   disabled?: boolean;
   options?: any[];
   extra?: string;
+  optionType?: "button" | "default";
 }

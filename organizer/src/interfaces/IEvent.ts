@@ -5,11 +5,9 @@ export default interface IEvent extends IBase {
   slug: string;
   type: string;
   category: string;
-  tags: string[];
   startDate: Date;
   endDate: Date;
-  tagline?: string;
+  summary?: string;
   description?: string;
   status: "draft" | "published";
-  summary?: string;
 }

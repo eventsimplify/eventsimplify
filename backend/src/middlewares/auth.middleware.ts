@@ -76,6 +76,7 @@ export const protectWithOrganizationAndEvent = async (req, res, next) => {
       where: {
         id: Number(eventId),
       },
+      relations: ["tickets"],
     });
 
     if (!event) {

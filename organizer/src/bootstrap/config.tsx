@@ -28,7 +28,6 @@ export const sidebarItems: MenuProps["items"] = [
     label: "Orders",
     key: "/admin/events/[eventId]/orders",
     icon: <FileDoneOutlined />,
-    disabled: true,
   },
   {
     label: "Order options",

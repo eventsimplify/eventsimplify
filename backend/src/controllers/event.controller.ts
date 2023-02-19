@@ -33,14 +33,11 @@ export const create = async (req, res) => {
     const event = await Event.create({
       name,
       type,
-      tags,
       startDate,
       endDate,
       summary,
       description,
       organizationId: req.organization.id,
-      createdBy: req.user.id,
-      updatedBy: req.user.id,
     }).save();
 
     return sendSuccess({

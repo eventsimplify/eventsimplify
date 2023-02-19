@@ -1,0 +1,7 @@
+.ticket {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid #4f4cee;
+  border-radius: 0.5rem;
+}

@@ -1,17 +1,16 @@
 import React from "react";
-// import { SaveOutlined } from "@ant-design/icons";
 import { Row, Col, Card, Button, Space, Divider } from "antd";
 
-import BasicInfo from "./BasicInfo";
-import Details from "./Details";
-// import Status from "./Status";
+import AttendeeInfo from "./AttendeeInfo";
+import Tickets from "./Tickets";
+import AdditionalInfo from "./AdditionalInfo";
 
-const EventForm = ({ loading }: { loading: string }) => {
+const OrderForm = ({ loading }: { loading: string }) => {
   return (
     <Row gutter={[16, 16]}>
       <Col span={24}>
         <Card
-          title="Create new event"
+          title="Create manual order"
           extra={
             <Space>
               <Button
@@ -19,22 +18,22 @@ const EventForm = ({ loading }: { loading: string }) => {
                 htmlType="submit"
                 loading={loading === "create"}
               >
-                Create event
+                Create order
               </Button>
             </Space>
           }
         >
-          <Col span={24}>
-            <BasicInfo />
-          </Col>
+          <AttendeeInfo />
+          <Divider orientation="left" orientationMargin={0}>
+            Tickets information
+          </Divider>
+          <Tickets />
           <Divider />
-          <Col span={24}>
-            <Details />
-          </Col>
+          <AdditionalInfo />
         </Card>
       </Col>
     </Row>
   );
 };
 
-export default EventForm;
+export default OrderForm;

@@ -16,4 +16,5 @@ export default interface IField {
   disabled?: boolean;
   error?: string;
   extra?: string;
+  optionType?: "button" | "default";
 }

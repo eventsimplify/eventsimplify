@@ -4,8 +4,17 @@ import { IField, IFieldProps } from "@/interfaces";
 import { TextInput, Select, DatePicker, Radio, Textarea } from "./index";
 
 const Field = ({ ...field }: IField) => {
-  const { type, name, label, disabled, placeholder, required, options, extra } =
-    field;
+  const {
+    type,
+    name,
+    label,
+    disabled,
+    placeholder,
+    required,
+    options,
+    extra,
+    optionType = "button",
+  } = field;
 
   let validations = [];
 
@@ -31,6 +40,7 @@ const Field = ({ ...field }: IField) => {
     rules: validations,
     options,
     extra,
+    optionType,
   };
 
   switch (type) {
