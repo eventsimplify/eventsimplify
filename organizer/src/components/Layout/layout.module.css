@@ -13,21 +13,6 @@
   z-index: 100;
 }
 
-.navBarHeader {
-  height: 60px;
-  width: calc(100vw - 256px);
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  top: 0px;
-  left: 256px;
-  padding: 0 1rem;
-  z-index: 100;
-}
-
 .sidebar {
   height: 100vh;
   width: 256px;

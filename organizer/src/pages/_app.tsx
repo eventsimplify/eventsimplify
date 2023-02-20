@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Router from "next/router";
 import type { AppProps } from "next/app";
 import NProgress from "nprogress";
@@ -8,9 +9,8 @@ import "antd/dist/reset.css";
 import "nprogress/nprogress.css";
 
 import { App as AntDesignApp, ConfigProvider, theme } from "antd";
-import { useEffect } from "react";
+
 import AppProvider from "@/contexts/AppProvider";
-import EventProvider from "@/contexts/EventProvider";
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -37,9 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <AntDesignApp>
         <AppProvider>
-          <EventProvider>
-            <Component {...pageProps} />
-          </EventProvider>
+          <Component {...pageProps} />
         </AppProvider>
       </AntDesignApp>
     </ConfigProvider>

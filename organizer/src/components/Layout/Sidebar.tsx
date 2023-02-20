@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 
@@ -10,9 +10,14 @@ const Sidebar: React.FC = () => {
   const router = useRouter();
   const [current, setCurrent] = useState(
     useMemo(() => {
-      const path = router.pathname;
-      return path;
-    }, [router])
+      const item = sidebarItems.find((item) => {
+        return item.keys.includes(router.pathname);
+      });
+
+      if (item) return item.key;
+
+      return router.pathname;
+    }, [router, sidebarItems])
   );
 
   const onClick: MenuProps["onClick"] = (e) => {

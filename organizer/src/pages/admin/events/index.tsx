@@ -73,7 +73,6 @@ const Events: React.FC = () => {
   };
 
   const onCreateEventClick = () => {
-    console.log("Create event");
     router.push("/admin/events/create");
   };
 

@@ -1,4 +1,5 @@
 import IBase from "./IBase";
+import ITicket from "./ITicket";
 
 export default interface IEvent extends IBase {
   name: string;
@@ -10,4 +11,5 @@ export default interface IEvent extends IBase {
   summary?: string;
   description?: string;
   status: "draft" | "published";
+  tickets?: ITicket[];
 }

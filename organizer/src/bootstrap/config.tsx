@@ -13,26 +13,33 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 
-export const sidebarItems: MenuProps["items"] = [
+export const sidebarItems: any[] = [
   {
     label: "Dashboard",
     key: "/admin/events/[eventId]",
     icon: <DashboardOutlined />,
+    keys: ["/admin/events/[eventId]"],
   },
   {
     label: "Event details",
     key: "/admin/events/[eventId]/details",
     icon: <DatabaseOutlined />,
+    keys: ["/admin/events/[eventId]/details"],
   },
   {
     label: "Orders",
     key: "/admin/events/[eventId]/orders",
     icon: <FileDoneOutlined />,
+    keys: [
+      "/admin/events/[eventId]/orders",
+      "/admin/events/[eventId]/orders/create",
+    ],
   },
   {
     label: "Order options",
     key: "/admin/events/[eventId]/order-options",
     icon: <DiffOutlined />,
+    keys: ["/admin/events/[eventId]/tickets"],
     children: [
       {
         label: "Event registration form",

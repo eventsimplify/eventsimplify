@@ -79,7 +79,10 @@ export const list = async (req, res) => {
 
 export const detail = async (req, res) => {
   try {
-    const event = req.event;
+    const event = await Event.findOne({
+      where: { id: req.event.id },
+      relations: ["tickets"],
+    });
 
     return sendSuccess({
       res,

@@ -1,16 +1,20 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 import { QuestionOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, MenuProps } from "antd";
 
 import { useAppContext } from "@/contexts/AppProvider";
+import { AuthService } from "@/services";
 
 const UserMenu = () => {
+  const router = useRouter();
   const { user } = useAppContext();
 
-  const onClick: MenuProps["onClick"] = (e) => {
+  const onClick: MenuProps["onClick"] = async (e) => {
     if (e.key === "logout") {
-      // logout();
+      await AuthService.logout();
+      router.push("/auth/login");
     }
   };
 
@@ -45,7 +49,9 @@ const UserMenu = () => {
       style={{
         height: "60px",
         lineHeight: "60px",
-        minWidth: "200px",
+        width: "100%",
+        display: "flex",
+        justifyContent: "flex-end",
       }}
     />
   );

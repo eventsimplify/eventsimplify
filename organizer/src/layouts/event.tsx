@@ -5,33 +5,13 @@ import { Layout } from "antd";
 
 import styles from "./dashboard.module.css";
 import Appbar from "@/components/Layout/Appbar";
-import { useEventContext } from "@/contexts/EventProvider";
-import { EventService } from "@/services";
-import { useRouter } from "next/router";
+import EventProvider, { useEventContext } from "@/contexts/EventProvider";
 import Loader from "@/components/Loader";
 
 const { Content } = Layout;
 
 const EventLayout = ({ children }: { children: React.ReactNode }) => {
-  const { event, setEvent, loading, setLoading } = useEventContext();
-  const router = useRouter();
-
-  const getEvent = async () => {
-    setLoading("get");
-
-    const data = await EventService.detail(router.query.eventId as string);
-
-    console.log(data);
-
-    setEvent(data);
-    setLoading("");
-  };
-
-  useEffect(() => {
-    if (!event && router.query.eventId) {
-      getEvent();
-    }
-  }, [event, router.query]);
+  const { event, loading } = useEventContext();
 
   if (loading !== "" || !event) {
     return <Loader />;
@@ -50,4 +30,16 @@ const EventLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default EventLayout;
+const EventLayoutWithContext = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  return (
+    <EventProvider>
+      <EventLayout>{children}</EventLayout>
+    </EventProvider>
+  );
+};
+
+export default EventLayoutWithContext;

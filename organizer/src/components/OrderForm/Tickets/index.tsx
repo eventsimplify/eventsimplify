@@ -1,39 +1,13 @@
 import React, { useState } from "react";
-import { Col, Divider, Row, Space } from "antd";
+import { Col, Row } from "antd";
 
 import Ticket from "./Ticket";
 import Field from "@/form-controls/Field";
 import { ITicket } from "@/interfaces";
 import { useEventContext } from "@/contexts/EventProvider";
 
-const tickets = [
-  {
-    id: "1",
-    name: "General Admission",
-    price: 100,
-    quantity: 10,
-    maxPerOrder: 5,
-  },
-  {
-    id: "2",
-    name: "VIP",
-    price: 200,
-    quantity: 10,
-    maxPerOrder: 5,
-  },
-  {
-    id: "3",
-    name: "Early Bird",
-    price: 50,
-    quantity: 10,
-    maxPerOrder: 5,
-  },
-];
-
 const Tickets = () => {
   const { event } = useEventContext();
-
-  console.log(event);
 
   const [selectedTickets, setSelectedTickets] = useState<ITicket[]>([]);
 
@@ -49,12 +23,9 @@ const Tickets = () => {
         />
       </Col>
 
-      {tickets.map((ticket) => (
-        <Col span={6}>
-          <Ticket
-            selectedTickets={selectedTickets}
-            setSelectedTickets={setSelectedTickets}
-          />
+      {event?.tickets?.map((ticket: ITicket) => (
+        <Col span={6} key={ticket.id}>
+          <Ticket ticket={ticket} />
         </Col>
       ))}
       <Col

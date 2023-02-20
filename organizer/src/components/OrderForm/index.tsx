@@ -3,7 +3,6 @@ import { Row, Col, Card, Button, Space, Divider } from "antd";
 
 import AttendeeInfo from "./AttendeeInfo";
 import Tickets from "./Tickets";
-import AdditionalInfo from "./AdditionalInfo";
 
 const OrderForm = ({ loading }: { loading: string }) => {
   return (
@@ -28,8 +27,8 @@ const OrderForm = ({ loading }: { loading: string }) => {
             Tickets information
           </Divider>
           <Tickets />
-          <Divider />
-          <AdditionalInfo />
+          {/* <Divider />
+          <AdditionalInfo /> */}
         </Card>
       </Col>
     </Row>

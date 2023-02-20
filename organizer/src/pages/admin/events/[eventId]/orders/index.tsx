@@ -9,6 +9,7 @@ import { TicketService } from "@/services";
 import EventFilters from "@/components/Filters/EventFilters";
 import { ITicket } from "@/interfaces";
 import Actions from "@/components/Table/Actions";
+import { useEventContext } from "@/contexts/EventProvider";
 
 const columns: ColumnsType<ITicket> = [
   {
@@ -34,8 +35,10 @@ const columns: ColumnsType<ITicket> = [
 ];
 
 const Orders: React.FC = () => {
+  const { event } = useEventContext();
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [loading, setLoading] = useState("");
+
   const router = useRouter();
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
@@ -44,23 +47,24 @@ const Orders: React.FC = () => {
 
   const getTickets = async () => {
     setLoading("get");
+    if (!event) return null;
     const data = await TicketService.list({
-      eventId: router.query.eventId as string,
+      eventId: String(event.id),
     });
     setTickets(data || []);
     setLoading("");
   };
 
   useEffect(() => {
-    if (router.query.eventId) {
+    if (event) {
       getTickets();
     }
-  }, [router.query.eventId]);
+  }, [event]);
 
   const createOrder = async () => {
     router.push({
       pathname: "/admin/events/[eventId]/orders/create",
-      query: { eventId: router.query.eventId },
+      query: { eventId: event?.id },
     });
   };
 

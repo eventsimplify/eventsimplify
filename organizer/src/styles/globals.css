@@ -68,25 +68,6 @@ body {
   margin-top: 1rem;
 }
 
-.ant-upload-list-item-container {
-  width: 100% !important;
-  height: auto !important;
-  aspect-ratio: 3/2 !important;
-  padding: none !important;
-}
-
-.ant-upload-list-item-container img {
-  object-fit: cover !important;
-}
-
-.ant-upload {
-  width: 100% !important;
-  height: auto !important;
-  border: none !important;
-  background: none !important;
-  justify-content: flex-start !important;
-}
-
 .ql-editor {
   min-height: 300px;
   border-color: #e2e8f0;

@@ -18,7 +18,6 @@ const Login = () => {
       password: values.password,
     });
 
-    // await getUser();
     setLoading("");
   };
 
