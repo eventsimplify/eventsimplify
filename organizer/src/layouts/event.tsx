@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import Sidebar from "@/components/Layout/Sidebar";
 import { Layout } from "antd";
 
-import styles from "./dashboard.module.css";
+import styles from "./layouts.module.css";
 import Appbar from "@/components/Layout/Appbar";
 import EventProvider, { useEventContext } from "@/contexts/EventProvider";
 import Loader from "@/components/Loader";

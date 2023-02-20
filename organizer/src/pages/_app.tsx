@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 import Router from "next/router";
 import type { AppProps } from "next/app";
 import NProgress from "nprogress";
@@ -11,8 +11,18 @@ import "nprogress/nprogress.css";
 import { App as AntDesignApp, ConfigProvider, theme } from "antd";
 
 import AppProvider from "@/contexts/AppProvider";
+import { NextPage } from "next";
 
-export default function App({ Component, pageProps }: AppProps) {
+// types for next layout
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     const handleRouteStart = () => NProgress.start();
     const handleRouteDone = () => NProgress.done();
@@ -29,6 +39,8 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, []);
 
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
     <ConfigProvider
       theme={{
@@ -36,9 +48,7 @@ export default function App({ Component, pageProps }: AppProps) {
       }}
     >
       <AntDesignApp>
-        <AppProvider>
-          <Component {...pageProps} />
-        </AppProvider>
+        <AppProvider>{getLayout(<Component {...pageProps} />)}</AppProvider>
       </AntDesignApp>
     </ConfigProvider>
   );

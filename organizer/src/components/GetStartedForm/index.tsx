@@ -4,13 +4,7 @@ import { Row, Col } from "antd";
 import CompanyInformation from "./CompanyInformation";
 import Guidelines from "./Guidelines";
 
-const GetStartedForm = ({
-  loading,
-  current,
-}: {
-  loading: string;
-  current: number;
-}) => {
+const GetStartedForm = ({ current }: { current: number }) => {
   const renderContent = () => {
     switch (current) {
       case 0:

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Button, Divider, Space, Table, Tag } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
@@ -63,7 +63,7 @@ const columns: ColumnsType<IEvent> = [
   },
 ];
 
-const Events: React.FC = () => {
+const Events = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
   const [loading, setLoading] = useState("");
   const router = useRouter();
@@ -88,32 +88,34 @@ const Events: React.FC = () => {
   }, []);
 
   return (
-    <DashboardLayout>
-      <div className="table-card">
-        <div className="table-header">
-          <EventFilters />
-          <Button type="primary" onClick={onCreateEventClick}>
-            Create Event
-          </Button>
-        </div>
-        <Divider />
-        <Table
-          rowKey={(record) => record.id.toString()}
-          columns={columns}
-          dataSource={events}
-          loading={loading === "events"}
-          bordered
-          //@ts-ignore
-          onChange={handleTableChange}
-          pagination={{
-            showSizeChanger: true,
-            showTotal: (total) => `Total ${total} items`,
-            pageSizeOptions: ["10", "20", "50", "100"],
-          }}
-        />
+    <div className="table-card">
+      <div className="table-header">
+        <EventFilters />
+        <Button type="primary" onClick={onCreateEventClick}>
+          Create Event
+        </Button>
       </div>
-    </DashboardLayout>
+      <Divider />
+      <Table
+        rowKey={(record) => record.id.toString()}
+        columns={columns}
+        dataSource={events}
+        loading={loading === "events"}
+        bordered
+        //@ts-ignore
+        onChange={handleTableChange}
+        pagination={{
+          showSizeChanger: true,
+          showTotal: (total) => `Total ${total} items`,
+          pageSizeOptions: ["10", "20", "50", "100"],
+        }}
+      />
+    </div>
   );
+};
+
+Events.getLayout = function getLayout(page: ReactElement) {
+  return <DashboardLayout>{page}</DashboardLayout>;
 };
 
 export default Events;

@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { Button, Form, Input } from "antd";
+import React, { ReactElement, useState } from "react";
+import { Button, Form } from "antd";
 import Link from "next/link";
-
-import styles from "./Login.module.css";
 
 import { AuthService } from "@/services";
 import AuthPageLayout from "@/layouts/auth-page";
+import Field from "@/form-controls/Field";
 
-const Login = () => {
+import { NextPageWithLayout } from "../_app";
+
+const Login: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState("");
 
@@ -22,64 +23,48 @@ const Login = () => {
   };
 
   return (
-    <AuthPageLayout>
-      <div className={styles.login}>
-        <div className={styles.loginCard}>
-          <Form
-            form={form}
-            name="loginForm"
-            onFinish={onFinish}
-            layout="vertical"
-            size="large"
-            validateTrigger="onBlur"
-          >
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your email!",
-                },
-                {
-                  type: "email",
-                  message: "Please input a valid email!",
-                },
-              ]}
-            >
-              <Input placeholder="Email" />
-            </Form.Item>
+    <Form
+      form={form}
+      name="loginForm"
+      onFinish={onFinish}
+      layout="vertical"
+      size="large"
+      validateTrigger="onBlur"
+    >
+      <Field
+        name="email"
+        label="Email"
+        required
+        type="email"
+        placeholder="Enter your email"
+      />
 
-            <Form.Item
-              label="Password"
-              name="password"
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
-            >
-              <Input.Password placeholder="Password" />
-            </Form.Item>
+      <Field
+        name="password"
+        label="Password"
+        required
+        type="password"
+        placeholder="Enter your password"
+      />
 
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{
-                  width: "100%",
-                }}
-                loading={loading === "login"}
-              >
-                Login
-              </Button>
-            </Form.Item>
-            <Link href="/auth/register">
-              Don't have an account? Register here
-            </Link>
-          </Form>
-        </div>
-      </div>
-    </AuthPageLayout>
+      <Button
+        type="primary"
+        htmlType="submit"
+        style={{
+          width: "100%",
+          marginBottom: "2rem",
+        }}
+        loading={loading === "login"}
+      >
+        Login
+      </Button>
+      <Link href="/auth/register">Don't have an account? Register here</Link>
+    </Form>
   );
+};
+
+Login.getLayout = function getLayout(page: ReactElement) {
+  return <AuthPageLayout>{page}</AuthPageLayout>;
 };
 
 export default Login;

@@ -8,7 +8,8 @@ export default interface IField {
     | "dropdown"
     | "date"
     | "email"
-    | "rich-text";
+    | "rich-text"
+    | "password";
   label: string;
   placeholder?: string;
   options?: any[];

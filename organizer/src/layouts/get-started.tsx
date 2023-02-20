@@ -1,28 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout } from "antd";
 
-import styles from "./dashboard.module.css";
+import styles from "./layouts.module.css";
 import GetStartedHeader from "@/components/Layout/GetstartedHeader";
-// import useAuth from "@/hooks/useAuth";
-// import Loader from "@/components/Loader";
-// import Redirect from "@/components/Redirect";
+import Loader from "@/components/Loader";
+import Redirect from "@/components/Redirect";
+import { useAppContext } from "@/contexts/AppProvider";
 
 const { Content } = Layout;
 
 const GetStartedLayout = ({ children }: { children: React.ReactNode }) => {
-  // const { user, loading } = useAuth();
+  const { user, loading, getUser, organization } = useAppContext();
 
-  // if (loading === "loading") {
-  //   return <Loader />;
-  // }
+  useEffect(() => {
+    getUser();
+  }, []);
 
-  // if (!user) {
-  //   return <Redirect to="/auth/login" redirect="/get-started" />;
-  // }
+  if (loading) {
+    return <Loader />;
+  }
 
-  // if (user.organization) {
-  //   return <Redirect to="/admin/dashboard" />;
-  // }
+  if (!user) {
+    return <Redirect to="/auth/login" />;
+  }
+
+  if (organization) {
+    return <Redirect to="/admin/dashboard" />;
+  }
 
   return (
     <div className={styles.dashboard}>

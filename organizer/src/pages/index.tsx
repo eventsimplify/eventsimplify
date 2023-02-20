@@ -1,13 +1,13 @@
 import React from "react";
-import { Button, Space } from "antd";
+import { Button } from "antd";
 
 import { useRouter } from "next/router";
 
 const index = () => {
   const router = useRouter();
 
-  const goToLoginPage = () => {
-    router.push("/auth/login");
+  const goToDashboard = () => {
+    router.push("/admin/dashboard");
   };
 
   return (
@@ -21,10 +21,7 @@ const index = () => {
         gap: "20px",
       }}
     >
-      <Button onClick={goToLoginPage} type="primary">
-        Go to login page
-      </Button>
-      <Button onClick={goToLoginPage} type="primary">
+      <Button onClick={goToDashboard} type="primary">
         Go to admin dashboard
       </Button>
     </div>

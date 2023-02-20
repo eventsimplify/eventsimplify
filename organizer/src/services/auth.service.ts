@@ -10,8 +10,8 @@ const login = async (formData: Partial<IUser>) => {
   try {
     const { data } = await axios.post(`${API_URL}/login`, formData);
 
-    if (data) {
-      Router.push("/admin/events");
+    if (data && data.status === "ok") {
+      Router.push("/admin/dashboard");
     }
 
     return handleSuccess(data?.message);

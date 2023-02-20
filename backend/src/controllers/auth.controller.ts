@@ -111,9 +111,11 @@ export const register = async (req, res) => {
       password: hashedPassword,
     });
 
-    user.save();
+    await user.save();
 
     const token = generateToken(user.id);
+
+    await setCookie(res, token);
 
     return sendSuccess({
       res,
@@ -134,7 +136,7 @@ export const me = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { id: req.user.id },
-      relations: ["organization"],
+      relations: ["organization", "organization.organization"],
     });
 
     if (!user) {
@@ -153,7 +155,7 @@ export const me = async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
-        organization: user.organization.organizationId,
+        organization: user.organization ? user.organization.organization : null,
       },
     });
   } catch (err) {

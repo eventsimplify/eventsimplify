@@ -11,7 +11,7 @@ export const protect = async (req, res, next) => {
       res,
       status: 401,
       data: null,
-      message: "Login required!",
+      message: "Login is required to access this!",
     });
   }
 
@@ -27,7 +27,7 @@ export const protect = async (req, res, next) => {
       res,
       status: 401,
       data: null,
-      message: "Login required!",
+      message: "Login is required to access this!",
     });
   }
 

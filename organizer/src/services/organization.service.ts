@@ -18,7 +18,7 @@ const getStarted = async () => {
   try {
     const { data } = await axios.get(`${API_URL}/get-started`);
 
-    return data?.data?.startups;
+    return handleSuccess(data?.message);
   } catch (err: any) {
     handleAxiosError(err);
   }

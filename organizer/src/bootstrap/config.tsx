@@ -121,6 +121,11 @@ export const sidebarItems: any[] = [
 
 export const appBarItems: MenuProps["items"] = [
   {
+    label: "Dashboard",
+    key: "/admin/dashboard",
+    icon: <DashboardOutlined />,
+  },
+  {
     label: "Events",
     key: "/admin/events",
     icon: <CalendarOutlined />,

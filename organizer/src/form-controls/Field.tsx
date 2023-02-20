@@ -9,6 +9,7 @@ import {
   Textarea,
   RichText,
 } from "./index";
+import PasswordInput from "./Password";
 
 const Field = ({ ...field }: IField) => {
   const {
@@ -77,6 +78,10 @@ const Field = ({ ...field }: IField) => {
 
     case "rich-text": {
       return <RichText key={name} {...props} />;
+    }
+
+    case "password": {
+      return <PasswordInput key={name} {...props} />;
     }
 
     default:

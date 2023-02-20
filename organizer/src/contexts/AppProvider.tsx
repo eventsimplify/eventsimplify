@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 
-import { IAppContext, IUser } from "@/interfaces";
+import { IAppContext, IOrganization, IUser } from "@/interfaces";
 import { AuthService } from "@/services";
 
 export const AppContext = createContext({} as IAppContext);
@@ -15,6 +15,7 @@ export const useAppContext = () => {
 
 const AppProvider = (props: any) => {
   const [user, setUser] = useState<IUser | null>(null);
+  const [organization, setOrganization] = useState<IOrganization | null>(null);
   const [loading, setLoading] = useState(true);
 
   const getUser = async () => {
@@ -22,6 +23,7 @@ const AppProvider = (props: any) => {
     const response = await AuthService.getUser();
 
     setUser(response);
+    setOrganization(response?.organization || null);
     setLoading(false);
   };
 
@@ -32,8 +34,9 @@ const AppProvider = (props: any) => {
       loading,
       setLoading,
       getUser,
+      organization,
     }),
-    [user, loading]
+    [user, loading, organization]
   );
 
   return (

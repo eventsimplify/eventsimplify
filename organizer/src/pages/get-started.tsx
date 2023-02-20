@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, Divider, Form, Space, message } from "antd";
-// import { BookOutlined, AuditOutlined } from "@ant-design/icons";
+import { Button, Card, Form } from "antd";
 
 import GetStartedForm from "@/components/GetStartedForm";
 import GetStartedLayout from "@/layouts/get-started";
@@ -43,7 +42,7 @@ const GetStarted = () => {
             </Button>
           }
         >
-          <GetStartedForm loading="" current={0} />
+          <GetStartedForm current={0} />
         </Card>
       </Form>
     </GetStartedLayout>
