@@ -9,10 +9,10 @@ import {
   DeleteDateColumn,
 } from "typeorm";
 
-import { Event } from "./index";
+import { Event, OrganizationUser, User } from "./index";
 
 @Entity({ name: "organizations" })
-export class Organization extends BaseEntity {
+export default class Organization extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -27,6 +27,12 @@ export class Organization extends BaseEntity {
 
   @OneToMany(() => Event, (event) => event.organization)
   events: Event[];
+
+  @OneToMany(
+    () => OrganizationUser,
+    (organizationUser) => organizationUser.user
+  )
+  users: User[];
 
   // default columns
   @CreateDateColumn()

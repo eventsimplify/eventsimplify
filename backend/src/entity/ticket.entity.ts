@@ -10,10 +10,10 @@ import {
   DeleteDateColumn,
 } from "typeorm";
 
-import { Event } from "./event.entity";
+import { Event } from "./index";
 
 @Entity({ name: "tickets" })
-export class Ticket extends BaseEntity {
+export default class Ticket extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

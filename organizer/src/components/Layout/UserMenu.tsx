@@ -1,11 +1,14 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-import { QuestionOutlined, UserOutlined } from "@ant-design/icons";
-import { Menu, MenuProps } from "antd";
+import { Avatar, Dropdown, Typography, MenuProps, Space } from "antd";
 
 import { useAppContext } from "@/contexts/AppProvider";
 import { AuthService } from "@/services";
+
+import styles from "./layout.module.css";
+
+const { Text, Paragraph } = Typography;
 
 const UserMenu = () => {
   const router = useRouter();
@@ -18,42 +21,24 @@ const UserMenu = () => {
     }
   };
 
-  const userMenuItems = [
+  const userMenuItems: MenuProps["items"] = [
     {
-      label: "Help & Support",
-      key: "help-and-support",
-      icon: <QuestionOutlined />,
+      label: "Profile",
+      key: "profile",
     },
     {
-      label: user?.name,
-      key: "user",
-      icon: <UserOutlined />,
-      children: [
-        {
-          label: "Profile",
-          key: "profile",
-        },
-        {
-          label: "Logout",
-          key: "logout",
-        },
-      ],
+      label: "Logout",
+      key: "logout",
     },
   ];
 
   return (
-    <Menu
-      onClick={onClick}
-      mode="horizontal"
-      items={userMenuItems}
-      style={{
-        height: "60px",
-        lineHeight: "60px",
-        width: "100%",
-        display: "flex",
-        justifyContent: "flex-end",
-      }}
-    />
+    <Dropdown menu={{ items: userMenuItems }} trigger={["click"]}>
+      <div className={styles.userMenu}>
+        <Avatar style={{ backgroundColor: "#1677FF" }}>BP</Avatar>
+        <Text strong>{user?.name}</Text>
+      </div>
+    </Dropdown>
   );
 };
 

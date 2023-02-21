@@ -12,6 +12,8 @@ import { App as AntDesignApp, ConfigProvider, theme } from "antd";
 
 import AppProvider from "@/contexts/AppProvider";
 import { NextPage } from "next";
+import HelpButton from "@/components/Help";
+import AntDMessage from "@/components/AntDMessage";
 
 // types for next layout
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -48,7 +50,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       }}
     >
       <AntDesignApp>
-        <AppProvider>{getLayout(<Component {...pageProps} />)}</AppProvider>
+        <AppProvider>
+          <AntDMessage />
+          {getLayout(<Component {...pageProps} />)}
+          <HelpButton />
+        </AppProvider>
       </AntDesignApp>
     </ConfigProvider>
   );

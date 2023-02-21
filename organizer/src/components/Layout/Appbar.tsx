@@ -13,6 +13,12 @@ const Appbar = () => {
   const router = useRouter();
   const [current, setCurrent] = useState(
     useMemo(() => {
+      const item = appBarItems?.find(
+        (item) => item?.key && router.pathname.includes(item?.key as string)
+      );
+
+      if (item) return item?.key as string;
+
       const path = router.asPath;
       return path;
     }, [router])

@@ -19,7 +19,7 @@ export const protect = async (req, res, next) => {
 
   let user = await User.findOne({
     where: { id: decoded.id },
-    relations: ["organization", "organization.organization"],
+    relations: ["organizations", "organizations.organization"],
   });
 
   if (!user) {
@@ -40,7 +40,7 @@ export const protectWithOrganization = async (req, res, next) => {
   protect(req, res, async () => {
     const { user } = req;
 
-    if (!user.organization) {
+    if (!user.organizations[0]) {
       return sendError({
         res,
         status: 401,
@@ -49,7 +49,7 @@ export const protectWithOrganization = async (req, res, next) => {
       });
     }
 
-    req.organization = user.organization.organization;
+    req.organization = user.organizations[0].organization;
 
     next();
   });

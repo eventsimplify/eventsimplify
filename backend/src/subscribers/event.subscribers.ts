@@ -1,9 +1,11 @@
 import { EntitySubscriberInterface, EventSubscriber } from "typeorm";
 
-import { Event, Ticket } from "./index";
+import { Event, Ticket } from "../entity/index";
 
 @EventSubscriber()
-export class EventEventSubscriber implements EntitySubscriberInterface<Event> {
+export default class EventEntitySubscriber
+  implements EntitySubscriberInterface<Event>
+{
   listenTo() {
     return Event;
   }

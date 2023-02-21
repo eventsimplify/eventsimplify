@@ -7,11 +7,12 @@ import {
   UpdateDateColumn,
   OneToOne,
   DeleteDateColumn,
+  OneToMany,
 } from "typeorm";
-import { OrganizationUser } from "./organization-user.entity";
+import { OrganizationUser } from "./index";
 
 @Entity({ name: "users" })
-export class User extends BaseEntity {
+export default class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,8 +25,11 @@ export class User extends BaseEntity {
   @Column("text", { nullable: false })
   password: string;
 
-  @OneToOne(() => OrganizationUser, (organizationUser) => organizationUser.user)
-  organization: OrganizationUser;
+  @OneToMany(
+    () => OrganizationUser,
+    (organizationUser) => organizationUser.user
+  )
+  organizations: OrganizationUser;
 
   // default columns
   @CreateDateColumn()

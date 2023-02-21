@@ -10,7 +10,7 @@ import {
 import { Organization, User } from "./index";
 
 @Entity({ name: "organization_users" })
-export class OrganizationUser extends BaseEntity {
+export default class OrganizationUser extends BaseEntity {
   @PrimaryColumn()
   organizationId: number;
 
@@ -21,7 +21,7 @@ export class OrganizationUser extends BaseEntity {
   @PrimaryColumn()
   userId: number;
 
-  @OneToOne(() => User, (user) => user.organization)
+  @OneToOne(() => User, (user) => user.id)
   @JoinColumn({ name: "userId" })
   user: User;
 

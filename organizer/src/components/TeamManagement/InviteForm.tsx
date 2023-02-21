@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Button, Form, message, Modal } from "antd";
 
 import Field from "@/form-controls/Field";
+import { OrganizationService } from "@/services";
 
-const StaffForm = () => {
+const StaffForm = ({ getStaffs }: { getStaffs: () => void }) => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
+  const [loading, setLoading] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,11 +17,21 @@ const StaffForm = () => {
 
   const handleOk = async () => {
     try {
+      setLoading(true);
       const values = await form.validateFields();
-      console.log("values", values);
+
+      await OrganizationService.inviteStaff(values);
+
+      setLoading(false);
+
       setIsOpen(false);
+
+      getStaffs();
     } catch (errorInfo) {
       messageApi.error("Please fill in all required fields");
+    } finally {
+      setLoading(false);
+      form.resetFields();
     }
   };
 
@@ -41,8 +53,16 @@ const StaffForm = () => {
         destroyOnClose
         maskClosable={false}
         centered
+        confirmLoading={loading}
+        okText="Invite"
       >
-        <Form form={form} name="basic" layout="vertical" autoComplete="off">
+        <Form
+          form={form}
+          name="basic"
+          layout="vertical"
+          autoComplete="off"
+          validateTrigger="onSubmit"
+        >
           <Field
             name="email"
             label="Email"

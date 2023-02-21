@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Card, Tabs } from "antd";
 import type { TabsProps } from "antd";
 
@@ -27,7 +27,6 @@ const TeamManagement = () => {
   const [activeKey, setActiveKey] = useState("staffs");
 
   useEffect(() => {
-    console.log("router.query.tab", router.query.tab);
     if (router.query.tab) {
       setActiveKey(router.query.tab.toString());
     }
@@ -46,12 +45,14 @@ const TeamManagement = () => {
   }
 
   return (
-    <DashboardLayout>
-      <Card>
-        <Tabs activeKey={activeKey} items={items} onChange={onChange} />
-      </Card>
-    </DashboardLayout>
+    <Card>
+      <Tabs activeKey={activeKey} items={items} onChange={onChange} />
+    </Card>
   );
+};
+
+TeamManagement.getLayout = function getLayout(page: ReactElement) {
+  return <DashboardLayout>{page}</DashboardLayout>;
 };
 
 export default TeamManagement;

@@ -35,3 +35,16 @@
 .menu {
   padding: 1rem 0px;
 }
+
+.userMenu {
+  display: flex;
+  cursor: pointer;
+  width: 180px;
+  border-color: 1px solid #f0f0f0;
+  border-width: 1px;
+  border-style: solid;
+  padding: 5px;
+  border-radius: 180px;
+  gap: 0.5rem;
+  max-width: 180px;
+}

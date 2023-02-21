@@ -136,7 +136,7 @@ export const me = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { id: req.user.id },
-      relations: ["organization", "organization.organization"],
+      relations: ["organizations", "organizations.organization"],
     });
 
     if (!user) {
@@ -155,7 +155,9 @@ export const me = async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
-        organization: user.organization ? user.organization.organization : null,
+        organization: user.organizations[0]
+          ? user.organizations[0].organization
+          : null,
       },
     });
   } catch (err) {

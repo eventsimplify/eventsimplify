@@ -66,11 +66,11 @@ export const sidebarItems: any[] = [
       },
       {
         label: "Sales",
-        key: "payout-methods",
+        key: "sales",
       },
       {
         label: "Feedback and reviews",
-        key: "refund-settings",
+        key: "feedback-and-reviews",
       },
     ],
   },

@@ -16,7 +16,7 @@ import {
 import { Ticket, Organization } from "./index";
 
 @Entity({ name: "events" })
-export class Event extends BaseEntity {
+export default class Event extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
