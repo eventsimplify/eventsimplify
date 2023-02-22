@@ -9,6 +9,7 @@ import {
   Organization,
   Ticket,
   Invitations,
+  Role,
 } from "../entity";
 //subscribers imports
 import { EventEntitySubscriber } from "../subscribers";
@@ -22,7 +23,15 @@ export const AppDataSource = new DataSource({
   database: "eventsimplify",
   synchronize: true,
   logging: true,
-  entities: [User, Event, Organization, OrganizationUser, Ticket, Invitations],
+  entities: [
+    User,
+    Event,
+    Organization,
+    OrganizationUser,
+    Ticket,
+    Invitations,
+    Role,
+  ],
   migrations: [],
   subscribers: [EventEntitySubscriber],
 });

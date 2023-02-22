@@ -2,6 +2,7 @@ import React, { createContext, useContext, useMemo, useState } from "react";
 
 import { IAppContext, IOrganization, IUser } from "@/interfaces";
 import { AuthService } from "@/services";
+import IInvitation from "@/interfaces/IInvitation";
 
 export const AppContext = createContext({} as IAppContext);
 
@@ -16,6 +17,8 @@ export const useAppContext = () => {
 const AppProvider = (props: any) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [organization, setOrganization] = useState<IOrganization | null>(null);
+  const [invitation, setInvitation] = useState<IInvitation | null>(null);
+
   const [loading, setLoading] = useState(true);
 
   const getUser = async () => {
@@ -35,8 +38,10 @@ const AppProvider = (props: any) => {
       setLoading,
       getUser,
       organization,
+      invitation,
+      setInvitation,
     }),
-    [user, loading, organization]
+    [user, loading, organization, invitation]
   );
 
   return (

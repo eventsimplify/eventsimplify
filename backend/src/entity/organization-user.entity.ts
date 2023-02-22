@@ -2,29 +2,37 @@ import {
   Entity,
   Column,
   BaseEntity,
-  PrimaryColumn,
-  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
   OneToOne,
+  JoinColumn,
 } from "typeorm";
 
-import { Organization, User } from "./index";
+import { Organization, User, Role } from "./index";
 
 @Entity({ name: "organization_users" })
 export default class OrganizationUser extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
+  public id: number;
+
+  @Column()
   organizationId: number;
 
-  @OneToOne(() => Organization, (organization) => organization.id)
-  @JoinColumn({ name: "organizationId" })
+  @ManyToOne(() => Organization, (organization) => organization.users)
   organization: Organization;
 
-  @PrimaryColumn()
+  @Column()
   userId: number;
 
-  @OneToOne(() => User, (user) => user.id)
-  @JoinColumn({ name: "userId" })
+  @ManyToOne(() => User, (user) => user.organizations)
   user: User;
 
-  @Column("text", { nullable: false })
-  role: string;
+  @Column()
+  roleId: number;
+
+  @ManyToOne(() => Role, (role) => role.users)
+  @JoinColumn({
+    name: "roleId",
+  })
+  role: Role;
 }

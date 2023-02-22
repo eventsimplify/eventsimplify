@@ -78,46 +78,4 @@ export default class Event extends BaseEntity {
 
     this.slug = slug + "-" + new Date().getTime();
   }
-
-  // @AfterInsert()
-  // private async createTicket() {
-  //   //create general admission ticket
-
-  //   console.log("this is the event", this);
-
-  //   const event = await Event.findOne({
-  //     where: {
-  //       id: this.id,
-  //     },
-  //   });
-
-  //   console.log("this is the event", event);
-
-  //   // await Ticket.create({
-  //   //   name: "General Admission",
-  //   //   type: "free",
-  //   //   startDate: this.startDate,
-  //   //   endDate: this.endDate,
-  //   //   quantity: 100,
-  //   //   visibility: "public",
-  //   //   minPerOrder: 1,
-  //   //   maxPerOrder: 10,
-  //   //   eventId: this.id,
-  //   // }).save();
-
-  //   // // update the tickets back to the event
-  //   // const tickets = await Ticket.find({
-  //   //   where: {
-  //   //     eventId: this.id,
-  //   //   },
-  //   // });
-
-  //   // this.tickets = tickets;
-
-  //   // return this;
-  // }
-
-  // link subscribers
-
-  // link controllers
 }

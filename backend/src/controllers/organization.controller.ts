@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { Invitations, OrganizationUser, Organization } from "../entity";
+import { Invitations, OrganizationUser, Organization, Role } from "../entity";
 import { errorHandler, sendError, sendSuccess } from "../utils";
 
 // @desc    Organization create
@@ -25,7 +25,7 @@ export const create = async (req, res) => {
     const organizationExists = await OrganizationUser.findOne({
       where: {
         userId: req.user.id,
-        role: "owner",
+        roleId: 1,
       },
     });
 
@@ -46,71 +46,25 @@ export const create = async (req, res) => {
 
     await organization.save();
 
+    // get owner role
+    const ownerRole = await Role.findOne({
+      where: {
+        name: "Owner",
+        type: "default",
+      },
+    });
+
     // create organization user role
     await OrganizationUser.create({
       organizationId: organization.id,
       userId: req.user.id,
-      role: "owner",
+      roleId: ownerRole.id,
     }).save();
 
     return sendSuccess({
       res,
       data: organization,
       message: "Organization created successfully!",
-    });
-  } catch (err) {
-    errorHandler(res, err);
-  }
-};
-
-// @desc    Invite staff
-// @route   POST /organizations/invite-staff
-// @access  Private
-export const inviteStaff = async (req, res) => {
-  const { email, role } = req.body;
-
-  const schema = Yup.object().shape({
-    email: Yup.string()
-      .email("Enter a valid email address")
-      .required("Email is a required field"),
-    role: Yup.string().required("Role is a required field"),
-  });
-
-  try {
-    await schema.validate({
-      email,
-      role,
-    });
-
-    const invitationExists = await Invitations.findOne({
-      where: {
-        email: email,
-        organizationId: req.organization.id,
-      },
-    });
-
-    if (invitationExists) {
-      return sendError({
-        res,
-        status: 400,
-        data: null,
-        message: "Invitations already exists for this staff!",
-      });
-    }
-
-    const invitation = await Invitations.create({
-      email,
-      organizationId: req.organization.id,
-      expiresAt: new Date(new Date().setDate(new Date().getDate() + 7)),
-      role,
-    });
-
-    await invitation.save();
-
-    return sendSuccess({
-      res,
-      data: null,
-      message: "Invitation sent succesfully!",
     });
   } catch (err) {
     errorHandler(res, err);
@@ -126,8 +80,7 @@ export const getStaff = async (req, res) => {
       where: {
         id: req.organization.id,
       },
-      select: ["users"],
-      relations: ["users", "users.user"],
+      relations: ["users", "users.user", "users.role"],
     });
 
     const invitations = await Invitations.find({

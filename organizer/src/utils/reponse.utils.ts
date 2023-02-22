@@ -43,13 +43,7 @@ export const handleError = (message: string) => {
 };
 
 export const handleSuccess = (message: string) => {
-  console.log("messageApi", messageApi);
-
   messageApi.success(message);
 
-  // notification.open({
-  //   message: "Success",
-  //   description: message,
-  //   type: "success",
-  // });
+  return true;
 };

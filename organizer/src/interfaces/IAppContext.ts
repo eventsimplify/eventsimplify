@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
+import IInvitation from "./IInvitation";
 import IOrganization from "./IOrganization";
 import IUser from "./IUser";
 
@@ -9,4 +10,6 @@ export default interface IAppContext {
   setLoading: Dispatch<SetStateAction<boolean>>;
   getUser: () => void;
   organization: IOrganization | null;
+  invitation: IInvitation | null;
+  setInvitation: Dispatch<SetStateAction<IInvitation | null>>;
 }

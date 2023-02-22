@@ -14,16 +14,6 @@ const create = async (formData: Partial<IOrganization>) => {
   }
 };
 
-const inviteStaff = async (formData: any) => {
-  try {
-    const { data } = await axios.post(`${API_URL}/invite-staff`, formData);
-
-    return handleSuccess(data?.message);
-  } catch (err: any) {
-    handleAxiosError(err);
-  }
-};
-
 const getStaff = async () => {
   try {
     const { data } = await axios.get(`${API_URL}/get-staff`);
@@ -36,7 +26,6 @@ const getStaff = async () => {
 
 const exportedObject = {
   create,
-  inviteStaff,
   getStaff,
 };
 

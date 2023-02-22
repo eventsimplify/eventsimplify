@@ -13,11 +13,9 @@ function Redirect({
   const router = useRouter();
 
   useEffect(() => {
-    let query = redirect ? { redirect } : {};
-
     router.push({
       pathname: to,
-      query: query,
+      query: redirect ? { redirect } : {},
     });
   }, [to, redirect]);
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Result } from "antd";
 
-const App: React.FC = () => (
+const Page404: React.FC = () => (
   <div
     style={{
       background: "#fff",
@@ -22,4 +22,4 @@ const App: React.FC = () => (
   </div>
 );
 
-export default App;
+export default Page404;

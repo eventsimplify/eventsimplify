@@ -40,7 +40,7 @@
   display: flex;
   cursor: pointer;
   width: 180px;
-  border-color: 1px solid #f0f0f0;
+  border-color: lightgray;
   border-width: 1px;
   border-style: solid;
   padding: 5px;

@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import { Button, Form } from "antd";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { AuthService } from "@/services";
 import { IUser } from "@/interfaces";
@@ -10,17 +10,37 @@ import AuthPageLayout from "@/layouts/auth-page";
 const Register = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState("");
+  const router = useRouter();
 
   const onFinish = async (values: IUser) => {
     setLoading("register");
 
-    await AuthService.register({
+    const response = await AuthService.register({
       email: values.email,
       name: values.name,
       password: values.password,
     });
 
     setLoading("");
+
+    if (response) {
+      if (router.query.redirect) {
+        window.location.href = router.query.redirect as string;
+
+        return;
+      }
+
+      router.push("/admin/dashboard");
+    }
+  };
+
+  const onLogin = () => {
+    router.push({
+      pathname: "/auth/login",
+      query: router.query,
+    });
+
+    return;
   };
 
   return (
@@ -66,7 +86,10 @@ const Register = () => {
       >
         Register
       </Button>
-      <Link href="/auth/login">Already have a account? Login</Link>
+
+      <Button onClick={onLogin} type="link">
+        Already have an account? Login here
+      </Button>
     </Form>
   );
 };

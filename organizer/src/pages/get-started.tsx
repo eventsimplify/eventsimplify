@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Button, Card, Form } from "antd";
 
 import GetStartedForm from "@/components/GetStartedForm";
@@ -21,32 +21,34 @@ const GetStarted = () => {
   };
 
   return (
-    <GetStartedLayout>
-      <Form
-        form={form}
-        name="event-form"
-        onFinish={onFinish}
-        layout="vertical"
-        size="large"
-        validateTrigger="onSubmit"
+    <Form
+      form={form}
+      name="event-form"
+      onFinish={onFinish}
+      layout="vertical"
+      size="large"
+      validateTrigger="onSubmit"
+    >
+      <Card
+        bordered={false}
+        extra={
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading === "create"}
+          >
+            Create an organization
+          </Button>
+        }
       >
-        <Card
-          bordered={false}
-          extra={
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={loading === "create"}
-            >
-              Create an organization
-            </Button>
-          }
-        >
-          <GetStartedForm current={0} />
-        </Card>
-      </Form>
-    </GetStartedLayout>
+        <GetStartedForm current={0} />
+      </Card>
+    </Form>
   );
+};
+
+GetStarted.getLayout = function getLayout(page: ReactElement) {
+  return <GetStartedLayout>{page}</GetStartedLayout>;
 };
 
 export default GetStarted;

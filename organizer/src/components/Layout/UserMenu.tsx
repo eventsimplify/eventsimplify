@@ -1,14 +1,14 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-import { Avatar, Dropdown, Typography, MenuProps, Space } from "antd";
+import { Avatar, Dropdown, Typography, MenuProps } from "antd";
 
 import { useAppContext } from "@/contexts/AppProvider";
 import { AuthService } from "@/services";
 
 import styles from "./layout.module.css";
 
-const { Text, Paragraph } = Typography;
+const { Text } = Typography;
 
 const UserMenu = () => {
   const router = useRouter();
@@ -21,6 +21,11 @@ const UserMenu = () => {
     }
   };
 
+  const logOut = async () => {
+    await AuthService.logout();
+    router.push("/auth/login");
+  };
+
   const userMenuItems: MenuProps["items"] = [
     {
       label: "Profile",
@@ -29,6 +34,7 @@ const UserMenu = () => {
     {
       label: "Logout",
       key: "logout",
+      onClick: logOut,
     },
   ];
 

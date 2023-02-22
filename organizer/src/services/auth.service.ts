@@ -2,17 +2,12 @@ import axios from "axios";
 
 import { handleAxiosError, handleSuccess } from "@/utils";
 import { IUser } from "@/interfaces";
-import Router from "next/router";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL + "/auth";
 
 const login = async (formData: Partial<IUser>) => {
   try {
     const { data } = await axios.post(`${API_URL}/login`, formData);
-
-    if (data && data.status === "ok") {
-      Router.push("/admin/dashboard");
-    }
 
     return handleSuccess(data?.message);
   } catch (err: any) {

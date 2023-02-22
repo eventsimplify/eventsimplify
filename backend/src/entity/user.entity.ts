@@ -5,7 +5,6 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
   DeleteDateColumn,
   OneToMany,
 } from "typeorm";
@@ -29,7 +28,7 @@ export default class User extends BaseEntity {
     () => OrganizationUser,
     (organizationUser) => organizationUser.user
   )
-  organizations: OrganizationUser;
+  organizations: OrganizationUser[];
 
   // default columns
   @CreateDateColumn()

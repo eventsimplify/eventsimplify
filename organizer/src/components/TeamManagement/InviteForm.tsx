@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, message, Modal } from "antd";
 
 import Field from "@/form-controls/Field";
-import { OrganizationService } from "@/services";
+import { InvitationService } from "@/services";
 
 const StaffForm = ({ getStaffs }: { getStaffs: () => void }) => {
   const [form] = Form.useForm();
@@ -20,10 +20,9 @@ const StaffForm = ({ getStaffs }: { getStaffs: () => void }) => {
       setLoading(true);
       const values = await form.validateFields();
 
-      await OrganizationService.inviteStaff(values);
+      await InvitationService.inviteStaff(values);
 
       setLoading(false);
-
       setIsOpen(false);
 
       getStaffs();

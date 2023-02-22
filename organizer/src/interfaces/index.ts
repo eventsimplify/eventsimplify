@@ -6,6 +6,7 @@ import IOrganization from "./IOrganization";
 import ITicket from "./ITicket";
 import IAppContext from "./IAppContext";
 import IEventContext from "./IEventContext";
+import IRole from "./IRole";
 
 export type {
   IField,
@@ -16,4 +17,5 @@ export type {
   ITicket,
   IAppContext,
   IEventContext,
+  IRole,
 };

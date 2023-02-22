@@ -1,27 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Divider, Space, Table } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 import type { ColumnsType } from "antd/es/table";
 import RoleForm from "./RoleForm";
-
-const users = [
-  {
-    id: 1,
-    name: "Owner",
-    totalUsers: 1,
-  },
-  {
-    id: 2,
-    name: "Admin",
-    totalUsers: 5,
-  },
-  {
-    id: 3,
-    name: "Event Manager",
-    totalUsers: 8,
-  },
-];
+import { IRole } from "@/interfaces";
+import { RoleService } from "@/services";
 
 const columns: ColumnsType<any> = [
   {
@@ -31,35 +15,55 @@ const columns: ColumnsType<any> = [
   },
   {
     title: "Total staffs on this role",
-    dataIndex: "totalUsers",
+    dataIndex: "users",
     width: "30%",
+    render: (text) => text.length,
   },
   {
     title: "Action",
+    dataIndex: "type",
     width: "10%",
-    render: () => (
+    render: (text) => (
       <Space>
-        <Button icon={<EditOutlined />} />
-        <Button danger icon={<DeleteOutlined />} />
+        <Button icon={<EyeOutlined />} />
+        {text === "default" ? null : <Button icon={<EditOutlined />} />}
+        {text === "default" ? null : (
+          <Button danger icon={<DeleteOutlined />} />
+        )}
       </Space>
     ),
   },
 ];
 
 const Roles = () => {
+  const [loading, setLoading] = useState("");
+  const [roles, setRoles] = useState<IRole[]>([]);
+
+  useEffect(() => {
+    getRoles();
+  }, []);
+
+  const getRoles = async () => {
+    setLoading("roles");
+    const data = await RoleService.getAll();
+    setRoles(data || []);
+    setLoading("");
+  };
+
   return (
     <div>
       <div className="table-header">
         <div />
-        <RoleForm />
+        <RoleForm getRoles={getRoles} />
       </div>
       <Divider />
       <Table
         rowKey={(record) => record.id.toString()}
         columns={columns}
-        dataSource={users}
+        dataSource={roles}
         bordered
         pagination={false}
+        loading={loading === "roles"}
       />
     </div>
   );

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Button, Form, message, Modal } from "antd";
+import { Button, Form, Modal } from "antd";
 
 import Field from "@/form-controls/Field";
 import Permission from "./Permission";
+import { RoleService } from "@/services";
 
-const RoleForm = () => {
+import { message as messageApi } from "@/components/AntDMessage";
+
+const RoleForm = ({ getRoles }: { getRoles: () => void }) => {
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = message.useMessage();
-
+  const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const showModal = () => {
@@ -16,10 +18,22 @@ const RoleForm = () => {
 
   const handleOk = async () => {
     try {
+      setLoading(true);
       const values = await form.validateFields();
-      console.log("values", values);
+
+      const formData = {
+        name: values.name,
+        permissions: [],
+      };
+
+      await RoleService.create(formData);
+      await getRoles();
+
+      setLoading(false);
+
       setIsOpen(false);
     } catch (errorInfo) {
+      setLoading(false);
       messageApi.error("Please fill in all required fields");
     }
   };
@@ -30,7 +44,6 @@ const RoleForm = () => {
 
   return (
     <>
-      {contextHolder}
       <Button type="primary" onClick={showModal}>
         Create new role
       </Button>
@@ -44,6 +57,8 @@ const RoleForm = () => {
         centered
         width={900}
         bodyStyle={{ paddingTop: "1rem" }}
+        okButtonProps={{ loading }}
+        okText="Create role"
       >
         <Form form={form} name="basic" layout="vertical" autoComplete="off">
           <Field

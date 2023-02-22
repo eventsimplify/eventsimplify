@@ -2,8 +2,6 @@ import React from "react";
 import { Button, Form, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
-import styles from "./filters.module.css";
-
 const onFinish = (values: any) => {
   console.log("Success:", values);
 };

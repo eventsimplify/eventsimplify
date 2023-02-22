@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import { Button, Form } from "antd";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { AuthService } from "@/services";
 import AuthPageLayout from "@/layouts/auth-page";
@@ -11,15 +11,35 @@ import { NextPageWithLayout } from "../_app";
 const Login: NextPageWithLayout = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState("");
+  const router = useRouter();
 
   const onFinish = async (values: any) => {
     setLoading("login");
-    await AuthService.login({
+    const response = await AuthService.login({
       email: values.email,
       password: values.password,
     });
 
     setLoading("");
+
+    if (response) {
+      if (router.query.redirect) {
+        window.location.href = router.query.redirect as string;
+
+        return;
+      }
+
+      router.push("/admin/dashboard");
+    }
+  };
+
+  const onRegiser = () => {
+    router.push({
+      pathname: "/auth/register",
+      query: router.query,
+    });
+
+    return;
   };
 
   return (
@@ -58,7 +78,9 @@ const Login: NextPageWithLayout = () => {
       >
         Login
       </Button>
-      <Link href="/auth/register">Don't have an account? Register here</Link>
+      <Button onClick={onRegiser} type="link">
+        Don't have an account? Register here
+      </Button>
     </Form>
   );
 };

@@ -7,6 +7,8 @@ import {
   UpdateDateColumn,
   OneToMany,
   DeleteDateColumn,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 
 import { Event, OrganizationUser, User } from "./index";
@@ -30,9 +32,9 @@ export default class Organization extends BaseEntity {
 
   @OneToMany(
     () => OrganizationUser,
-    (organizationUser) => organizationUser.user
+    (organizationUser) => organizationUser.organization
   )
-  users: User[];
+  users: OrganizationUser[];
 
   // default columns
   @CreateDateColumn()
