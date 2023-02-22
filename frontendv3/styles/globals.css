@@ -5,8 +5,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mende+Kikakui&display=swap');
 @import 'react-date-range/dist/styles.css';
 @import 'react-date-range/dist/theme/default.css';
+@import 'rc-slider/assets/index.css';
 @layer base {
   h1 {
     @apply font-heading;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+
+    /* Text/Default */
+
+    color: #1b1b25;
   }
+}
+
+.divider {
+  border-bottom: 1px solid #e2e8f0;
+  margin: 1rem 0;
+}
+h2 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  color: #1b1b25;
 }

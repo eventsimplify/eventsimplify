@@ -1,10 +1,7 @@
 .search_container {
   box-sizing: border-box;
 
-  position: absolute;
-  width: 996px;
   height: 69px;
-  bottom: -10px;
   opacity: 1;
   /* White */
 
@@ -28,11 +25,9 @@
   outline: none;
 }
 .line {
-  position: absolute;
   width: 0px;
-  left: 498px;
-  bottom: 4px;
-  top: 4px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   /* Text/2nd Lightest */
 
   border: 1px solid #ddddde;
@@ -45,11 +40,8 @@
   padding: 10px 16px;
   gap: 4px;
 
-  position: absolute;
   width: 100px;
   height: 39px;
-  left: calc(50% - 100px / 2 + 425px);
-  top: calc(50% - 39px / 2);
 
   /* Brand/Primary/Default */
 

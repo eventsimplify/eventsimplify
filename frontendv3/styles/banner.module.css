@@ -4,6 +4,10 @@
   height: 118.78px;
   /* right: 200px; */
 }
+.search_bar_container {
+  position: absolute;
+  top: 450px;
+}
 .img_two {
   /* position: absolute; */
   width: 101.46px;

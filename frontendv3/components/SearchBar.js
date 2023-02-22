@@ -25,7 +25,7 @@ const SearchBar = () => {
         />
         <div className={`${styles.line}`}></div>
 
-        <div className={`${styles.second_part} flex items-center `}>
+        <div className={`${styles.second_part} flex items-center`}>
           <div className="ml-5 flex items-center">
             <Menu.Button as="div" className="flex items-center gap-4">
               <FaCalendar className="text-gray-500" />
@@ -54,7 +54,7 @@ const SearchBar = () => {
             </Menu.Items>
           </div>
 
-          <div className={`${styles.button_box}`}>
+          <div className={`${styles.button_box} ml-5 mr-5`}>
             <div>
               <FaSearch className="text-white" />
             </div>

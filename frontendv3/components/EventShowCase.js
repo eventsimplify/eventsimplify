@@ -4,7 +4,6 @@ import { FaArrowRight } from 'react-icons/fa';
 import EventCard from './EventCard';
 
 const EventShowCase = ({ details }) => {
-  console.log(details);
   return (
     <div className={`${styles.wrapper}`}>
       <div className={`${styles.container}`} style={{}}>

@@ -3,7 +3,7 @@ import Footer from './Footer';
 import Header from './Header';
 import SearchBar from './SearchBar';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, showFooter, showHeader }) => {
   return (
     <div
       style={{
@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
         height: '100vh',
       }}
     >
-      <Header />
+      {showHeader && <Header />}
 
       <main
         style={{
@@ -23,9 +23,16 @@ const Layout = ({ children }) => {
         {children}
       </main>
 
-      <Footer />
+      {showFooter && <Footer />}
     </div>
   );
+};
+
+// default props
+Layout.defaultProps = {
+  children: null,
+  showFooter: true,
+  showHeader: true,
 };
 
 export default Layout;

@@ -1,0 +1,68 @@
+.main_container {
+  position: relative;
+  display: flex;
+}
+.filter_box {
+  /* position: absolute;
+  left: 119px;
+  top: 118px; */
+  height: 648px;
+  width: 204px;
+}
+.filter_text {
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  /* identical to box height */
+
+  /* Text/Default */
+
+  color: #1b1b25;
+}
+.event_showcase_container {
+  /* position: absolute;
+  left: 425px;
+  top: 86px; */
+  width: 895px;
+
+  /* Body/Heading/01 */
+
+  font-family: 'Cabinet Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 30px;
+
+  /* Text/Light */
+
+  color: #5c5c5f;
+}
+
+.search_results_text {
+  width: 289px;
+  height: 32px;
+
+  /* Body/Heading/01 */
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 30px;
+
+  /* Text/Light */
+
+  color: #5c5c5f;
+}
+
+.event_col {
+}
+.option_box {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkbox_container:hover {
+}

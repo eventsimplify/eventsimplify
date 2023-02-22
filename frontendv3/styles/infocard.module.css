@@ -1,0 +1,17 @@
+.maincontainer {
+  position: relative;
+  width: 280px;
+  height: 120px;
+  display: flex;
+}
+.maincontainer .icon {
+  font-size: 50px;
+  color: #4f4cee;
+  flex: 1;
+}
+.maincontainer .info {
+  flex: 3;
+}
+.info > h2 {
+  margin-bottom: 10px;
+}

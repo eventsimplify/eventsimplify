@@ -1,67 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Banner from '../components/Banner';
 import Layout from '../components/Layout';
 import EventShowCase from '../components/EventShowCase';
 import TopSelling from '../components/TopSelling';
 import HotOffer from '../components/HotOffer';
-// event showcase type and details
-const eventCardDetailsDummy = [
-  {
-    date: ['Nov', '01'],
-    title: 'Panic! at the disco',
-    price: 'Rs 45,000',
-    location: 'Kathmandu, Nepal',
-    image: '/assets/card_image/singer.png',
-  },
-  {
-    date: ['Nov', '01'],
-    title: 'Panic! at the disco',
-    price: 'Rs 45,000',
-    location: 'Kathmandu, Nepal',
-    image: '/assets/card_image/singer.png',
-  },
-  {
-    date: ['Nov', '01'],
-    title: 'Panic! at the disco',
-    price: 'Rs 45,000',
-    location: 'Kathmandu, Nepal',
-    image: '/assets/card_image/singer.png',
-  },
-  {
-    date: ['Nov', '01'],
-    title: 'Panic! at the disco',
-    price: 'Rs 45,000',
-    location: 'Kathmandu, Nepal',
-    image: '/assets/card_image/singer.png',
-  },
-];
-//
-const eventShowCase = {
-  type: 'Upcoming Events',
-  detailsOfEvents: eventCardDetailsDummy,
-};
-
-// arts
-const artShowCase = {
-  type: 'Browse by Arts',
-  detailsOfEvents: eventCardDetailsDummy,
-};
-
-// concerts
-const concertShowCase = {
-  type: 'Browse by Concerts',
-  detailsOfEvents: eventCardDetailsDummy,
-};
-
+import { DummyData } from '../dummyData';
+import UserContext from '../context/context';
 const index = () => {
+  const msg = useContext(UserContext);
+  console.log(msg);
+  const [eventShowCase, artShowCase, concertShowCase, eventCardDetailsDummy] =
+    DummyData();
   return (
     <div>
       <Layout>
         <Banner />
         <EventShowCase details={eventShowCase} />
         <HotOffer />
-        <EventShowCase details={artShowCase} />
         <TopSelling />
+        <EventShowCase details={artShowCase} />
         <EventShowCase details={concertShowCase} />
       </Layout>
     </div>

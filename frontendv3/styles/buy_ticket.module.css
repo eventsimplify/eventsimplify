@@ -1,0 +1,31 @@
+.mainContainer {
+  position: relative;
+  width: 285px;
+  height: 144px;
+  border: 1px solid #828282;
+  border-radius: 8px;
+  box-shadow: 3px 4px 0px #0022ba;
+}
+.mainContainer:hover {
+  box-shadow: 6px 8px 0px #0022ba;
+  transition: 0.3s;
+}
+.button_buy_tickets {
+  width: 220px;
+  height: 40px;
+  margin-top: 17px;
+  background-color: #4f4cee;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 10px 16px;
+}
+
+.button_buy_tickets:hover {
+  transition: 0.3s;
+  transform: scale(1.1);
+  cursor: pointer;
+  background-color: #0022ba;
+}

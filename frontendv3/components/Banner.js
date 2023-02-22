@@ -41,7 +41,9 @@ const Banner = () => {
           />
         </div>
       </div>
-      <SearchBar />
+      <div className={`${styles.search_bar_container}`}>
+        <SearchBar />
+      </div>
     </div>
   );
 };
