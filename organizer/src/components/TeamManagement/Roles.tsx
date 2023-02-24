@@ -1,60 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button, Divider, Space, Table } from "antd";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 import type { ColumnsType } from "antd/es/table";
 import RoleForm from "./RoleForm";
-import { IRole } from "@/interfaces";
-import { RoleService } from "@/services";
-
-const columns: ColumnsType<any> = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    width: "60%",
-  },
-  {
-    title: "Total staffs on this role",
-    dataIndex: "users",
-    width: "30%",
-    render: (text) => text.length,
-  },
-  {
-    title: "Action",
-    dataIndex: "type",
-    width: "10%",
-    render: (text) => (
-      <Space>
-        <Button icon={<EyeOutlined />} />
-        {text === "default" ? null : <Button icon={<EditOutlined />} />}
-        {text === "default" ? null : (
-          <Button danger icon={<DeleteOutlined />} />
-        )}
-      </Space>
-    ),
-  },
-];
+import { useTeamManagementContext } from "@/contexts/TeamManagementProvider";
 
 const Roles = () => {
-  const [loading, setLoading] = useState("");
-  const [roles, setRoles] = useState<IRole[]>([]);
+  const { roles, loading, getStaffs, deleteRole } = useTeamManagementContext();
 
-  useEffect(() => {
-    getRoles();
-  }, []);
-
-  const getRoles = async () => {
-    setLoading("roles");
-    const data = await RoleService.getAll();
-    setRoles(data || []);
-    setLoading("");
-  };
+  const columns: ColumnsType<any> = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      width: "60%",
+    },
+    {
+      title: "Total staffs on this role",
+      dataIndex: "users",
+      width: "30%",
+      render: (text) => text.length,
+    },
+    {
+      title: "Action",
+      dataIndex: "type",
+      width: "10%",
+      render: (text, record) => (
+        <Space>
+          <Button icon={<EyeOutlined />} />
+          {text === "default" ? null : <Button icon={<EditOutlined />} />}
+          {text === "default" ? null : (
+            <Button
+              danger
+              icon={<DeleteOutlined />}
+              onClick={() => deleteRole(record.id)}
+              loading={loading === "delete"}
+            />
+          )}
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div>
       <div className="table-header">
         <div />
-        <RoleForm getRoles={getRoles} />
+        <RoleForm getRoles={getStaffs} />
       </div>
       <Divider />
       <Table
@@ -63,7 +55,7 @@ const Roles = () => {
         dataSource={roles}
         bordered
         pagination={false}
-        loading={loading === "roles"}
+        loading={loading !== ""}
       />
     </div>
   );

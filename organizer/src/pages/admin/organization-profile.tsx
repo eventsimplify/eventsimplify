@@ -1,11 +1,13 @@
 import React, { ReactElement, useState } from "react";
-import { Button, Card, Form } from "antd";
 
-import GetStartedForm from "@/components/GetStartedForm";
-import GetStartedLayout from "@/layouts/get-started";
+import DashboardLayout from "@/layouts/dashboard";
+import OrganizationForm from "@/components/OrganizationForm";
 import { OrganizationService } from "@/services";
+import { Form, Card, Button } from "antd";
+import { useAppContext } from "@/contexts/AppProvider";
 
-const GetStarted = () => {
+const OrganizationProfile = () => {
+  const { organization } = useAppContext();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState("");
 
@@ -23,10 +25,15 @@ const GetStarted = () => {
   return (
     <Form
       form={form}
-      name="get-started-form"
+      name="profile-form"
       onFinish={onFinish}
       layout="vertical"
       validateTrigger="onSubmit"
+      initialValues={{
+        name: organization?.name,
+        summary: organization?.summary,
+        description: organization?.description,
+      }}
     >
       <Card
         bordered={false}
@@ -36,18 +43,18 @@ const GetStarted = () => {
             htmlType="submit"
             loading={loading === "create"}
           >
-            Create an organization
+            Update profile
           </Button>
         }
       >
-        <GetStartedForm current={0} />
+        <OrganizationForm />
       </Card>
     </Form>
   );
 };
 
-GetStarted.getLayout = function getLayout(page: ReactElement) {
-  return <GetStartedLayout>{page}</GetStartedLayout>;
+OrganizationProfile.getLayout = function getLayout(page: ReactElement) {
+  return <DashboardLayout>{page}</DashboardLayout>;
 };
 
-export default GetStarted;
+export default OrganizationProfile;

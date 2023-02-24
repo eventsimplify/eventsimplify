@@ -39,7 +39,6 @@
 .userMenu {
   display: flex;
   cursor: pointer;
-  width: 180px;
   border-color: lightgray;
   border-width: 1px;
   border-style: solid;

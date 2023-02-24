@@ -7,6 +7,8 @@ import ITicket from "./ITicket";
 import IAppContext from "./IAppContext";
 import IEventContext from "./IEventContext";
 import IRole from "./IRole";
+import IInvitation from "./IInvitation";
+import ITeamManagementContext from "./ITeamManagementContext";
 
 export type {
   IField,
@@ -18,4 +20,6 @@ export type {
   IAppContext,
   IEventContext,
   IRole,
+  IInvitation,
+  ITeamManagementContext,
 };

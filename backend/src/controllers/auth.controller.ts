@@ -136,7 +136,11 @@ export const me = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { id: req.user.id },
-      relations: ["organizations"],
+      relations: [
+        "organizations",
+        "organizations.organization",
+        "organizations.role",
+      ],
     });
 
     if (!user) {
@@ -148,6 +152,57 @@ export const me = async (req, res) => {
       });
     }
 
+    if (user.organizations.length === 0) {
+      return sendSuccess({
+        res,
+        message: "User has been fetched successfully.",
+        data: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          organization: null,
+          totalOrganizations: 0,
+          organizations: [],
+        },
+      });
+    }
+
+    const organizationId = req.headers["organization"];
+
+    let organization = null;
+
+    if (!organizationId) {
+      organization = user.organizations[0].organization;
+
+      return sendSuccess({
+        res,
+        message: "User has been fetched successfully.",
+        data: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          organization: organization,
+          totalOrganizations: user.organizations.length,
+          organizations: user.organizations,
+        },
+      });
+    }
+
+    const organizationExists = user.organizations.find(
+      (org) => org.organizationId === Number(organizationId)
+    );
+
+    if (!organizationExists) {
+      return sendError({
+        res,
+        status: 401,
+        data: null,
+        message: "Organization not found!",
+      });
+    }
+
+    organization = organizationExists.organization;
+
     return sendSuccess({
       res,
       message: "User has been fetched successfully.",
@@ -155,7 +210,9 @@ export const me = async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
-        organization: user.organizations[0] ? user.organizations[0] : null,
+        organization: organization,
+        totalOrganizations: user.organizations.length,
+        organizations: user.organizations,
       },
     });
   } catch (err) {

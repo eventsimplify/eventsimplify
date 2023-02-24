@@ -7,7 +7,7 @@ import Loader from "@/components/Loader";
 import Redirect from "@/components/Redirect";
 
 import styles from "./layouts.module.css";
-import { OrganizationService } from "@/services";
+import { InvitationService } from "@/services";
 import { useRouter } from "next/router";
 
 const { Content } = Layout;
@@ -22,7 +22,7 @@ const InvitationsLayout = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const getInvitation = async () => {
-    const invitation = await OrganizationService.getInvitationDetails({
+    const invitation = await InvitationService.getInvitationDetails({
       token: router.query.token as string,
     });
     setInvitation(invitation);
@@ -39,7 +39,6 @@ const InvitationsLayout = ({ children }: { children: React.ReactNode }) => {
     return <Loader />;
   }
 
-  console.log("router", window.location);
   if (!user) {
     return <Redirect to="/auth/login" redirect={window.location.href} />;
   }

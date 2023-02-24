@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { Invitations, OrganizationUser } from "../entity";
+import { Invitations, OrganizationUser, Role } from "../entity";
 import { errorHandler, sendError, sendSuccess } from "../utils";
 
 // @desc    Invite staff
@@ -38,11 +38,28 @@ export const inviteStaff = async (req, res) => {
       });
     }
 
+    // check if role exists
+    const roleExists = await Role.findOne({
+      where: {
+        id: role,
+        organizationId: req.organization.id,
+      },
+    });
+
+    if (!roleExists) {
+      return sendError({
+        res,
+        status: 400,
+        data: null,
+        message: "Role not found!",
+      });
+    }
+
     const invitation = await Invitations.create({
       email,
       organizationId: req.organization.id,
       expiresAt: new Date(new Date().setDate(new Date().getDate() + 7)),
-      role,
+      roleId: roleExists.id,
     });
 
     await invitation.save();
@@ -78,7 +95,7 @@ export const getInvitationDetails = async (req, res) => {
       where: {
         token: req.params.token,
       },
-      relations: ["organization"],
+      relations: ["organization", "role"],
     });
 
     if (!invitation) {
@@ -178,7 +195,7 @@ export const acceptInvitation = async (req, res) => {
     await OrganizationUser.create({
       userId: req.user.id,
       organizationId: invitation.organizationId,
-      roleId: 1,
+      roleId: invitation.roleId,
     }).save();
 
     await Invitations.delete({

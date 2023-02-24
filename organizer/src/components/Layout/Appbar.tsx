@@ -1,16 +1,19 @@
 import React, { useMemo, useState } from "react";
-import { Layout, Menu, MenuProps } from "antd";
+import { Button, Layout, Menu, MenuProps, Space } from "antd";
 import { useRouter } from "next/router";
+import { SwapOutlined } from "@ant-design/icons";
 
 import UserMenu from "./UserMenu";
 
 import styles from "./layout.module.css";
 import { appBarItems } from "@/bootstrap/config";
+import { useAppContext } from "@/contexts/AppProvider";
 
 const { Header } = Layout;
 
 const Appbar = () => {
   const router = useRouter();
+  const { organizations } = useAppContext();
   const [current, setCurrent] = useState(
     useMemo(() => {
       const item = appBarItems?.find(
@@ -29,6 +32,10 @@ const Appbar = () => {
     setCurrent(e.key);
   };
 
+  const onSwitchOrganization = () => {
+    router.push("/admin/organizations");
+  };
+
   return (
     <Header className={styles.appBarHeader}>
       <Menu
@@ -38,7 +45,19 @@ const Appbar = () => {
         items={appBarItems}
         style={{ height: "60px", lineHeight: "60px", width: "100%" }}
       />
-      <UserMenu />
+      <Space size="large">
+        {organizations.length > 1 && (
+          <Button
+            type="primary"
+            icon={<SwapOutlined />}
+            onClick={onSwitchOrganization}
+          >
+            Switch organization
+          </Button>
+        )}
+
+        <UserMenu />
+      </Space>
     </Header>
   );
 };

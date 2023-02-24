@@ -24,9 +24,20 @@ const getStaff = async () => {
   }
 };
 
+const removeStaff = async (id: string) => {
+  try {
+    const { data } = await axios.delete(`${API_URL}/remove-staff/${id}`);
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
 const exportedObject = {
   create,
   getStaff,
+  removeStaff,
 };
 
 export default exportedObject;

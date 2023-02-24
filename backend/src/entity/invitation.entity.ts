@@ -9,8 +9,9 @@ import {
   ManyToOne,
   JoinColumn,
   Generated,
+  OneToOne,
 } from "typeorm";
-import { Organization } from "./index";
+import { Organization, Role } from "./index";
 
 @Entity({ name: "invitations" })
 export default class Invitations extends BaseEntity {
@@ -34,8 +35,12 @@ export default class Invitations extends BaseEntity {
   @JoinColumn({ name: "organizationId" })
   organization: Organization;
 
-  @Column("text", { nullable: false })
-  role: string;
+  @Column()
+  roleId: number;
+
+  @OneToOne(() => Role, (role) => role.id)
+  @JoinColumn({ name: "roleId" })
+  role: Role;
 
   // default columns
   @CreateDateColumn()

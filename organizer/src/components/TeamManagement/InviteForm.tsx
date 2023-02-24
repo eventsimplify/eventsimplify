@@ -1,12 +1,15 @@
-import React, { useState } from "react";
-import { Button, Form, message, Modal } from "antd";
+import React, { useMemo, useState } from "react";
+import { Button, Form, Modal } from "antd";
+
+import { message } from "@/components/AntDMessage";
 
 import Field from "@/form-controls/Field";
 import { InvitationService } from "@/services";
+import { useTeamManagementContext } from "@/contexts/TeamManagementProvider";
 
 const StaffForm = ({ getStaffs }: { getStaffs: () => void }) => {
+  const { roles } = useTeamManagementContext();
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -20,14 +23,16 @@ const StaffForm = ({ getStaffs }: { getStaffs: () => void }) => {
       setLoading(true);
       const values = await form.validateFields();
 
-      await InvitationService.inviteStaff(values);
+      const response = await InvitationService.inviteStaff(values);
+
+      if (response) {
+        await getStaffs();
+        setIsOpen(false);
+      }
 
       setLoading(false);
-      setIsOpen(false);
-
-      getStaffs();
     } catch (errorInfo) {
-      messageApi.error("Please fill in all required fields");
+      message.error("Please fill in all required fields");
     } finally {
       setLoading(false);
       form.resetFields();
@@ -38,9 +43,17 @@ const StaffForm = ({ getStaffs }: { getStaffs: () => void }) => {
     setIsOpen(false);
   };
 
+  const roleOptions = useMemo(
+    () =>
+      roles.map((role) => ({
+        label: role.name,
+        value: role.id,
+      })),
+    [roles]
+  );
+
   return (
     <>
-      {contextHolder}
       <Button type="primary" onClick={showModal}>
         Invite new staff
       </Button>
@@ -76,10 +89,7 @@ const StaffForm = ({ getStaffs }: { getStaffs: () => void }) => {
             required
             placeholder="Enter a role"
             type="dropdown"
-            options={[
-              { label: "Admin", value: "admin" },
-              { label: "Staff", value: "staff" },
-            ]}
+            options={roleOptions}
           />
         </Form>
       </Modal>

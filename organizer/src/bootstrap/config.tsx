@@ -136,8 +136,8 @@ export const appBarItems: MenuProps["items"] = [
     icon: <TeamOutlined />,
   },
   {
-    label: "Organization settings",
-    key: "/admin/organization-settings",
+    label: "Organization profile",
+    key: "/admin/organization-profile",
     icon: <AppstoreOutlined />,
   },
 ];

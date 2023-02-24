@@ -23,9 +23,21 @@ const create = async (formData: Partial<IRole>) => {
     handleAxiosError(err);
   }
 };
+
+const remove = async (id: number) => {
+  try {
+    const { data } = await axios.delete(`${API_URL}/delete/${id}`);
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
 const exportedObject = {
   getAll,
   create,
+  remove,
 };
 
 export default exportedObject;

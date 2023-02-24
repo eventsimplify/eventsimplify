@@ -26,12 +26,15 @@ const RoleForm = ({ getRoles }: { getRoles: () => void }) => {
         permissions: [],
       };
 
-      await RoleService.create(formData);
-      await getRoles();
+      const data = await RoleService.create(formData);
+
+      if (data) {
+        await getRoles();
+        setIsOpen(false);
+        form.resetFields();
+      }
 
       setLoading(false);
-
-      setIsOpen(false);
     } catch (errorInfo) {
       setLoading(false);
       messageApi.error("Please fill in all required fields");

@@ -3,6 +3,7 @@ import React, { createContext, useContext, useMemo, useState } from "react";
 import { IAppContext, IOrganization, IUser } from "@/interfaces";
 import { AuthService } from "@/services";
 import IInvitation from "@/interfaces/IInvitation";
+import IOrganizationUser from "@/interfaces/IOrganizationUser";
 
 export const AppContext = createContext({} as IAppContext);
 
@@ -18,6 +19,7 @@ const AppProvider = (props: any) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [organization, setOrganization] = useState<IOrganization | null>(null);
   const [invitation, setInvitation] = useState<IInvitation | null>(null);
+  const [organizations, setOrganizations] = useState<IOrganizationUser[]>([]);
 
   const [loading, setLoading] = useState(true);
 
@@ -27,6 +29,7 @@ const AppProvider = (props: any) => {
 
     setUser(response);
     setOrganization(response?.organization || null);
+    setOrganizations(response?.organizations || []);
     setLoading(false);
   };
 
@@ -40,8 +43,9 @@ const AppProvider = (props: any) => {
       organization,
       invitation,
       setInvitation,
+      organizations,
     }),
-    [user, loading, organization, invitation]
+    [user, loading, organization, invitation, organizations]
   );
 
   return (

@@ -47,6 +47,23 @@ export const create = async (req, res) => {
       permissions,
     });
 
+    //check if role already exists
+    const roleExists = await Role.findOne({
+      where: {
+        name,
+        organizationId: req.organization.id,
+      },
+    });
+
+    if (roleExists) {
+      return sendError({
+        res,
+        status: 400,
+        data: null,
+        message: "Role with this name already exists!",
+      });
+    }
+
     const role = await Role.create({
       name,
       permissions,

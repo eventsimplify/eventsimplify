@@ -49,9 +49,28 @@ export const protectWithOrganization = async (req, res, next) => {
       });
     }
 
-    req.organization = user.organizations[0].organization;
+    const organizationId = req.headers["organization"];
 
-    next();
+    if (!organizationId) {
+      req.organization = user.organizations[0].organization;
+      return next();
+    }
+
+    const organization = user.organizations.find(
+      (org) => org.organization.id === Number(organizationId)
+    );
+
+    if (!organization) {
+      return sendError({
+        res,
+        status: 401,
+        data: null,
+        message: "Organization not found!",
+      });
+    }
+
+    req.organization = organization.organization;
+    return next();
   });
 };
 

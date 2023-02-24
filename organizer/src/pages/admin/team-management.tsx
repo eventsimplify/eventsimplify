@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 
 import Staffs from "@/components/TeamManagement/Staffs";
 import Roles from "@/components/TeamManagement/Roles";
+import TeamManagementProvider from "@/contexts/TeamManagementProvider";
 
 const items: TabsProps["items"] = [
   {
@@ -52,7 +53,11 @@ const TeamManagement = () => {
 };
 
 TeamManagement.getLayout = function getLayout(page: ReactElement) {
-  return <DashboardLayout>{page}</DashboardLayout>;
+  return (
+    <DashboardLayout>
+      <TeamManagementProvider>{page}</TeamManagementProvider>
+    </DashboardLayout>
+  );
 };
 
 export default TeamManagement;

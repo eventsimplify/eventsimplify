@@ -1,111 +1,100 @@
-import React, { useEffect, useState } from "react";
-import { Avatar, Button, Divider, Space, Table } from "antd";
-
-import { DeleteOutlined, CopyOutlined } from "@ant-design/icons";
-
+import React, { useState } from "react";
+import { Avatar, Button, Divider, Popconfirm, Space, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import StaffFilters from "../Filters/StaffFilters";
-import InviteForm from "./InviteForm";
-import { IUser } from "@/interfaces";
-import { OrganizationService } from "@/services";
-import { getFirstLetterFromName } from "@/utils";
-import IInvitation from "@/interfaces/IInvitation";
-import { message } from "../AntDMessage";
 
-const columns: ColumnsType<any> = [
-  {
-    title: "Name",
-    dataIndex: "user",
-    width: "60%",
-    render: (record) => {
-      return (
-        <Space>
-          <Avatar src={record.name}>
-            {getFirstLetterFromName(record.name)}
-          </Avatar>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <span
-              style={{
-                fontWeight: "bold",
-              }}
-            >
-              {record.name}
-            </span>
-            <span>{record.email}</span>
-          </div>
-        </Space>
-      );
-    },
-  },
-  {
-    title: "Role",
-    dataIndex: "role",
-    width: "20%",
-    render: (text) => <span>{text?.name}</span>,
-  },
-  {
-    title: "Action",
-    width: "20%",
-    render: () => (
-      <Space>
-        <Button danger icon={<DeleteOutlined />} />
-      </Space>
-    ),
-  },
-];
+import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+
+import InviteForm from "./InviteForm";
+import Invitations from "./Invitations";
+
+import { getFirstLetterFromName } from "@/utils";
+import { useTeamManagementContext } from "@/contexts/TeamManagementProvider";
+import { OrganizationService } from "@/services";
 
 const Staffs = () => {
-  const [loading, setLoading] = useState("");
-  const [staffs, setStaffs] = useState<IUser[]>([]);
-  const [invitations, setInvitations] = useState<IInvitation[]>([]);
+  const { staffs, loading, getStaffs } = useTeamManagementContext();
 
-  useEffect(() => {
-    getStaffs();
-  }, []);
+  const [open, setOpen] = useState<string | null>(null);
+  const [confirmLoading, setConfirmLoading] = useState(false);
 
-  const copyInvitationsLink = ({ token }: { token: string }) => {
-    navigator.clipboard.writeText(
-      `http://localhost:3000/invitations?token=${token}`
-    );
-
-    message.success("Copied to clipboard");
+  const showPopconfirm = (id: string) => {
+    setOpen(id);
   };
 
-  const getStaffs = async () => {
-    setLoading("staffs");
-    const data = await OrganizationService.getStaff();
-    setStaffs(data?.staffs || []);
-    setInvitations(data?.invitations || []);
-    setLoading("");
+  const handleConfirm = async () => {
+    setConfirmLoading(true);
+
+    await OrganizationService.removeStaff(open as string);
+
+    await getStaffs();
+
+    setOpen(null);
+    setConfirmLoading(false);
   };
 
-  const columnsInvitation: ColumnsType<IInvitation> = [
+  const handleCancel = () => {
+    setOpen(null);
+  };
+
+  const columns: ColumnsType<any> = [
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "Name",
+      dataIndex: "user",
       width: "60%",
+      render: (record) => {
+        return (
+          <Space>
+            <Avatar src={record.name}>
+              {getFirstLetterFromName(record.name)}
+            </Avatar>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <span
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                {record.name}
+              </span>
+              <span>{record.email}</span>
+            </div>
+          </Space>
+        );
+      },
     },
     {
       title: "Role",
       dataIndex: "role",
       width: "20%",
+      render: (text) => <span>{text?.name}</span>,
     },
     {
       title: "Action",
+      dataIndex: "id",
       width: "20%",
-      render: (text, record: IInvitation) => (
+      render: (id) => (
         <Space>
-          <Button
-            type="primary"
-            onClick={() => copyInvitationsLink({ token: record.token })}
-            icon={<CopyOutlined />}
-          />
-          <Button danger icon={<DeleteOutlined />} />
+          <Button icon={<EyeOutlined />} />
+          <Popconfirm
+            title="Are you sure to delete this staff?"
+            description="This action cannot be undone"
+            open={open === id}
+            onConfirm={handleConfirm}
+            okButtonProps={{ loading: confirmLoading }}
+            onCancel={handleCancel}
+            okText="Yes"
+          >
+            <Button
+              danger
+              icon={<DeleteOutlined />}
+              loading={loading === "delete"}
+              onClick={() => showPopconfirm(id)}
+            />
+          </Popconfirm>
         </Space>
       ),
     },
@@ -114,27 +103,20 @@ const Staffs = () => {
   return (
     <div>
       <div className="table-header">
-        <StaffFilters />
+        <div />
         <InviteForm getStaffs={getStaffs} />
       </div>
       <Divider />
       <Table
         rowKey={(record) => record.id}
-        columns={columns}
         dataSource={staffs}
         bordered
         pagination={false}
-        loading={loading === "staffs"}
+        loading={loading !== ""}
+        columns={columns}
       />
       <Divider orientation="left">Invitations</Divider>
-      <Table
-        rowKey={(record) => record.id}
-        columns={columnsInvitation}
-        dataSource={invitations}
-        bordered
-        pagination={false}
-        loading={loading === "staffs"}
-      />
+      <Invitations />
     </div>
   );
 };

@@ -22,7 +22,7 @@ export const AppDataSource = new DataSource({
   password: "paramount10",
   database: "eventsimplify",
   synchronize: true,
-  logging: true,
+  logging: false,
   entities: [
     User,
     Event,

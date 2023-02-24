@@ -87,6 +87,19 @@ export const getStaff = async (req, res) => {
       where: {
         organizationId: req.organization.id,
       },
+      relations: ["role"],
+    });
+
+    const roles = await Role.find({
+      where: [
+        {
+          type: "default",
+        },
+        {
+          organizationId: req.organization.id,
+        },
+      ],
+      relations: ["users"],
     });
 
     return sendSuccess({
@@ -94,10 +107,62 @@ export const getStaff = async (req, res) => {
       data: {
         invitations,
         staffs: organization.users,
+        roles,
       },
       message: "Staff fetched successfully!",
     });
   } catch (err) {
     errorHandler(res, err);
+  }
+};
+
+// @desc remove staff from organization
+// @route DELETE /organizations/remove-staff/:id
+// @access Private
+export const removeStaff = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const organizationUser = await OrganizationUser.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!organizationUser) {
+      return sendError({
+        res,
+        status: 404,
+        data: null,
+        message: "Staff not found!",
+      });
+    }
+
+    const ownerRole = await Role.findOne({
+      where: {
+        name: "Owner",
+        type: "default",
+      },
+    });
+
+    // check if user is owner
+    if (organizationUser.roleId === ownerRole.id) {
+      return sendError({
+        res,
+        status: 400,
+        data: null,
+        message: "You cannot remove the owner!",
+      });
+    }
+
+    await organizationUser.remove();
+
+    return sendSuccess({
+      res,
+      data: null,
+      message: "Staff removed successfully!",
+    });
+  } catch (error) {
+    errorHandler(res, error);
   }
 };

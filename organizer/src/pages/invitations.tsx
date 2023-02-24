@@ -12,19 +12,25 @@ import { useAppContext } from "@/contexts/AppProvider";
 
 // services import
 import { InvitationService } from "@/services";
+import { useRouter } from "next/router";
 
 const { Title, Paragraph } = Typography;
 
 const Invitations = () => {
   const { invitation } = useAppContext();
   const [loading, setLoading] = useState("");
+  const router = useRouter();
 
   const handleAccept = async () => {
     setLoading("accept");
 
-    await InvitationService.acceptInvitation({
+    const response = await InvitationService.acceptInvitation({
       token: invitation?.token || "",
     });
+
+    if (response) {
+      router.push("/admin/dashboard");
+    }
 
     setLoading("");
   };
@@ -61,7 +67,7 @@ const Invitations = () => {
             />
             <div>
               <Title level={5}>{invitation?.organization?.name}</Title>
-              <Paragraph>{invitation?.role}</Paragraph>
+              <Paragraph>{invitation?.role?.name}</Paragraph>
             </div>
           </Space>
           <Divider />
