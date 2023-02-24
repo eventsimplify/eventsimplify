@@ -5,33 +5,38 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
+  DeleteDateColumn,
+  OneToMany,
 } from "typeorm";
-import { OrganizationUser } from "./organization-user.entity";
+import { OrganizationUser } from "./index";
 
 @Entity({ name: "users" })
-export class User extends BaseEntity {
+export default class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column("text", { nullable: false })
   name: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column("text", { nullable: false, unique: true })
   email: string;
 
-  @Column({ nullable: false })
+  @Column("text", { nullable: false })
   password: string;
 
-  @Column({ nullable: false, enum: ["user", "admin", "organizer"] })
-  type: "user" | "organizer" | "admin";
+  @OneToMany(
+    () => OrganizationUser,
+    (organizationUser) => organizationUser.user
+  )
+  organizations: OrganizationUser[];
 
-  @OneToOne(() => OrganizationUser, (organizationUser) => organizationUser.user)
-  organization: OrganizationUser;
-
+  // default columns
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

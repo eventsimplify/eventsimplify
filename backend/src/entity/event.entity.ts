@@ -7,79 +7,66 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
-  PrimaryColumn,
-  OneToOne,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
+  DeleteDateColumn,
 } from "typeorm";
-import { Organization } from "./organization.entity";
-import { Ticket } from "./ticket.entity";
+
+import { Ticket, Organization } from "./index";
 
 @Entity({ name: "events" })
-export class Event extends BaseEntity {
+export default class Event extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false, type: "text" })
+  @Column("text", { nullable: false })
   name: string;
 
-  @PrimaryColumn({
-    type: "text",
+  @Column("text", {
+    nullable: false,
     unique: true,
   })
   slug: string;
 
-  @Column({ nullable: false, type: "text" })
+  @Column("text", { nullable: false })
   type: string;
 
-  @Column({ nullable: false, type: "text", array: true, default: [] })
-  tags: string[];
-
-  @Column({ nullable: false, type: "date" })
+  @Column("date", { nullable: false })
   startDate: string;
 
-  @Column({ nullable: false, type: "date" })
+  @Column("date", { nullable: false })
   endDate: string;
 
-  @Column({ nullable: true, type: "text" })
+  @Column("text", { nullable: true })
   summary?: string;
 
-  @Column({ nullable: true, type: "text" })
+  @Column("text", { nullable: true })
   description?: string;
 
-  @Column({ nullable: false, type: "text", default: "saved" })
+  @Column("text", { nullable: false, default: "saved" })
   status: "draft" | "published" | "saved" | "scheduled";
 
-  @PrimaryColumn({ nullable: false, type: "int" })
+  @Column()
   organizationId: number;
-  @OneToOne(() => Organization, (organization) => organization.id)
+
+  @ManyToOne(() => Organization, (organization) => organization.events)
+  @JoinColumn({ name: "organizationId" })
   organization: Organization;
 
-  @PrimaryColumn("int", { nullable: false, array: true, default: [] })
-  ticketIds: number[];
-  @OneToMany(() => Ticket, (ticket) => ticket.id, {
-    cascade: true,
-    onDelete: "CASCADE",
-  })
+  // relations with tickets
+  @OneToMany(() => Ticket, (ticket) => ticket.event)
   tickets: Ticket[];
 
   // default columns
-  @Column({ nullable: true, type: "text" })
-  createdBy?: number;
-
-  @Column({ nullable: true, type: "text" })
-  updatedBy?: number;
-
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ nullable: true, type: "text" })
-  deletedAt?: Date;
-
-  @Column({ nullable: true, type: "text" })
-  deletedBy?: number;
+  @DeleteDateColumn()
+  deletedAt: Date;
 
   //create slug before inserting into database
   @BeforeInsert()

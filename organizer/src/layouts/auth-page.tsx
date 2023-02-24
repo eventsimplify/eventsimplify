@@ -1,26 +1,13 @@
 import React from "react";
-import { useRouter } from "next/router";
 
-import Loader from "@/components/Loader";
-import Redirect from "@/components/Redirect";
-
-import useAuth from "@/hooks/useAuth";
+import styles from "./layouts.module.css";
 
 const AuthPageLayout = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth();
-  const router = useRouter();
-
-  if (loading === "loading") {
-    return <Loader />;
-  }
-
-  if (user) {
-    return (
-      <Redirect to={router.query.redirect?.toString() || "/admin/dashboard"} />
-    );
-  }
-
-  return <>{children}</>;
+  return (
+    <div className={styles.auth}>
+      <div className={styles.authCard}>{children}</div>
+    </div>
+  );
 };
 
 export default AuthPageLayout;

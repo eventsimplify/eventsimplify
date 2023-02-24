@@ -75,15 +75,12 @@ export const login = async (req, res) => {
 // @route   POST /users/register
 // @access  Public
 export const register = async (req, res) => {
-  const { email, password, name, type } = req.body;
+  const { email, password, name } = req.body;
 
   const schema = Yup.object().shape({
     email: Yup.string().required("Email is a required field"),
     password: Yup.string().required("Password is a required field"),
     name: Yup.string().required("Name is a required field"),
-    type: Yup.string()
-      .required("Type is a required field")
-      .oneOf(["user", "organizer", "admin"], "User type is invalid"),
   });
 
   try {
@@ -91,7 +88,6 @@ export const register = async (req, res) => {
       email,
       password,
       name,
-      type,
     });
 
     let userExists: IUser = await User.findOneBy({
@@ -113,12 +109,13 @@ export const register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      type,
     });
 
-    user.save();
+    await user.save();
 
     const token = generateToken(user.id);
+
+    await setCookie(res, token);
 
     return sendSuccess({
       res,
@@ -139,7 +136,11 @@ export const me = async (req, res) => {
   try {
     const user = await User.findOne({
       where: { id: req.user.id },
-      relations: ["organization"],
+      relations: [
+        "organizations",
+        "organizations.organization",
+        "organizations.role",
+      ],
     });
 
     if (!user) {
@@ -151,17 +152,67 @@ export const me = async (req, res) => {
       });
     }
 
+    if (user.organizations.length === 0) {
+      return sendSuccess({
+        res,
+        message: "User has been fetched successfully.",
+        data: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          organization: null,
+          totalOrganizations: 0,
+          organizations: [],
+        },
+      });
+    }
+
+    const organizationId = req.headers["organization"];
+
+    let organization = null;
+
+    if (!organizationId) {
+      organization = user.organizations[0].organization;
+
+      return sendSuccess({
+        res,
+        message: "User has been fetched successfully.",
+        data: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          organization: organization,
+          totalOrganizations: user.organizations.length,
+          organizations: user.organizations,
+        },
+      });
+    }
+
+    const organizationExists = user.organizations.find(
+      (org) => org.organizationId === Number(organizationId)
+    );
+
+    if (!organizationExists) {
+      return sendError({
+        res,
+        status: 401,
+        data: null,
+        message: "Organization not found!",
+      });
+    }
+
+    organization = organizationExists.organization;
+
     return sendSuccess({
       res,
       message: "User has been fetched successfully.",
       data: {
-        user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          type: user.type,
-          organization: user.organization.organizationId,
-        },
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        organization: organization,
+        totalOrganizations: user.organizations.length,
+        organizations: user.organizations,
       },
     });
   } catch (err) {

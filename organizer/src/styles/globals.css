@@ -65,25 +65,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.ant-upload-list-item-container {
-  width: 100% !important;
-  height: auto !important;
-  aspect-ratio: 3/2 !important;
-  padding: none !important;
-}
-
-.ant-upload-list-item-container img {
-  object-fit: cover !important;
-}
-
-.ant-upload {
-  width: 100% !important;
-  height: auto !important;
-  border: none !important;
-  background: none !important;
-  justify-content: flex-start !important;
+  margin-top: 1rem;
 }
 
 .ql-editor {
@@ -99,4 +81,17 @@ body {
   font-size: 1rem;
   color: #dfdfdf;
   font-style: normal;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }

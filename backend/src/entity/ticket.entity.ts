@@ -5,71 +5,66 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToOne,
-  PrimaryColumn,
+  ManyToOne,
+  JoinColumn,
+  DeleteDateColumn,
 } from "typeorm";
 
-import { Event } from "./event.entity";
+import { Event } from "./index";
 
 @Entity({ name: "tickets" })
-export class Ticket extends BaseEntity {
+export default class Ticket extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false, type: "text" })
+  @Column("text", { nullable: false })
   name: string;
 
-  @Column({ nullable: false, type: "text" })
+  @Column("text", { nullable: false })
   type: string;
 
-  @Column({ nullable: false, type: "int", default: 0 })
+  @Column("numeric", { nullable: false, default: 0 })
   price: number;
 
-  @Column({ nullable: false, type: "int", default: 0 })
+  @Column("int", { nullable: false, default: 0 })
   quantity: number;
 
-  @Column({ nullable: false, type: "int", default: 0 })
+  @Column("int", { nullable: false, default: 0 })
   sold: number;
 
-  @Column({ nullable: false, type: "date" })
+  @Column("date", { nullable: false })
   startDate: string;
 
-  @Column({ nullable: false, type: "date" })
+  @Column("date", { nullable: false })
   endDate: string;
 
-  @Column({ nullable: false, type: "int", default: 1 })
+  @Column("int", { nullable: false, default: 1 })
   minPerOrder: number;
 
-  @Column({ nullable: false, type: "int", default: 10 })
+  @Column("int", { nullable: false, default: 10 })
   maxPerOrder: number;
 
-  @Column({ nullable: false, type: "text", default: "public" })
+  @Column("text", { nullable: false, default: "public" })
   visibility: "public" | "private";
 
-  @PrimaryColumn({ nullable: false })
-  eventId: number;
-  @OneToOne(() => Event, (event) => event.id)
-  event: Event;
-
-  @Column({ nullable: true, type: "text" })
+  @Column("text", { nullable: true })
   description?: string;
 
+  // relations with tickets
+  @Column({ nullable: true })
+  eventId: number;
+
+  @ManyToOne(() => Event, (event) => event.tickets)
+  @JoinColumn({ name: "eventId" })
+  event: Event;
+
   // default columns
-  @Column({ nullable: true, type: "text" })
-  createdBy?: number;
-
-  @Column({ nullable: true, type: "text" })
-  updatedBy?: number;
-
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ nullable: true, type: "text" })
+  @DeleteDateColumn()
   deletedAt?: Date;
-
-  @Column({ nullable: true, type: "text" })
-  deletedBy?: number;
 }

@@ -5,40 +5,72 @@ import {
   DiffOutlined,
   FileDoneOutlined,
   UserOutlined,
-  LineChartOutlined,
+  TeamOutlined,
   AppstoreOutlined,
   CalendarOutlined,
+  BarChartOutlined,
+  IdcardOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 
-export const sidebarItems: MenuProps["items"] = [
+export const sidebarItems: any[] = [
   {
     label: "Dashboard",
-    key: "dashboard",
+    key: "/admin/events/[eventId]",
     icon: <DashboardOutlined />,
+    keys: ["/admin/events/[eventId]"],
   },
   {
     label: "Event details",
-    key: "event-details",
+    key: "/admin/events/[eventId]/details",
     icon: <DatabaseOutlined />,
+    keys: ["/admin/events/[eventId]/details"],
   },
   {
     label: "Orders",
-    key: "orders",
+    key: "/admin/events/[eventId]/orders",
     icon: <FileDoneOutlined />,
+    keys: [
+      "/admin/events/[eventId]/orders",
+      "/admin/events/[eventId]/orders/create",
+    ],
   },
   {
     label: "Order options",
-    key: "order-options",
+    key: "/admin/events/[eventId]/order-options",
     icon: <DiffOutlined />,
+    keys: ["/admin/events/[eventId]/tickets"],
     children: [
       {
-        label: "Order form",
-        key: "order-form",
+        label: "Event registration form",
+        key: "/admin/events/[eventId]/registration-form",
+      },
+      {
+        label: "Feedback form",
+        key: "/admin/events/[eventId]/feedback-form",
       },
       {
         label: "Tickets",
-        key: "tickets",
+        key: "/admin/events/[eventId]/tickets",
+      },
+    ],
+  },
+  {
+    label: "Analytics",
+    key: "/admin/events/[eventId]/analytics",
+    icon: <BarChartOutlined />,
+    children: [
+      {
+        label: "Demographics",
+        key: "/admin/events/[eventId]/demographics",
+      },
+      {
+        label: "Sales",
+        key: "sales",
+      },
+      {
+        label: "Feedback and reviews",
+        key: "feedback-and-reviews",
       },
     ],
   },
@@ -80,6 +112,11 @@ export const sidebarItems: MenuProps["items"] = [
       },
     ],
   },
+  {
+    label: "ID card",
+    key: "id-card",
+    icon: <IdcardOutlined />,
+  },
 ];
 
 export const appBarItems: MenuProps["items"] = [
@@ -94,13 +131,13 @@ export const appBarItems: MenuProps["items"] = [
     icon: <CalendarOutlined />,
   },
   {
-    label: "Reports",
-    key: "/admin/reports",
-    icon: <LineChartOutlined />,
+    label: "Team management",
+    key: "/admin/team-management",
+    icon: <TeamOutlined />,
   },
   {
-    label: "Organization settings",
-    key: "/admin/organization-settings",
+    label: "Organization profile",
+    key: "/admin/organization-profile",
     icon: <AppstoreOutlined />,
   },
 ];

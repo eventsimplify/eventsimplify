@@ -5,7 +5,7 @@ import { IUser } from "@/interfaces";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL + "/auth";
 
-const login = async (formData: any) => {
+const login = async (formData: Partial<IUser>) => {
   try {
     const { data } = await axios.post(`${API_URL}/login`, formData);
 
@@ -29,7 +29,7 @@ const getUser = async () => {
   try {
     const { data } = await axios.get(`${API_URL}/me`);
 
-    return data?.data?.user;
+    return data?.data;
   } catch (err: any) {
     handleAxiosError(err);
   }

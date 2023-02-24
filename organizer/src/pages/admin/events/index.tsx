@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Button, Divider, Space, Table, Tag } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
@@ -9,6 +9,7 @@ import IEvent from "@/interfaces/IEvent";
 import EventFilters from "@/components/Filters/EventFilters";
 import { useRouter } from "next/router";
 import { EventService } from "@/services";
+import Link from "next/link";
 
 const columns: ColumnsType<IEvent> = [
   {
@@ -28,7 +29,16 @@ const columns: ColumnsType<IEvent> = [
     dataIndex: "name",
     width: "40%",
     render: (text, record) => {
-      return <a href="#">{text}</a>;
+      return (
+        <Link
+          href={{
+            pathname: "/admin/events/[id]",
+            query: { id: record.id },
+          }}
+        >
+          {text}
+        </Link>
+      );
     },
   },
   {
@@ -53,7 +63,7 @@ const columns: ColumnsType<IEvent> = [
   },
 ];
 
-const Events: React.FC = () => {
+const Events = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
   const [loading, setLoading] = useState("");
   const router = useRouter();
@@ -63,7 +73,6 @@ const Events: React.FC = () => {
   };
 
   const onCreateEventClick = () => {
-    console.log("Create event");
     router.push("/admin/events/create");
   };
 
@@ -79,32 +88,34 @@ const Events: React.FC = () => {
   }, []);
 
   return (
-    <DashboardLayout>
-      <div className="table-card">
-        <div className="table-header">
-          <EventFilters />
-          <Button type="primary" onClick={onCreateEventClick}>
-            Create Event
-          </Button>
-        </div>
-        <Divider />
-        <Table
-          rowKey={(record) => record.id.toString()}
-          columns={columns}
-          dataSource={events}
-          loading={loading === "events"}
-          bordered
-          //@ts-ignore
-          onChange={handleTableChange}
-          pagination={{
-            showSizeChanger: true,
-            showTotal: (total) => `Total ${total} items`,
-            pageSizeOptions: ["10", "20", "50", "100"],
-          }}
-        />
+    <div className="table-card">
+      <div className="table-header">
+        <EventFilters />
+        <Button type="primary" onClick={onCreateEventClick}>
+          Create Event
+        </Button>
       </div>
-    </DashboardLayout>
+      <Divider />
+      <Table
+        rowKey={(record) => record.id.toString()}
+        columns={columns}
+        dataSource={events}
+        loading={loading === "events"}
+        bordered
+        //@ts-ignore
+        onChange={handleTableChange}
+        pagination={{
+          showSizeChanger: true,
+          showTotal: (total) => `Total ${total} items`,
+          pageSizeOptions: ["10", "20", "50", "100"],
+        }}
+      />
+    </div>
   );
+};
+
+Events.getLayout = function getLayout(page: ReactElement) {
+  return <DashboardLayout>{page}</DashboardLayout>;
 };
 
 export default Events;

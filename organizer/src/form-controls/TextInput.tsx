@@ -9,9 +9,10 @@ const TextInput = ({
   rules,
   placeholder,
   disabled,
+  extra,
 }: IFieldProps) => {
   return (
-    <Form.Item name={name} label={label} rules={rules}>
+    <Form.Item name={name} label={label} rules={rules} extra={extra}>
       <Input placeholder={placeholder} disabled={disabled} />
     </Form.Item>
   );

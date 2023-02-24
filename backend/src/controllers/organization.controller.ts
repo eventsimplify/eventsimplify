@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 
-import { OrganizationUser } from "../entity";
-import { Organization } from "../entity/organization.entity";
+import { Invitations, OrganizationUser, Organization, Role } from "../entity";
 import { errorHandler, sendError, sendSuccess } from "../utils";
 
 // @desc    Organization create
@@ -26,7 +25,7 @@ export const create = async (req, res) => {
     const organizationExists = await OrganizationUser.findOne({
       where: {
         userId: req.user.id,
-        role: "owner",
+        roleId: 1,
       },
     });
 
@@ -47,11 +46,19 @@ export const create = async (req, res) => {
 
     await organization.save();
 
+    // get owner role
+    const ownerRole = await Role.findOne({
+      where: {
+        name: "Owner",
+        type: "default",
+      },
+    });
+
     // create organization user role
     await OrganizationUser.create({
       organizationId: organization.id,
       userId: req.user.id,
-      role: "owner",
+      roleId: ownerRole.id,
     }).save();
 
     return sendSuccess({
@@ -61,5 +68,101 @@ export const create = async (req, res) => {
     });
   } catch (err) {
     errorHandler(res, err);
+  }
+};
+
+// @desc Get staff
+// @route GET /organizations/staff
+// @access Private
+export const getStaff = async (req, res) => {
+  try {
+    const organization = await Organization.findOne({
+      where: {
+        id: req.organization.id,
+      },
+      relations: ["users", "users.user", "users.role"],
+    });
+
+    const invitations = await Invitations.find({
+      where: {
+        organizationId: req.organization.id,
+      },
+      relations: ["role"],
+    });
+
+    const roles = await Role.find({
+      where: [
+        {
+          type: "default",
+        },
+        {
+          organizationId: req.organization.id,
+        },
+      ],
+      relations: ["users"],
+    });
+
+    return sendSuccess({
+      res,
+      data: {
+        invitations,
+        staffs: organization.users,
+        roles,
+      },
+      message: "Staff fetched successfully!",
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};
+
+// @desc remove staff from organization
+// @route DELETE /organizations/remove-staff/:id
+// @access Private
+export const removeStaff = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const organizationUser = await OrganizationUser.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!organizationUser) {
+      return sendError({
+        res,
+        status: 404,
+        data: null,
+        message: "Staff not found!",
+      });
+    }
+
+    const ownerRole = await Role.findOne({
+      where: {
+        name: "Owner",
+        type: "default",
+      },
+    });
+
+    // check if user is owner
+    if (organizationUser.roleId === ownerRole.id) {
+      return sendError({
+        res,
+        status: 400,
+        data: null,
+        message: "You cannot remove the owner!",
+      });
+    }
+
+    await organizationUser.remove();
+
+    return sendSuccess({
+      res,
+      data: null,
+      message: "Staff removed successfully!",
+    });
+  } catch (error) {
+    errorHandler(res, error);
   }
 };

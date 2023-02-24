@@ -11,7 +11,7 @@ export const protect = async (req, res, next) => {
       res,
       status: 401,
       data: null,
-      message: "Login required!",
+      message: "Login is required to access this!",
     });
   }
 
@@ -19,7 +19,7 @@ export const protect = async (req, res, next) => {
 
   let user = await User.findOne({
     where: { id: decoded.id },
-    relations: ["organization", "organization.organization"],
+    relations: ["organizations", "organizations.organization"],
   });
 
   if (!user) {
@@ -27,7 +27,7 @@ export const protect = async (req, res, next) => {
       res,
       status: 401,
       data: null,
-      message: "Login required!",
+      message: "Login is required to access this!",
     });
   }
 
@@ -40,7 +40,7 @@ export const protectWithOrganization = async (req, res, next) => {
   protect(req, res, async () => {
     const { user } = req;
 
-    if (!user.organization) {
+    if (!user.organizations[0]) {
       return sendError({
         res,
         status: 401,
@@ -49,15 +49,38 @@ export const protectWithOrganization = async (req, res, next) => {
       });
     }
 
-    req.organization = user.organization.organization;
+    const organizationId = req.headers["organization"];
 
-    next();
+    if (!organizationId) {
+      req.organization = user.organizations[0].organization;
+      return next();
+    }
+
+    const organization = user.organizations.find(
+      (org) => org.organization.id === Number(organizationId)
+    );
+
+    if (!organization) {
+      return sendError({
+        res,
+        status: 401,
+        data: null,
+        message: "Organization not found!",
+      });
+    }
+
+    req.organization = organization.organization;
+    return next();
   });
 };
 
 export const protectWithOrganizationAndEvent = async (req, res, next) => {
   protectWithOrganization(req, res, async () => {
-    const { eventId } = req.query;
+    let { eventId } = req.query;
+
+    if (!eventId) {
+      eventId = req.params.eventId;
+    }
 
     if (!eventId || eventId === "undefined") {
       return sendError({
@@ -72,6 +95,7 @@ export const protectWithOrganizationAndEvent = async (req, res, next) => {
       where: {
         id: Number(eventId),
       },
+      relations: ["tickets"],
     });
 
     if (!event) {

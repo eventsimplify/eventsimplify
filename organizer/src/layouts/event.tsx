@@ -3,12 +3,20 @@ import React from "react";
 import Sidebar from "@/components/Layout/Sidebar";
 import { Layout } from "antd";
 
-import styles from "./dashboard.module.css";
+import styles from "./layouts.module.css";
 import Appbar from "@/components/Layout/Appbar";
+import EventProvider, { useEventContext } from "@/contexts/EventProvider";
+import Loader from "@/components/Loader";
 
 const { Content } = Layout;
 
 const EventLayout = ({ children }: { children: React.ReactNode }) => {
+  const { event, loading } = useEventContext();
+
+  if (loading !== "" || !event) {
+    return <Loader />;
+  }
+
   return (
     <div className={styles.dashboard}>
       <Sidebar />
@@ -22,4 +30,16 @@ const EventLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default EventLayout;
+const EventLayoutWithContext = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  return (
+    <EventProvider>
+      <EventLayout>{children}</EventLayout>
+    </EventProvider>
+  );
+};
+
+export default EventLayoutWithContext;

@@ -1,6 +1,8 @@
 import { notification } from "antd";
 import { AxiosError } from "axios";
 
+import { message as messageApi } from "../components/AntDMessage";
+
 export const handleAxiosError = (err: AxiosError) => {
   if (err?.response?.data) {
     notification.open({
@@ -41,9 +43,7 @@ export const handleError = (message: string) => {
 };
 
 export const handleSuccess = (message: string) => {
-  notification.open({
-    message: "Success",
-    description: message,
-    type: "success",
-  });
+  messageApi.success(message);
+
+  return true;
 };

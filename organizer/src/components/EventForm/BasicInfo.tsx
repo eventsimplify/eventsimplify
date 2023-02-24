@@ -1,102 +1,45 @@
 import React from "react";
-import { Col, DatePicker, Form, Input, Radio, Row, Select } from "antd";
-import { eventCategories, eventTypes, locationType } from "@/bootstrap/config";
+import { Col, Row } from "antd";
+import { eventCategories, eventTypes } from "@/bootstrap/config";
+import Field from "@/form-controls/Field";
 
 const BasicInfo = () => {
   return (
     <Row gutter={[16, 0]}>
       <Col span={24}>
-        <Form.Item
+        <Field
           name="name"
           label="Event name"
-          rules={[{ required: true, message: "Please input your event name!" }]}
-        >
-          <Input placeholder="Event title" />
-        </Form.Item>
+          type="text"
+          required
+          placeholder="Event name"
+        />
       </Col>
       <Col span={12}>
-        <Form.Item
+        <Field
           name="type"
           label="Event type"
-          rules={[{ required: true, message: "Please input your event type!" }]}
-        >
-          <Select showSearch placeholder="Select a type" options={eventTypes} />
-        </Form.Item>
+          placeholder="Select event type"
+          type="dropdown"
+          required
+          options={eventTypes}
+        />
       </Col>
       <Col span={12}>
-        <Form.Item
+        <Field
           name="category"
           label="Event category"
-          rules={[
-            { required: true, message: "Please input your event category!" },
-          ]}
-        >
-          <Select
-            placeholder="Select a category"
-            showSearch
-            options={eventCategories}
-          />
-        </Form.Item>
-      </Col>
-      <Col span={24}>
-        <Form.Item
-          name="locationType"
-          label="Location type"
-          rules={[
-            { required: true, message: "Please input your location type!" },
-          ]}
-        >
-          <Radio.Group
-            options={locationType}
-            optionType="button"
-            buttonStyle="solid"
-            size="middle"
-          />
-        </Form.Item>
+          placeholder="Select event category"
+          type="dropdown"
+          required
+          options={eventCategories}
+        />
       </Col>
       <Col span={12}>
-        <Form.Item
-          name="startDate"
-          label="Event start date"
-          rules={[{ required: true, message: "Please input your start date!" }]}
-        >
-          <DatePicker
-            showTime
-            use12Hours
-            minuteStep={15}
-            format="MMMM DD YYYY hh:mm A"
-            style={{ width: "100%" }}
-          />
-        </Form.Item>
+        <Field name="startDate" label="Event start date" type="date" required />
       </Col>
       <Col span={12}>
-        <Form.Item
-          name="endDate"
-          label="Event end date"
-          rules={[
-            { required: true, message: "Please input your event end date!" },
-          ]}
-        >
-          <DatePicker
-            showTime
-            use12Hours
-            minuteStep={15}
-            format="MMMM DD YYYY hh:mm A"
-            style={{ width: "100%" }}
-          />
-        </Form.Item>
-      </Col>
-      <Col span={24}>
-        <Form.Item
-          name="location"
-          label="Location search"
-          rules={[{ required: true, message: "Please input your location!" }]}
-        >
-          <Input.Search
-            placeholder="Search for a location"
-            style={{ width: "100%" }}
-          />
-        </Form.Item>
+        <Field name="endDate" label="Event end date" type="date" required />
       </Col>
     </Row>
   );

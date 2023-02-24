@@ -13,21 +13,6 @@
   z-index: 100;
 }
 
-.navBarHeader {
-  height: 60px;
-  width: calc(100vw - 256px);
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  top: 0px;
-  left: 256px;
-  padding: 0 1rem;
-  z-index: 100;
-}
-
 .sidebar {
   height: 100vh;
   width: 256px;
@@ -49,4 +34,16 @@
 
 .menu {
   padding: 1rem 0px;
+}
+
+.userMenu {
+  display: flex;
+  cursor: pointer;
+  border-color: lightgray;
+  border-width: 1px;
+  border-style: solid;
+  padding: 5px;
+  border-radius: 180px;
+  gap: 0.5rem;
+  max-width: 180px;
 }

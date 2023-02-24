@@ -1,3 +1,4 @@
+import { ReactElement, ReactNode, useEffect } from "react";
 import Router from "next/router";
 import type { AppProps } from "next/app";
 import NProgress from "nprogress";
@@ -8,9 +9,22 @@ import "antd/dist/reset.css";
 import "nprogress/nprogress.css";
 
 import { App as AntDesignApp, ConfigProvider, theme } from "antd";
-import { useEffect } from "react";
 
-export default function App({ Component, pageProps }: AppProps) {
+import AppProvider from "@/contexts/AppProvider";
+import { NextPage } from "next";
+import HelpButton from "@/components/Help";
+import AntDMessage from "@/components/AntDMessage";
+
+// types for next layout
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     const handleRouteStart = () => NProgress.start();
     const handleRouteDone = () => NProgress.done();
@@ -27,6 +41,8 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, []);
 
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
     <ConfigProvider
       theme={{
@@ -34,7 +50,11 @@ export default function App({ Component, pageProps }: AppProps) {
       }}
     >
       <AntDesignApp>
-        <Component {...pageProps} />
+        <AppProvider>
+          <AntDMessage />
+          {getLayout(<Component {...pageProps} />)}
+          <HelpButton />
+        </AppProvider>
       </AntDesignApp>
     </ConfigProvider>
   );

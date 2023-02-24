@@ -51,8 +51,6 @@ export const create = async (req, res) => {
       visibility,
       minPerOrder,
       maxPerOrder,
-      createdBy: req.user.id,
-      updatedBy: req.user.id,
       eventId: req.event.id,
     }).save();
 
@@ -77,6 +75,8 @@ export const list = async (req, res) => {
         eventId: req.event.id,
       },
     });
+
+    console.log(tickets);
 
     return sendSuccess({
       res,

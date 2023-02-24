@@ -14,11 +14,21 @@ const create = async (formData: Partial<IOrganization>) => {
   }
 };
 
-const getStarted = async () => {
+const getStaff = async () => {
   try {
-    const { data } = await axios.get(`${API_URL}/get-started`);
+    const { data } = await axios.get(`${API_URL}/get-staff`);
 
-    return data?.data?.startups;
+    return data?.data;
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
+const removeStaff = async (id: string) => {
+  try {
+    const { data } = await axios.delete(`${API_URL}/remove-staff/${id}`);
+
+    return handleSuccess(data?.message);
   } catch (err: any) {
     handleAxiosError(err);
   }
@@ -26,7 +36,8 @@ const getStarted = async () => {
 
 const exportedObject = {
   create,
-  getStarted,
+  getStaff,
+  removeStaff,
 };
 
 export default exportedObject;

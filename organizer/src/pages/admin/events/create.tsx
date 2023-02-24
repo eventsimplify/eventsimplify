@@ -26,14 +26,6 @@ const Create = () => {
     setLoading("");
   };
 
-  const onSaveDraft = () => {
-    console.log("Save as draft");
-
-    const values = form.getFieldsValue();
-
-    console.log(values);
-  };
-
   return (
     <DashboardLayout>
       <Form
@@ -42,6 +34,7 @@ const Create = () => {
         onFinish={onFinish}
         layout="vertical"
         size="large"
+        validateTrigger="onSubmit"
       >
         <EventForm loading={loading} />
       </Form>

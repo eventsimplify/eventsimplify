@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { AuthService } from "@/services";
-import { IUser } from "@/interfaces";
 import { useRouter } from "next/router";
+import { useAppContext } from "@/contexts/AppProvider";
 
 const useAuth = () => {
-  const [user, setUser] = useState<IUser | null>(null);
+  const { user, setUser } = useAppContext();
   const [loading, setLoading] = useState("loading");
 
   const router = useRouter();
@@ -16,7 +16,6 @@ const useAuth = () => {
     setLoading("");
 
     router.push("/auth/login");
-
     return;
   };
 
@@ -31,7 +30,9 @@ const useAuth = () => {
   };
 
   useEffect(() => {
-    getUser();
+    if (!user) {
+      getUser();
+    }
   }, []);
 
   return {

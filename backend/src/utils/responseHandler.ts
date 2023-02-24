@@ -14,7 +14,7 @@ export const sendSuccess = ({
   res.message = message;
 
   res.status(status).json({
-    status: "success",
+    status: "ok",
     message,
     data,
   });

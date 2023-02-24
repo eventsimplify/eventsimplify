@@ -1,5 +1,5 @@
 import React from "react";
-import { SaveOutlined } from "@ant-design/icons";
+// import { SaveOutlined } from "@ant-design/icons";
 import { Row, Col, Card, Button, Space, Divider } from "antd";
 
 import BasicInfo from "./BasicInfo";
@@ -14,9 +14,6 @@ const EventForm = ({ loading }: { loading: string }) => {
           title="Create new event"
           extra={
             <Space>
-              <Button type="default" htmlType="button" icon={<SaveOutlined />}>
-                Save as draft
-              </Button>
               <Button
                 type="primary"
                 htmlType="submit"

@@ -5,39 +5,44 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
+  DeleteDateColumn,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 
+import { Event, OrganizationUser, User } from "./index";
+
 @Entity({ name: "organizations" })
-export class Organization extends BaseEntity {
+export default class Organization extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false, type: "text" })
+  @Column("text", { nullable: false })
   name: string;
 
-  @Column({ nullable: true, type: "text" })
+  @Column("text", { nullable: true })
   summary?: string;
 
-  @Column({ nullable: true, type: "text" })
+  @Column("text", { nullable: true })
   description?: string;
 
+  @OneToMany(() => Event, (event) => event.organization)
+  events: Event[];
+
+  @OneToMany(
+    () => OrganizationUser,
+    (organizationUser) => organizationUser.organization
+  )
+  users: OrganizationUser[];
+
   // default columns
-
-  @Column({ nullable: true, type: "text" })
-  createdBy?: number;
-
-  @Column({ nullable: true, type: "text" })
-  updatedBy?: number;
-
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ nullable: true, type: "text" })
-  deletedAt?: Date;
-
-  @Column({ nullable: true, type: "text" })
-  deletedBy?: number;
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

@@ -21,6 +21,7 @@ const columns: ColumnsType<ITicket> = [
     title: "Tickets sold",
     dataIndex: "sold",
     width: "20%",
+    render: (text, record) => `${text} / ${record.quantity}`,
   },
   {
     title: "Price",

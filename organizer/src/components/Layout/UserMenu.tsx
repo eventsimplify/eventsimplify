@@ -1,53 +1,75 @@
 import React from "react";
+import { useRouter } from "next/router";
 
-import { QuestionOutlined, UserOutlined } from "@ant-design/icons";
-import { Menu, MenuProps } from "antd";
+import { LogoutOutlined, ProfileOutlined } from "@ant-design/icons";
+import { Avatar, Dropdown, MenuProps, Space } from "antd";
 
-import useAuth from "@/hooks/useAuth";
+import { useAppContext } from "@/contexts/AppProvider";
+import { AuthService } from "@/services";
+
+import styles from "./layout.module.css";
+import { getFirstLetterFromName } from "@/utils";
 
 const UserMenu = () => {
-  const { user, loading, logout } = useAuth();
+  const router = useRouter();
+  const { user } = useAppContext();
 
-  const onClick: MenuProps["onClick"] = (e) => {
-    if (e.key === "logout") {
-      logout();
-    }
+  const logOut = async () => {
+    await AuthService.logout();
+    router.push("/auth/login");
   };
 
-  const userMenuItems = [
+  const userMenuItems: MenuProps["items"] = [
     {
-      label: "Help & Support",
-      key: "help-and-support",
-      icon: <QuestionOutlined />,
+      label: (
+        <Space>
+          <Avatar src={user?.name}>
+            {getFirstLetterFromName(user?.name || "")}
+          </Avatar>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <span
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              {user?.name}
+            </span>
+            <span>{user?.email}</span>
+          </div>
+        </Space>
+      ),
+      key: "name",
+      onMouseEnter: () => {},
     },
     {
-      label: user?.name,
-      key: "user",
-      icon: <UserOutlined />,
-      children: [
-        {
-          label: "Profile",
-          key: "profile",
-        },
-        {
-          label: "Logout",
-          key: "logout",
-        },
-      ],
+      type: "divider",
+    },
+    {
+      icon: <ProfileOutlined />,
+      label: "Profile",
+      key: "profile",
+    },
+    {
+      icon: <LogoutOutlined />,
+      label: "Logout",
+      key: "logout",
+      onClick: logOut,
     },
   ];
 
   return (
-    <Menu
-      onClick={onClick}
-      mode="horizontal"
-      items={userMenuItems}
-      style={{
-        height: "60px",
-        lineHeight: "60px",
-        minWidth: "200px",
-      }}
-    />
+    <Dropdown menu={{ items: userMenuItems }} trigger={["click"]} arrow>
+      <div className={styles.userMenu}>
+        <Avatar style={{ backgroundColor: "#1677FF" }}>
+          {getFirstLetterFromName(user?.name || "")}
+        </Avatar>
+      </div>
+    </Dropdown>
   );
 };
 

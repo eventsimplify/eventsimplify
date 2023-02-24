@@ -33,15 +33,14 @@ export const create = async (req, res) => {
     const event = await Event.create({
       name,
       type,
-      tags,
       startDate,
       endDate,
       summary,
       description,
       organizationId: req.organization.id,
-      createdBy: req.user.id,
-      updatedBy: req.user.id,
-    }).save();
+    });
+
+    await event.save();
 
     return sendSuccess({
       res,
@@ -61,14 +60,34 @@ export const list = async (req, res) => {
   try {
     const events = await Event.find({
       where: { organizationId: req.organization.id },
+      relations: ["tickets"],
     });
 
     return sendSuccess({
       res,
-      data: {
-        events,
-      },
+      data: events,
       message: "Events fetched successfully!",
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};
+
+// @desc    Event detail
+// @route   POST /events/detail/:id
+// @access  Private
+
+export const detail = async (req, res) => {
+  try {
+    const event = await Event.findOne({
+      where: { id: req.event.id },
+      relations: ["tickets"],
+    });
+
+    return sendSuccess({
+      res,
+      data: event,
+      message: "Event fetched successfully!",
     });
   } catch (err) {
     errorHandler(res, err);
