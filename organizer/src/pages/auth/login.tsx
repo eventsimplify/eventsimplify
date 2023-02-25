@@ -79,7 +79,7 @@ const Login: NextPageWithLayout = () => {
         Login
       </Button>
       <Button onClick={onRegiser} type="link">
-        Don't have an account? Register here
+        Dont have an account? Register here
       </Button>
     </Form>
   );
