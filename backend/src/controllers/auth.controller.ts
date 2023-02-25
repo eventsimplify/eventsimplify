@@ -1,8 +1,8 @@
-import * as Yup from "yup";
-import bcrypt from "bcryptjs";
+import * as Yup from 'yup';
+import bcrypt from 'bcryptjs';
 
-import { IUser } from "../interfaces";
-import { User } from "../entity";
+import { IUser } from '../interfaces';
+import { User } from '../entity';
 import {
   errorHandler,
   generateToken,
@@ -10,17 +10,17 @@ import {
   sendSuccess,
   setCookie,
   removeCookie,
-} from "../utils";
+} from '../utils';
 
 // @desc    User login
 // @route   POST /users/login
 // @access  Public
 export const login = async (req, res) => {
   const { email, password } = req.body;
-
+  console.log('I am inside login');
   const schema = Yup.object().shape({
-    email: Yup.string().required("Email is a required field"),
-    password: Yup.string().required("Password is a required field"),
+    email: Yup.string().required('Email is a required field'),
+    password: Yup.string().required('Password is a required field'),
   });
 
   try {
@@ -38,7 +38,7 @@ export const login = async (req, res) => {
         res,
         status: 404,
         data: null,
-        message: "Please provide a valid email address and password",
+        message: 'Please provide a valid email address and password',
       });
     }
 
@@ -49,7 +49,7 @@ export const login = async (req, res) => {
         res,
         status: 404,
         data: null,
-        message: "Please provide a valid email address and password",
+        message: 'Please provide a valid email address and password',
       });
     }
 
@@ -61,7 +61,7 @@ export const login = async (req, res) => {
 
     return sendSuccess({
       res,
-      message: "User has been logged in successfully.",
+      message: 'User has been logged in successfully.',
       data: {
         token,
       },
@@ -78,9 +78,9 @@ export const register = async (req, res) => {
   const { email, password, name } = req.body;
 
   const schema = Yup.object().shape({
-    email: Yup.string().required("Email is a required field"),
-    password: Yup.string().required("Password is a required field"),
-    name: Yup.string().required("Name is a required field"),
+    email: Yup.string().required('Email is a required field'),
+    password: Yup.string().required('Password is a required field'),
+    name: Yup.string().required('Name is a required field'),
   });
 
   try {
@@ -99,7 +99,7 @@ export const register = async (req, res) => {
         res,
         status: 404,
         data: null,
-        message: "User with this email already exists, Please login.",
+        message: 'User with this email already exists, Please login.',
       });
     }
 
@@ -119,7 +119,7 @@ export const register = async (req, res) => {
 
     return sendSuccess({
       res,
-      message: "User has been register successfully.",
+      message: 'User has been register successfully.',
       data: {
         token,
       },
@@ -137,9 +137,9 @@ export const me = async (req, res) => {
     const user = await User.findOne({
       where: { id: req.user.id },
       relations: [
-        "organizations",
-        "organizations.organization",
-        "organizations.role",
+        'organizations',
+        'organizations.organization',
+        'organizations.role',
       ],
     });
 
@@ -148,14 +148,14 @@ export const me = async (req, res) => {
         res,
         status: 404,
         data: null,
-        message: "User not found.",
+        message: 'User not found.',
       });
     }
 
     if (user.organizations.length === 0) {
       return sendSuccess({
         res,
-        message: "User has been fetched successfully.",
+        message: 'User has been fetched successfully.',
         data: {
           id: user.id,
           name: user.name,
@@ -167,7 +167,7 @@ export const me = async (req, res) => {
       });
     }
 
-    const organizationId = req.headers["organization"];
+    const organizationId = req.headers['organization'];
 
     let organization = null;
 
@@ -176,7 +176,7 @@ export const me = async (req, res) => {
 
       return sendSuccess({
         res,
-        message: "User has been fetched successfully.",
+        message: 'User has been fetched successfully.',
         data: {
           id: user.id,
           name: user.name,
@@ -197,7 +197,7 @@ export const me = async (req, res) => {
         res,
         status: 401,
         data: null,
-        message: "Organization not found!",
+        message: 'Organization not found!',
       });
     }
 
@@ -205,7 +205,7 @@ export const me = async (req, res) => {
 
     return sendSuccess({
       res,
-      message: "User has been fetched successfully.",
+      message: 'User has been fetched successfully.',
       data: {
         id: user.id,
         name: user.name,
@@ -230,7 +230,7 @@ export const logout = async (req, res) => {
 
     return sendSuccess({
       res,
-      message: "User has been logged out successfully.",
+      message: 'User has been logged out successfully.',
       data: null,
     });
   } catch (err) {

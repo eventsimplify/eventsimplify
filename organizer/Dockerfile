@@ -1,13 +1,8 @@
-FROM node:14
-
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN npm install
-
+FROM node:18-alpine
+WORKDIR '/app'
+COPY ./package.json ./
+RUN npm install --legacy-peer-deps
 COPY . .
-
-EXPOSE 3000
-
-CMD [ "npm", "run", "dev" ]
+RUN npm install next@latest --legacy-peer-deps
+RUN npm run build
+CMD ["npm","start"] 
