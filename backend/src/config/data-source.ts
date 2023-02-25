@@ -14,13 +14,22 @@ import {
 //subscribers imports
 import { EventEntitySubscriber } from "../subscribers";
 
+//importing ssl certificate
+import fs from "fs";
+import path from "path";
+const caCert = fs.readFileSync(path.join(__dirname, "certificate.crt"));
+
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "bipulpoudel",
-  password: "paramount10",
-  database: "eventsimplify",
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: {
+    rejectUnauthorized: true,
+    ca: caCert,
+  },
   synchronize: true,
   logging: false,
   entities: [

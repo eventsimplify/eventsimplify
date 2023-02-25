@@ -21,7 +21,7 @@ export default class Role extends BaseEntity {
   name: string;
 
   @Column("text", { nullable: false, default: "created" })
-  type: string;
+  type!: string;
 
   @Column("jsonb", { nullable: false, default: [] })
   permissions: IPermission[];

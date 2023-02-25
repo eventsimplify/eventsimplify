@@ -27,8 +27,6 @@ const OrderForm = ({ loading }: { loading: string }) => {
             Tickets information
           </Divider>
           <Tickets />
-          {/* <Divider />
-          <AdditionalInfo /> */}
         </Card>
       </Col>
     </Row>
