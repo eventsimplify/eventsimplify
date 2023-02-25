@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nginx:
-    build: .././nginx
+    build: ./nginx
     ports:
       - "3000:80"
     depends_on:
@@ -10,7 +10,7 @@ services:
       - organizer
 
   backend:
-    build: .././backend
+    build: ./backend
 
   organizer:
-    build: .././organizer
+    build: ./organizer
