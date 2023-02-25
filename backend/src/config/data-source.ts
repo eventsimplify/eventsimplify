@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import fs from 'fs';
+import path from 'path';
 
 // entity imports
 import {
@@ -12,9 +13,7 @@ import {
   Invitations,
   Role,
 } from '../entity';
-const caCert = fs.readFileSync(
-  '/Users/nishanthapa/Documents/EventSimplifyRemasteredBackend/backend/src/config/ca-certificate.crt'
-);
+const caCert = fs.readFileSync(path.join(__dirname, 'ca-certificate.crt'));
 //subscribers imports
 import { EventEntitySubscriber } from '../subscribers';
 const dbHostLocation = process.env.CHOOSE_DB_HOST;
