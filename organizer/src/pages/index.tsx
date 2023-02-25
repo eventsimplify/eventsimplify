@@ -3,7 +3,7 @@ import { Button } from "antd";
 
 import { useRouter } from "next/router";
 
-const index = () => {
+const Index = () => {
   const router = useRouter();
 
   const goToDashboard = () => {
@@ -28,4 +28,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

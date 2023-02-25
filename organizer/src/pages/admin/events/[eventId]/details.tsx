@@ -6,7 +6,7 @@ import EventLayout from "@/layouts/event";
 import { EventService } from "@/services";
 import { useEventContext } from "@/contexts/EventProvider";
 
-const details = () => {
+const Details = () => {
   const { event } = useEventContext();
   const [loading, setLoading] = useState("");
   const [form] = Form.useForm();
@@ -53,4 +53,4 @@ const details = () => {
   );
 };
 
-export default details;
+export default Details;
