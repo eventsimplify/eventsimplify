@@ -7,14 +7,19 @@ import styles from "./layouts.module.css";
 import Appbar from "@/components/Layout/Appbar";
 import EventProvider, { useEventContext } from "@/contexts/EventProvider";
 import Loader from "@/components/Loader";
+import NotFound from "@/components/NotFound";
 
 const { Content } = Layout;
 
 const EventLayout = ({ children }: { children: React.ReactNode }) => {
   const { event, loading } = useEventContext();
 
-  if (loading !== "" || !event) {
+  if (loading) {
     return <Loader />;
+  }
+
+  if (!event) {
+    return <NotFound />;
   }
 
   return (

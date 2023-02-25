@@ -22,7 +22,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (!user) {
-    return <Redirect to="/auth/login" />;
+    return <Redirect to="/auth/login" redirect={window.location.href} />;
   }
 
   if (!organization) {

@@ -11,7 +11,7 @@ const Sidebar: React.FC = () => {
   const [current, setCurrent] = useState(
     useMemo(() => {
       const item = sidebarItems.find((item) => {
-        return item.keys.includes(router.pathname);
+        return item?.keys?.includes(router.pathname);
       });
 
       if (item) return item.key;

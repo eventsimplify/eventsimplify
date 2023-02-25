@@ -26,7 +26,7 @@ export const useEventContext = () => {
 const EventProvider = (props: any) => {
   const { user, getUser, loading: authLoading } = useAppContext();
   const [event, setEvent] = useState<IEvent | null>(null);
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
 
@@ -35,11 +35,11 @@ const EventProvider = (props: any) => {
   }, []);
 
   const getEvent = async () => {
-    setLoading("get");
+    setLoading(true);
     const data = await EventService.detail(router.query.eventId as string);
 
     setEvent(data);
-    setLoading("");
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const EventProvider = (props: any) => {
   }
 
   if (!user) {
-    return <Redirect to="/auth/login" />;
+    return <Redirect to="/auth/login" redirect={window.location.href} />;
   }
 
   return (

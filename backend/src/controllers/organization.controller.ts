@@ -49,7 +49,7 @@ export const create = async (req, res) => {
     // get owner role
     const ownerRole = await Role.findOne({
       where: {
-        name: "Owner",
+        name: "owner",
         type: "default",
       },
     });
@@ -140,7 +140,7 @@ export const removeStaff = async (req, res) => {
 
     const ownerRole = await Role.findOne({
       where: {
-        name: "Owner",
+        name: "owner",
         type: "default",
       },
     });

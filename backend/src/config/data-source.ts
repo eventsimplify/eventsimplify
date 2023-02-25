@@ -1,7 +1,5 @@
-import 'reflect-metadata';
-import { DataSource } from 'typeorm';
-import fs from 'fs';
-import path from 'path';
+import "reflect-metadata";
+import { DataSource } from "typeorm";
 
 // entity imports
 import {
@@ -12,62 +10,37 @@ import {
   Ticket,
   Invitations,
   Role,
-} from '../entity';
-const caCert = fs.readFileSync(path.join(__dirname, 'ca-certificate.crt'));
+} from "../entity";
 //subscribers imports
-import { EventEntitySubscriber } from '../subscribers';
-const dbHostLocation = process.env.CHOOSE_DB_HOST;
+import { EventEntitySubscriber } from "../subscribers";
 
-// if dbHostLocation == "digitalocean", set AppDataSource to this else null
+//importing ssl certificate
+import fs from "fs";
+import path from "path";
+const caCert = fs.readFileSync(path.join(__dirname, "certificate.crt"));
 
-let AppDataSource;
-if (dbHostLocation === 'digitalocean') {
-  AppDataSource = new DataSource({
-    type: 'postgres',
-    host: 'eventsimplify-postgres-db-do-user-12466944-0.b.db.ondigitalocean.com',
-    port: 25060,
-    username: 'doadmin',
-    password: 'AVNS_DNVkKA7XXedS-Hgqufg',
-    database: 'defaultdb',
-    ssl: {
-      rejectUnauthorized: true,
-      ca: caCert,
-    },
-    synchronize: true,
-    logging: false,
-    entities: [
-      User,
-      Event,
-      Organization,
-      OrganizationUser,
-      Ticket,
-      Invitations,
-      Role,
-    ],
-    migrations: [],
-    subscribers: [EventEntitySubscriber],
-  });
-} else {
-  AppDataSource = new DataSource({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'bipulpoudel',
-    password: 'paramount10',
-    database: 'eventsimplify',
-    synchronize: true,
-    logging: false,
-    entities: [
-      User,
-      Event,
-      Organization,
-      OrganizationUser,
-      Ticket,
-      Invitations,
-      Role,
-    ],
-    migrations: [],
-    subscribers: [EventEntitySubscriber],
-  });
-}
-export { AppDataSource };
+export const AppDataSource = new DataSource({
+  type: "postgres",
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: {
+    rejectUnauthorized: true,
+    ca: caCert,
+  },
+  synchronize: true,
+  logging: false,
+  entities: [
+    User,
+    Event,
+    Organization,
+    OrganizationUser,
+    Ticket,
+    Invitations,
+    Role,
+  ],
+  migrations: [],
+  subscribers: [EventEntitySubscriber],
+});

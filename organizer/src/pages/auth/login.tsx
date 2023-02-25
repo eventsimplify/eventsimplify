@@ -29,7 +29,7 @@ const Login: NextPageWithLayout = () => {
         return;
       }
 
-      router.push("/admin/dashboard");
+      window.location.href = "/admin/dashboard";
     }
   };
 
