@@ -6,10 +6,10 @@ import {
   FileDoneOutlined,
   UserOutlined,
   TeamOutlined,
-  AppstoreOutlined,
   CalendarOutlined,
   BarChartOutlined,
   IdcardOutlined,
+  ProfileOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 
@@ -138,7 +138,7 @@ export const appBarItems: MenuProps["items"] = [
   {
     label: "Organization profile",
     key: "/admin/organization-profile",
-    icon: <AppstoreOutlined />,
+    icon: <ProfileOutlined />,
   },
 ];
 

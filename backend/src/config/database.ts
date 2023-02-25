@@ -1,12 +1,21 @@
 import { AppDataSource } from "./data-source";
+import initializeDB from "./initialize";
 
 const connectDB = async () => {
   try {
-    await AppDataSource.initialize();
+    const response = await AppDataSource.initialize();
 
-    console.log(`Database Connected`);
+    if (response.isInitialized) {
+      console.log("Database connection established");
+
+      await initializeDB();
+
+      console.log("Database initialized");
+    }
+
+    return response;
   } catch (error) {
-    console.error(`Error: ${error.message}`);
+    console.error(`Error in database connection: ${error.message}`);
 
     process.exit(1);
   }

@@ -76,8 +76,6 @@ export const list = async (req, res) => {
       },
     });
 
-    console.log(tickets);
-
     return sendSuccess({
       res,
       data: tickets,

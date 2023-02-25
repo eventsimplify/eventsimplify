@@ -29,7 +29,7 @@ const Login: NextPageWithLayout = () => {
         return;
       }
 
-      router.push("/admin/dashboard");
+      window.location.href = "/admin/dashboard";
     }
   };
 
@@ -79,7 +79,7 @@ const Login: NextPageWithLayout = () => {
         Login
       </Button>
       <Button onClick={onRegiser} type="link">
-        Don't have an account? Register here
+        Dont have an account? Register here
       </Button>
     </Form>
   );
