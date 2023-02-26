@@ -1,5 +1,4 @@
 name: Droplet Pipeline
-
 on:
   push:
     branches: [deployment]
