@@ -1,10 +1,8 @@
 import React from "react";
-// import { SaveOutlined } from "@ant-design/icons";
 import { Row, Col, Card, Button, Space, Divider } from "antd";
 
 import BasicInfo from "./BasicInfo";
 import Details from "./Details";
-// import Status from "./Status";
 
 const EventForm = ({ loading }: { loading: string }) => {
   return (

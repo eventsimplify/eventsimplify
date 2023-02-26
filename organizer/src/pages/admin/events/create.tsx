@@ -5,6 +5,7 @@ import DashboardLayout from "@/layouts/dashboard";
 import EventForm from "@/components/EventForm";
 import { EventService } from "@/services";
 import { useRouter } from "next/router";
+import moment from "moment";
 
 const Create = () => {
   const [loading, setLoading] = useState("");
@@ -17,8 +18,8 @@ const Create = () => {
     const formData = {
       name: values.name,
       type: values.type,
-      startDate: values.startDate,
-      endDate: values.endDate,
+      startDate: moment(values.startDate).toDate(),
+      endDate: moment(values.endDate).toDate(),
       summary: values.summary,
       description: values.description,
     };
@@ -40,7 +41,6 @@ const Create = () => {
         name="event-form"
         onFinish={onFinish}
         layout="vertical"
-        size="large"
         validateTrigger="onSubmit"
       >
         <EventForm loading={loading} />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Button, Divider, Table } from "antd";
 
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
@@ -10,6 +10,7 @@ import EventFilters from "@/components/Filters/EventFilters";
 import { ITicket } from "@/interfaces";
 import Actions from "@/components/Table/Actions";
 import { useEventContext } from "@/contexts/EventProvider";
+import EventLayoutWithContext from "@/layouts/event";
 
 const columns: ColumnsType<ITicket> = [
   {
@@ -34,7 +35,7 @@ const columns: ColumnsType<ITicket> = [
   },
 ];
 
-const Orders: React.FC = () => {
+const Orders = () => {
   const { event } = useEventContext();
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [loading, setLoading] = useState("");
@@ -69,28 +70,30 @@ const Orders: React.FC = () => {
   };
 
   return (
-    <EventLayout>
-      <div className="table-card">
-        <div className="table-header">
-          <EventFilters />
-          <Button type="primary" onClick={createOrder}>
-            Add manual order
-          </Button>
-        </div>
-        <Divider />
-        <Table
-          rowKey={(record) => record.id.toString()}
-          columns={columns}
-          dataSource={tickets}
-          loading={loading === "get"}
-          bordered
-          //@ts-ignore
-          onChange={handleTableChange}
-          pagination={false}
-        />
+    <div className="table-card">
+      <div className="table-header">
+        <EventFilters />
+        <Button type="primary" onClick={createOrder}>
+          Add manual order
+        </Button>
       </div>
-    </EventLayout>
+      <Divider />
+      <Table
+        rowKey={(record) => record.id.toString()}
+        columns={columns}
+        dataSource={tickets}
+        loading={loading === "get"}
+        bordered
+        //@ts-ignore
+        onChange={handleTableChange}
+        pagination={false}
+      />
+    </div>
   );
+};
+
+Orders.getLayout = (page: ReactElement) => {
+  return <EventLayoutWithContext>{page}</EventLayoutWithContext>;
 };
 
 export default Orders;

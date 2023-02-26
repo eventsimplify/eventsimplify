@@ -32,10 +32,10 @@ export default class Event extends BaseEntity {
   @Column("text", { nullable: false })
   type: string;
 
-  @Column("date", { nullable: false })
+  @Column("timestamptz", { nullable: false })
   startDate: string;
 
-  @Column("date", { nullable: false })
+  @Column("timestamptz", { nullable: false })
   endDate: string;
 
   @Column("text", { nullable: true })

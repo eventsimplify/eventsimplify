@@ -30,10 +30,9 @@ const Create = () => {
     <EventLayout>
       <Form
         form={form}
-        name="event-form"
+        name="eventForm"
         onFinish={onFinish}
         layout="vertical"
-        size="large"
         validateTrigger="onSubmit"
       >
         <OrderForm loading={loading} />

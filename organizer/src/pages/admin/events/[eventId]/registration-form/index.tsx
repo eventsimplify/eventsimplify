@@ -9,6 +9,7 @@ import RegisterationFormProvider, {
 import { useEventContext } from "@/contexts/EventProvider";
 
 import EventLayoutWithContext from "@/layouts/event";
+import Redirect from "@/components/Redirect";
 
 const { Title, Paragraph } = Typography;
 
@@ -29,6 +30,14 @@ const RegistrationForm = () => {
       getForms();
     }
   }, [event?.id]);
+
+  if (forms.length === 1) {
+    return (
+      <Redirect
+        to={`/admin/events/${event?.id}/registration-form/${forms[0].id}`}
+      />
+    );
+  }
 
   return (
     <Card>

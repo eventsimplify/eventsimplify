@@ -43,9 +43,6 @@ const TicketForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
       form={form}
       layout="vertical"
       name="ticketForm"
-      validateMessages={{
-        required: "Please enter ${label}",
-      }}
       onValuesChange={(changedValues) => {
         if (changedValues.type) {
           setTicketType(changedValues.type);
@@ -56,8 +53,8 @@ const TicketForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
         quantity: 100,
         minPerOrder: 1,
         maxPerOrder: 10,
-        startDate: moment(),
-        endDate: moment(event?.endDate),
+        startDate: moment(event?.createdAt),
+        endDate: moment(event?.createdAt),
       }}
       onFinish={onSubmit}
       validateTrigger={formSubmitted ? ["onChange"] : ["onSubmit"]}
@@ -174,7 +171,10 @@ const TicketForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
               <DatePicker
                 style={{ width: "100%" }}
                 placeholder="Ticket sale start date"
-                format={"DD/MM/YYYY"}
+                showTime
+                use12Hours
+                minuteStep={15}
+                format="MMMM DD YYYY hh:mm A"
               />
             </Form.Item>
           </Col>

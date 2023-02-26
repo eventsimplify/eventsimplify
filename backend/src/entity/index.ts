@@ -6,6 +6,8 @@ import Ticket from "./ticket.entity";
 import Invitations from "./invitation.entity";
 import Role from "./role.entity";
 import RegistrationForm from "./registration-form.entity";
+import EventType from "./event-type.entity";
+import Category from "./category.entity";
 
 export {
   User,
@@ -16,6 +18,8 @@ export {
   Invitations,
   Role,
   RegistrationForm,
+  EventType,
+  Category,
 };
 
 export default {
@@ -27,4 +31,6 @@ export default {
   Invitations,
   Role,
   RegistrationForm,
+  EventType,
+  Category,
 };
