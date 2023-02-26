@@ -39,6 +39,7 @@ const EventProvider = (props: any) => {
     const data = await EventService.detail(router.query.eventId as string);
 
     setEvent(data);
+
     setLoading(false);
   };
 
@@ -46,7 +47,7 @@ const EventProvider = (props: any) => {
     if (router.query.eventId && user) {
       getEvent();
     }
-  }, [router.query, user]);
+  }, [router.query.eventId, user]);
 
   const value = useMemo(
     () => ({

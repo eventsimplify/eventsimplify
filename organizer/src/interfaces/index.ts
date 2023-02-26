@@ -9,6 +9,10 @@ import IEventContext from "./IEventContext";
 import IRole from "./IRole";
 import IInvitation from "./IInvitation";
 import ITeamManagementContext from "./ITeamManagementContext";
+import IQuestion from "./IQuestion";
+import IQuestionOption from "./IQuestionOption";
+import IRegistrationForm from "./IRegistrationForm";
+import IRegistrationFormContext from "./IRegistrationFormContext";
 
 export type {
   IField,
@@ -22,4 +26,8 @@ export type {
   IRole,
   IInvitation,
   ITeamManagementContext,
+  IQuestion,
+  IQuestionOption,
+  IRegistrationForm,
+  IRegistrationFormContext,
 };

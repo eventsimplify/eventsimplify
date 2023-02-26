@@ -1,3 +1,5 @@
+import IQuestionOption from "./IQuestionOption";
+
 export default interface IField {
   name: string;
   type:
@@ -9,14 +11,16 @@ export default interface IField {
     | "date"
     | "email"
     | "rich-text"
-    | "password";
+    | "password"
+    | "options";
   label: string;
   placeholder?: string;
-  options?: any[];
+  options?: IQuestionOption[];
   value?: string;
   required?: boolean;
   disabled?: boolean;
   error?: string;
   extra?: string;
   optionType?: "button" | "default";
+  setOptions?: (options: IQuestionOption[]) => void;
 }

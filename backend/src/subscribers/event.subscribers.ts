@@ -1,6 +1,7 @@
 import { EntitySubscriberInterface, EventSubscriber } from "typeorm";
+import { defaultRegistrationQuestions } from "../config";
 
-import { Event, Ticket } from "../entity/index";
+import { Event, RegistrationForm, Ticket } from "../entity/index";
 
 @EventSubscriber()
 export default class EventEntitySubscriber
@@ -24,7 +25,18 @@ export default class EventEntitySubscriber
     ticket.endDate = event.entity.endDate;
     ticket.eventId = event.entity.id;
 
+    // create general admission registration form
+    const form = new RegistrationForm();
+    form.name = "General Admission";
+    form.questions = defaultRegistrationQuestions;
+    form.additionalQuestions = [];
+    form.eventId = event.entity.id;
+
     // we need to use the event manager to save the ticket because we are in a transaction and we cannot use the repository directly
     await event.manager.getRepository(Ticket).save(ticket);
+
+    await event.manager.getRepository(RegistrationForm).save(form);
+
+    console.log("Event create event triggered");
   }
 }

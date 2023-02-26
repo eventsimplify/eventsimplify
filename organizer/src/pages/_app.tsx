@@ -14,6 +14,7 @@ import AppProvider from "@/contexts/AppProvider";
 import { NextPage } from "next";
 import HelpButton from "@/components/Help";
 import AntDMessage from "@/components/AntDMessage";
+import EmptyTable from "@/components/EmptyTable";
 
 // types for next layout
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {

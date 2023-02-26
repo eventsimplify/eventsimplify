@@ -7,11 +7,9 @@ import {
   UpdateDateColumn,
   OneToMany,
   DeleteDateColumn,
-  ManyToMany,
-  JoinTable,
 } from "typeorm";
 
-import { Event, OrganizationUser, User } from "./index";
+import { Event, OrganizationUser } from "./index";
 
 @Entity({ name: "organizations" })
 export default class Organization extends BaseEntity {

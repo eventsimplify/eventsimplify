@@ -82,6 +82,14 @@ export const protectWithOrganizationAndEvent = async (req, res, next) => {
       eventId = req.params.eventId;
     }
 
+    if (!eventId) {
+      eventId = req.body.eventId;
+    }
+
+    if (!eventId) {
+      eventId = req.headers["event"];
+    }
+
     if (!eventId || eventId === "undefined") {
       return sendError({
         res,

@@ -4,10 +4,12 @@ import { Form } from "antd";
 import DashboardLayout from "@/layouts/dashboard";
 import EventForm from "@/components/EventForm";
 import { EventService } from "@/services";
+import { useRouter } from "next/router";
 
 const Create = () => {
   const [loading, setLoading] = useState("");
   const [form] = Form.useForm();
+  const router = useRouter();
 
   const onFinish = async (values: any) => {
     setLoading("create");
@@ -21,7 +23,12 @@ const Create = () => {
       description: values.description,
     };
 
-    await EventService.create(formData);
+    const response = await EventService.create(formData);
+
+    if (response) {
+      form.resetFields();
+      router.back();
+    }
 
     setLoading("");
   };

@@ -102,7 +102,6 @@ const Events = () => {
         dataSource={events}
         loading={loading === "events"}
         bordered
-        //@ts-ignore
         onChange={handleTableChange}
         pagination={{
           showSizeChanger: true,

@@ -2,15 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 
 // entity imports
-import {
-  User,
-  Event,
-  OrganizationUser,
-  Organization,
-  Ticket,
-  Invitations,
-  Role,
-} from "../entity";
+import Entities from "../entity";
 //subscribers imports
 import { EventEntitySubscriber } from "../subscribers";
 
@@ -26,21 +18,13 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  ssl: {
+  ssl: process.env.NODE_ENV === "production" && {
     rejectUnauthorized: true,
     ca: caCert,
   },
   synchronize: true,
   logging: false,
-  entities: [
-    User,
-    Event,
-    Organization,
-    OrganizationUser,
-    Ticket,
-    Invitations,
-    Role,
-  ],
+  entities: [...Object.values(Entities)],
   migrations: [],
   subscribers: [EventEntitySubscriber],
 });

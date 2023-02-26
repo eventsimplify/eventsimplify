@@ -8,6 +8,7 @@ import {
   Radio,
   Textarea,
   RichText,
+  Options,
 } from "./index";
 import PasswordInput from "./Password";
 
@@ -22,6 +23,7 @@ const Field = ({ ...field }: IField) => {
     options,
     extra,
     optionType = "button",
+    setOptions,
   } = field;
 
   let validations = [];
@@ -49,6 +51,7 @@ const Field = ({ ...field }: IField) => {
     options,
     extra,
     optionType,
+    setOptions,
   };
 
   switch (type) {
@@ -82,6 +85,10 @@ const Field = ({ ...field }: IField) => {
 
     case "password": {
       return <PasswordInput key={name} {...props} />;
+    }
+
+    case "options": {
+      return <Options key={name} {...props} />;
     }
 
     default:

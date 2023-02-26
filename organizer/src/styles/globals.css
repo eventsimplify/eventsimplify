@@ -95,3 +95,9 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.flex-justify {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
