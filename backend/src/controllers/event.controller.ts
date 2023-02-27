@@ -61,6 +61,7 @@ export const list = async (req, res) => {
     const events = await Event.find({
       where: { organizationId: req.organization.id },
       relations: ["tickets"],
+      select: ["id", "name", "type", "startDate", "endDate"],
     });
 
     return sendSuccess({

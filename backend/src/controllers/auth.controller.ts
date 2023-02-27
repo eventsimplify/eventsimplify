@@ -53,7 +53,10 @@ export const login = async (req, res) => {
       });
     }
 
-    let user: IUser = await User.findOneBy({ email });
+    let user: IUser = await User.findOne({
+      where: { email },
+      select: ["id", "name", "email"],
+    });
 
     const token = generateToken(user.id);
 
@@ -63,7 +66,7 @@ export const login = async (req, res) => {
       res,
       message: "User has been logged in successfully.",
       data: {
-        token,
+        user,
       },
     });
   } catch (err) {
@@ -121,7 +124,8 @@ export const register = async (req, res) => {
       res,
       message: "User has been register successfully.",
       data: {
-        token,
+        name: user.name,
+        email: user.email,
       },
     });
   } catch (err) {
