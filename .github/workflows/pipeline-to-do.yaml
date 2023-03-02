@@ -16,3 +16,4 @@ jobs:
         run: |
           echo ${{secrets.DROPLET_PW}} | sudo -S docker-compose down
           echo ${{secrets.DROPLET_PW}} | sudo -S docker-compose up --build -d
+# setup to old eventsimplify repo
