@@ -25,6 +25,7 @@ const Field = ({ ...field }: IField) => {
     extra,
     optionType = "button",
     setOptions,
+    form,
   } = field;
 
   let validations = [];
@@ -53,6 +54,7 @@ const Field = ({ ...field }: IField) => {
     extra,
     optionType,
     setOptions,
+    form,
   };
 
   switch (type) {

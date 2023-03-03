@@ -1,3 +1,4 @@
+import { FormInstance } from "rc-field-form/lib/interface";
 import IQuestionOption from "./IQuestionOption";
 
 export default interface IFieldProps {
@@ -10,4 +11,5 @@ export default interface IFieldProps {
   extra?: string;
   optionType?: "button" | "default";
   setOptions?: (options: IQuestionOption[]) => void;
+  form?: FormInstance;
 }

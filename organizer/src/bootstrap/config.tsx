@@ -47,13 +47,17 @@ export const sidebarItems: any[] = [
         label: "Speakers",
         key: "/admin/events/[eventId]/details/speakers",
       },
+      {
+        label: "FAQs",
+        key: "/admin/events/[eventId]/details/faqs",
+      },
     ],
   },
   {
     label: "Event registration form",
-    key: "/admin/events/[eventId]/registration-form",
+    key: "/admin/events/[eventId]/registration-form/[id]",
     icon: <DiffOutlined />,
-    keys: ["/admin/events/[eventId]/registration-form"],
+    keys: ["/admin/events/[eventId]/registration-form/[id]"],
   },
   {
     label: "Manage tickets",

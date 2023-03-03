@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 import { RegistrationForm } from "../entity";
-import { errorHandler, sendSuccess } from "../utils";
+import { errorHandler, sendError, sendSuccess } from "../utils";
 
 // @desc    Create registration form
 // @route   POST /registration-forms/create
@@ -110,8 +110,9 @@ export const update = async (req, res) => {
     });
 
     if (!form) {
-      return res.status(404).json({
-        success: false,
+      return sendError({
+        res,
+        status: 404,
         message: "Form not found!",
       });
     }
@@ -148,8 +149,9 @@ export const remove = async (req, res) => {
     });
 
     if (!form) {
-      return res.status(404).json({
-        success: false,
+      return sendError({
+        res,
+        status: 404,
         message: "Form not found!",
       });
     }

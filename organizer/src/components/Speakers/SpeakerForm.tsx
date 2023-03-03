@@ -73,7 +73,7 @@ const SpeakerForm = () => {
           <Field
             name="description"
             label="Description"
-            type="textarea"
+            type="rich-text"
             placeholder="Provide a short description of the speaker"
             required
           />

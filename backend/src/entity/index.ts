@@ -13,6 +13,7 @@ import Order from "./orders.entity";
 import OrderDetails from "./order-details.entity";
 import PaymentDetails from "./payment-details.entity";
 import Speaker from "./speaker.entity";
+import Faq from "./faq.entity";
 
 export {
   User,
@@ -30,6 +31,7 @@ export {
   OrderDetails,
   PaymentDetails,
   Speaker,
+  Faq,
 };
 
 export default {
@@ -48,4 +50,5 @@ export default {
   OrderDetails,
   PaymentDetails,
   Speaker,
+  Faq,
 };

@@ -5,3 +5,8 @@
   align-items: center;
   height: 100dvh;
 }
+
+.ql-editor {
+  min-height: 100%;
+  height: 100%;
+}

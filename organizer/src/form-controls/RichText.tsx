@@ -11,10 +11,19 @@ const ReactQuill = dynamic(import("react-quill"), {
 
 import "react-quill/dist/quill.snow.css";
 
-const RichText = ({ name, label, rules, placeholder }: IFieldProps) => {
+const RichText = ({ name, label, rules, placeholder, form }: IFieldProps) => {
   return (
     <Form.Item name={name} label={label} rules={rules}>
-      <ReactQuill theme="snow" placeholder={placeholder} />
+      <ReactQuill
+        theme="snow"
+        placeholder={placeholder}
+        onChange={(v) => {
+          form?.setFieldValue(name, v);
+        }}
+        style={{
+          minHeight: "200px",
+        }}
+      />
     </Form.Item>
   );
 };

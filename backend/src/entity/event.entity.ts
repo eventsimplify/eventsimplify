@@ -13,7 +13,7 @@ import {
   DeleteDateColumn,
 } from "typeorm";
 
-import { Ticket, Organization, RegistrationForm } from "./index";
+import { Ticket, Organization, RegistrationForm, Faq } from "./index";
 import Speaker from "./speaker.entity";
 
 @Entity({ name: "events" })
@@ -67,6 +67,9 @@ export default class Event extends BaseEntity {
 
   @OneToMany(() => Speaker, (speaker) => speaker.event)
   speakers: Speaker[];
+
+  @OneToMany(() => Faq, (faq) => faq.event)
+  faqs: Faq[];
 
   // default columns
   @CreateDateColumn()

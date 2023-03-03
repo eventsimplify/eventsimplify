@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import { ISpeaker } from "@/interfaces";
+import { IFaq } from "@/interfaces";
 import { handleAxiosError, handleSuccess } from "@/utils";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL + "/speakers";
+const API_URL = process.env.NEXT_PUBLIC_API_URL + "/faqs";
 
-const create = async (formData: Partial<ISpeaker>) => {
+const create = async (formData: Partial<IFaq>) => {
   try {
     const { data } = await axios.post(`${API_URL}`, formData);
 
@@ -30,7 +30,7 @@ const update = async ({
   formData,
 }: {
   id: number;
-  formData: Partial<ISpeaker>;
+  formData: Partial<IFaq>;
 }) => {
   try {
     const { data } = await axios.put(`${API_URL}/${id}`, formData);

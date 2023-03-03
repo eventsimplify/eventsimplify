@@ -4,6 +4,8 @@ import { Card, Avatar, Col, Space, Typography, Button, Popconfirm } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ISpeaker } from "@/interfaces";
 import { useEventContext } from "@/contexts/EventProvider";
+import parse from "html-react-parser";
+import ShowRichText from "../ShowRichText";
 
 const { Paragraph, Text } = Typography;
 
@@ -57,14 +59,7 @@ const SpeakerItem = ({ speaker }: { speaker: ISpeaker }) => {
               <Text>{jobTitle}</Text>
             </Space>
           </Space>
-          <Paragraph
-            type="secondary"
-            ellipsis={{
-              rows: 2,
-            }}
-          >
-            {description}
-          </Paragraph>
+          {/* <ShowRichText text={description} /> */}
         </Space>
       </Card>
     </Col>

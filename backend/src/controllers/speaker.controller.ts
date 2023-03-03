@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 import { Speaker } from "../entity";
-import { errorHandler, sendSuccess } from "../utils";
+import { errorHandler, sendError, sendSuccess } from "../utils";
 
 // @desc    Create speaker
 // @route   POST /speakers
@@ -24,15 +24,13 @@ export const create = async (req, res) => {
       description,
     });
 
-    const speaker = await Speaker.create({
+    await Speaker.create({
       name,
       jobTitle,
       company,
       description,
       eventId: req.event.id,
     }).save();
-
-    await speaker.save();
 
     return sendSuccess({
       res,
@@ -96,8 +94,9 @@ export const update = async (req, res) => {
     });
 
     if (!speaker) {
-      return res.status(404).json({
-        success: false,
+      return sendError({
+        res,
+        status: 404,
         message: "Speaker not found!",
       });
     }
@@ -135,8 +134,9 @@ export const remove = async (req, res) => {
     });
 
     if (!speaker) {
-      return res.status(404).json({
-        success: false,
+      return sendError({
+        res,
+        status: 404,
         message: "Speaker not found!",
       });
     }

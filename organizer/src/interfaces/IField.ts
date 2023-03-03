@@ -1,3 +1,4 @@
+import { FormInstance } from "antd";
 import IQuestionOption from "./IQuestionOption";
 
 export default interface IField {
@@ -24,4 +25,5 @@ export default interface IField {
   extra?: string;
   optionType?: "button" | "default";
   setOptions?: (options: IQuestionOption[]) => void;
+  form?: FormInstance;
 }
