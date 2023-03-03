@@ -29,7 +29,7 @@ export const login = async (req, res) => {
       password,
     });
 
-    let userExists: IUser = await User.findOneBy({
+    let userExists = await User.findOneBy({
       email,
     });
 
@@ -53,12 +53,12 @@ export const login = async (req, res) => {
       });
     }
 
-    let user: IUser = await User.findOne({
+    let user = await User.findOne({
       where: { email },
       select: ["id", "name", "email"],
     });
 
-    const token = generateToken(user.id);
+    const token = generateToken(user.providerId);
 
     await setCookie(res, token);
 
@@ -93,7 +93,7 @@ export const register = async (req, res) => {
       name,
     });
 
-    let userExists: IUser = await User.findOneBy({
+    let userExists = await User.findOneBy({
       email,
     });
 
@@ -116,7 +116,7 @@ export const register = async (req, res) => {
 
     await user.save();
 
-    const token = generateToken(user.id);
+    const token = generateToken(user.providerId);
 
     await setCookie(res, token);
 

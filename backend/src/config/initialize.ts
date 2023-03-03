@@ -1,5 +1,5 @@
-import { defaultCategories, defaultTypes } from ".";
-import { Category, EventType, Role } from "../entity";
+import { defaultCategories, defaultPermissions, defaultTypes } from ".";
+import { Category, EventType, Permission, Role } from "../entity";
 
 // this is used to create default data in the database
 const initializeDB = async () => {
@@ -48,6 +48,24 @@ const initializeDB = async () => {
       await Category.insert(values);
 
       console.log("Categories created");
+    }
+
+    const permissions = await Permission.find();
+
+    if (permissions.length !== defaultPermissions.length) {
+      const notCreatedPermissions = defaultPermissions.filter((permission) => {
+        return !permissions.find((p) => p.action === permission);
+      });
+
+      await Permission.insert(
+        notCreatedPermissions.map((permission) => {
+          return {
+            action: permission,
+          };
+        })
+      );
+
+      console.log(`Permissions created: ${notCreatedPermissions.join(", ")}`);
     }
   } catch (error) {
     console.error(`Error in database initialization: ${error.message}`);

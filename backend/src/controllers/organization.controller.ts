@@ -1,6 +1,12 @@
 import * as Yup from "yup";
 
-import { Invitations, OrganizationUser, Organization, Role } from "../entity";
+import {
+  Invitations,
+  OrganizationUser,
+  Organization,
+  Role,
+  Permission,
+} from "../entity";
 import { errorHandler, sendError, sendSuccess } from "../utils";
 
 // @desc    Organization create
@@ -102,12 +108,15 @@ export const getStaff = async (req, res) => {
       relations: ["users"],
     });
 
+    const permissions = await Permission.find({});
+
     return sendSuccess({
       res,
       data: {
         invitations,
         staffs: organization.users,
         roles,
+        permissions,
       },
       message: "Staff fetched successfully!",
     });

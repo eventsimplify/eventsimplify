@@ -6,6 +6,7 @@ import files from "./file.route";
 import invitation from "./invitation.route";
 import role from "./role.route";
 import registrationForm from "./registration-form.route";
+import speaker from "./speaker.route";
 
 import { sendError } from "../utils";
 
@@ -18,6 +19,7 @@ const rootRoutes = (app) => {
   app.use("/invitations", invitation);
   app.use("/roles", role);
   app.use("/registration-forms", registrationForm);
+  app.use("/speakers", speaker);
 
   app.use("*", (req, res) => {
     return sendError({

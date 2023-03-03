@@ -8,6 +8,11 @@ import Role from "./role.entity";
 import RegistrationForm from "./registration-form.entity";
 import EventType from "./event-type.entity";
 import Category from "./category.entity";
+import Permission from "./permission.entity";
+import Order from "./orders.entity";
+import OrderDetails from "./order-details.entity";
+import PaymentDetails from "./payment-details.entity";
+import Speaker from "./speaker.entity";
 
 export {
   User,
@@ -20,6 +25,11 @@ export {
   RegistrationForm,
   EventType,
   Category,
+  Permission,
+  Order,
+  OrderDetails,
+  PaymentDetails,
+  Speaker,
 };
 
 export default {
@@ -33,4 +43,9 @@ export default {
   RegistrationForm,
   EventType,
   Category,
+  Permission,
+  Order,
+  OrderDetails,
+  PaymentDetails,
+  Speaker,
 };

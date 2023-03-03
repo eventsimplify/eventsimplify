@@ -8,7 +8,7 @@ import {
   DeleteDateColumn,
 } from "typeorm";
 
-@Entity({ name: "event-types" })
+@Entity({ name: "event_types" })
 export default class EventType extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

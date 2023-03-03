@@ -14,6 +14,7 @@ import {
 } from "typeorm";
 
 import { Ticket, Organization, RegistrationForm } from "./index";
+import Speaker from "./speaker.entity";
 
 @Entity({ name: "events" })
 export default class Event extends BaseEntity {
@@ -63,6 +64,9 @@ export default class Event extends BaseEntity {
     (registrationForm) => registrationForm.event
   )
   forms: RegistrationForm[];
+
+  @OneToMany(() => Speaker, (speaker) => speaker.event)
+  speakers: Speaker[];
 
   // default columns
   @CreateDateColumn()

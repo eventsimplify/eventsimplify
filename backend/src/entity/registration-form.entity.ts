@@ -14,7 +14,7 @@ import { Event } from "./index";
 
 import { IQuestion } from "../interfaces";
 
-@Entity({ name: "registration-forms" })
+@Entity({ name: "registration_forms" })
 export default class RegistraionForm extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

@@ -211,3 +211,23 @@ export const defaultCategories = [
     value: "travel-and-outdoor",
   },
 ];
+
+export const defaultPermissions = [
+  "events.create",
+  "events.list",
+  "events.edit",
+  "events.delete",
+  "tickets.create",
+  "tickets.list",
+  "tickets.edit",
+  "tickets.delete",
+  "orders.list",
+  "orders.edit",
+  "orders.delete",
+  "orders.manual-create",
+  "organizations.profile",
+  "forms.create",
+  "forms.list",
+  "forms.edit",
+  "forms.delete",
+];

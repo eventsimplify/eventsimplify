@@ -6,9 +6,9 @@ import React, {
   useState,
 } from "react";
 
-import { IEvent, IEventContext } from "@/interfaces";
+import { IEvent, IEventContext, ISpeaker } from "@/interfaces";
 import { useRouter } from "next/router";
-import { EventService } from "@/services";
+import { EventService, SpeakerService } from "@/services";
 import { useAppContext } from "./AppProvider";
 import Redirect from "@/components/Redirect";
 import Loader from "@/components/Loader";
@@ -26,7 +26,10 @@ export const useEventContext = () => {
 const EventProvider = (props: any) => {
   const { user, getUser, loading: authLoading } = useAppContext();
   const [event, setEvent] = useState<IEvent | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState("event");
+  const [speakers, setSpeakers] = useState<ISpeaker[]>([]);
+
+  const [speaker, setSpeaker] = useState<ISpeaker | null>(null);
 
   const router = useRouter();
 
@@ -35,12 +38,44 @@ const EventProvider = (props: any) => {
   }, []);
 
   const getEvent = async () => {
-    setLoading(true);
+    setLoading("event");
     const data = await EventService.detail(router.query.eventId as string);
-
     setEvent(data);
+    setLoading("");
+  };
 
-    setLoading(false);
+  const getSpeakers = async () => {
+    setLoading("speakers");
+    const response = await SpeakerService.list();
+    setSpeakers(response);
+    setLoading("");
+  };
+
+  const updateSpeaker = async (formData: any) => {
+    setLoading("edit-speaker");
+    if (!speaker?.id) return;
+    const response = await SpeakerService.update({
+      id: speaker.id,
+      formData,
+    });
+    await getSpeakers();
+    setLoading("");
+    return response;
+  };
+
+  const createSpeaker = async (formData: any) => {
+    setLoading("create-speaker");
+    const response = await SpeakerService.create(formData);
+    await getSpeakers();
+    setLoading("");
+    return response;
+  };
+
+  const deleteSpeaker = async (id: number) => {
+    setLoading("delete-speaker");
+    await SpeakerService.remove(id);
+    await getSpeakers();
+    setLoading("");
   };
 
   useEffect(() => {
@@ -55,8 +90,15 @@ const EventProvider = (props: any) => {
       setEvent,
       loading,
       setLoading,
+      speakers,
+      getSpeakers,
+      speaker,
+      setSpeaker,
+      createSpeaker,
+      updateSpeaker,
+      deleteSpeaker,
     }),
-    [event, loading]
+    [event, loading, speakers, speaker]
   );
 
   if (authLoading) {

@@ -9,6 +9,7 @@ import {
   Textarea,
   RichText,
   Options,
+  Socials,
 } from "./index";
 import PasswordInput from "./Password";
 
@@ -89,6 +90,10 @@ const Field = ({ ...field }: IField) => {
 
     case "options": {
       return <Options key={name} {...props} />;
+    }
+
+    case "socials": {
+      return <Socials key={name} {...props} />;
     }
 
     default:

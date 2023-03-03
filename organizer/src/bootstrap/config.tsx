@@ -10,6 +10,8 @@ import {
   BarChartOutlined,
   IdcardOutlined,
   ProfileOutlined,
+  BookOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 
 import { IQuestion } from "../interfaces";
@@ -25,36 +27,69 @@ export const sidebarItems: any[] = [
   },
   {
     label: "Event details",
-    key: "/admin/events/[eventId]/details",
+    key: "event-details",
     icon: <DatabaseOutlined />,
-    keys: ["/admin/events/[eventId]/details"],
+    keys: [
+      "/admin/events/[eventId]/details",
+      "/admin/events/[eventId]/location",
+      "/admin/events/[eventId]/speakers",
+    ],
+    children: [
+      {
+        label: "Details",
+        key: "/admin/events/[eventId]/details",
+      },
+      {
+        label: "Location",
+        key: "/admin/events/[eventId]/details/location",
+      },
+      {
+        label: "Speakers",
+        key: "/admin/events/[eventId]/details/speakers",
+      },
+    ],
+  },
+  {
+    label: "Event registration form",
+    key: "/admin/events/[eventId]/registration-form",
+    icon: <DiffOutlined />,
+    keys: ["/admin/events/[eventId]/registration-form"],
+  },
+  {
+    label: "Manage tickets",
+    key: "manage-tickets",
+    icon: <BookOutlined />,
+    keys: [
+      "/admin/events/[eventId]/tickets",
+      "/admin/events/[eventId]/promo-codes",
+    ],
+    children: [
+      {
+        label: "Tickets",
+        key: "/admin/events/[eventId]/tickets",
+      },
+      {
+        label: "Promo codes",
+        key: "/admin/events/[eventId]/promo-codes",
+      },
+    ],
   },
   {
     label: "Orders",
-    key: "/admin/events/[eventId]/orders",
+    key: "orders",
     icon: <FileDoneOutlined />,
     keys: [
       "/admin/events/[eventId]/orders",
       "/admin/events/[eventId]/orders/create",
     ],
-  },
-  {
-    label: "Order options",
-    key: "/admin/events/[eventId]/order-options",
-    icon: <DiffOutlined />,
-    keys: ["/admin/events/[eventId]/tickets"],
     children: [
       {
-        label: "Event registration form",
-        key: "/admin/events/[eventId]/registration-form",
+        label: "Orders",
+        key: "/admin/events/[eventId]/orders",
       },
       {
-        label: "Feedback form",
-        key: "/admin/events/[eventId]/feedback-form",
-      },
-      {
-        label: "Tickets",
-        key: "/admin/events/[eventId]/tickets",
+        label: "Create manual order",
+        key: "/admin/events/[eventId]/orders/create",
       },
     ],
   },
@@ -101,17 +136,25 @@ export const sidebarItems: any[] = [
     ],
   },
   {
-    label: "Manage Attendees",
-    key: "manage-attendees",
-    icon: <UserOutlined />,
+    label: "Manage",
+    key: "manage",
+    icon: <SettingOutlined />,
     children: [
       {
-        label: "Attendees list",
-        key: "attendees-list",
+        label: "Attendees",
+        key: "attendees",
       },
       {
-        label: "Email to attendees",
-        key: "email-to-attendees",
+        label: "Speakers",
+        key: "speakers",
+      },
+      {
+        label: "Sponsors",
+        key: "sponsors",
+      },
+      {
+        label: "Volunteers",
+        key: "volunteers",
       },
     ],
   },

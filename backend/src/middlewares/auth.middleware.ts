@@ -18,7 +18,7 @@ export const protect = async (req, res, next) => {
   let decoded: any = jwt_decode(token);
 
   let user = await User.findOne({
-    where: { id: decoded.id },
+    where: { providerId: decoded.id },
     relations: ["organizations", "organizations.organization"],
   });
 
@@ -32,6 +32,9 @@ export const protect = async (req, res, next) => {
   }
 
   req.user = user;
+
+  // set user to global variable
+  globalThis.user = user;
 
   next();
 };

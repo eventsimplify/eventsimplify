@@ -3,20 +3,14 @@ import { Button, Card, Typography } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 
 import { ITicket } from "@/interfaces";
+import { useOrderFormContext } from "@/contexts/OrderFormProvider";
 
 const { Title, Text } = Typography;
 const { Meta } = Card;
 
-const Ticket = ({
-  ticket,
-  selectedTickets,
-  setSelectedTickets,
-}: {
-  ticket: ITicket;
+const Ticket = ({ ticket }: { ticket: ITicket }) => {
+  const { selectedTickets, setSelectedTickets } = useOrderFormContext();
 
-  selectedTickets: ITicket[];
-  setSelectedTickets: React.Dispatch<React.SetStateAction<ITicket[]>>;
-}) => {
   const { name, description, maxPerOrder } = ticket;
 
   const handleAddTicket = () => {

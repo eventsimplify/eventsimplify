@@ -1,20 +1,16 @@
-import React, { Dispatch, SetStateAction, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Col, Row, Typography } from "antd";
 
 import Ticket from "./Ticket";
 import { ITicket } from "@/interfaces";
 import { useEventContext } from "@/contexts/EventProvider";
+import { useOrderFormContext } from "@/contexts/OrderFormProvider";
 
 const { Title, Paragraph } = Typography;
 
-const Tickets = ({
-  selectedTickets,
-  setSelectedTickets,
-}: {
-  selectedTickets: ITicket[];
-  setSelectedTickets: Dispatch<SetStateAction<ITicket[]>>;
-}) => {
+const Tickets = () => {
   const { event } = useEventContext();
+  const { selectedTickets } = useOrderFormContext();
 
   const totalPrice = useMemo(() => {
     let total = 0;
@@ -34,11 +30,7 @@ const Tickets = ({
       </Col>
       {event?.tickets?.map((ticket: ITicket) => (
         <Col span={6} key={ticket.id}>
-          <Ticket
-            ticket={ticket}
-            selectedTickets={selectedTickets}
-            setSelectedTickets={setSelectedTickets}
-          />
+          <Ticket ticket={ticket} />
         </Col>
       ))}
       <Col

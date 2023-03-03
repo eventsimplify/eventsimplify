@@ -1,26 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, Button, Space, Divider, Steps } from "antd";
 
 import AttendeeInfo from "./AttendeeInfo";
 import Tickets from "./Tickets";
 import PaymentInformation from "./PaymentInformation";
-import { ITicket } from "@/interfaces";
 import Confirmation from "./Confirmation";
+import OrderFormProvider, {
+  useOrderFormContext,
+} from "@/contexts/OrderFormProvider";
 
-const OrderForm = ({ loading }: { loading: string }) => {
-  const [currentStep, setCurrentStep] = useState(0);
-
-  const [selectedTickets, setSelectedTickets] = useState<ITicket[]>([]);
+const OrderForm = () => {
+  const { currentStep, setCurrentStep, loading, selectedTickets } =
+    useOrderFormContext();
 
   const orderSteps = [
     {
       title: "Ticket information",
-      content: (
-        <Tickets
-          selectedTickets={selectedTickets}
-          setSelectedTickets={setSelectedTickets}
-        />
-      ),
+      content: <Tickets />,
     },
     {
       title: "Attendee information",
@@ -32,7 +28,7 @@ const OrderForm = ({ loading }: { loading: string }) => {
     },
     {
       title: "Confirmation",
-      content: <Confirmation selectedTickets={selectedTickets} />,
+      content: <Confirmation />,
     },
   ];
 
@@ -48,12 +44,23 @@ const OrderForm = ({ loading }: { loading: string }) => {
           >
             Previous
           </Button>
-          {currentStep < orderSteps.length - 1 && (
+          {[0, 2].includes(currentStep) && (
             <Button
               type="primary"
               htmlType="button"
               loading={loading === "create"}
               onClick={() => setCurrentStep(currentStep + 1)}
+            >
+              Next
+            </Button>
+          )}
+
+          {currentStep === 1 && (
+            <Button
+              type="primary"
+              htmlType="submit"
+              form="attendeeInfoForm"
+              loading={loading === "create"}
             >
               Next
             </Button>
@@ -78,4 +85,12 @@ const OrderForm = ({ loading }: { loading: string }) => {
   );
 };
 
-export default OrderForm;
+const OrderFormWithProvider = () => {
+  return (
+    <OrderFormProvider>
+      <OrderForm />
+    </OrderFormProvider>
+  );
+};
+
+export default OrderFormWithProvider;

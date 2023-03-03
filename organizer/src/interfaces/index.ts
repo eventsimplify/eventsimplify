@@ -13,6 +13,9 @@ import IQuestion from "./IQuestion";
 import IQuestionOption from "./IQuestionOption";
 import IRegistrationForm from "./IRegistrationForm";
 import IRegistrationFormContext from "./IRegistrationFormContext";
+import IOrderFormContext from "./IOrderFormContext";
+import IAttendee from "./IAttendee";
+import ISpeaker from "./ISpeaker";
 
 export type {
   IField,
@@ -30,4 +33,7 @@ export type {
   IQuestionOption,
   IRegistrationForm,
   IRegistrationFormContext,
+  IOrderFormContext,
+  IAttendee,
+  ISpeaker,
 };

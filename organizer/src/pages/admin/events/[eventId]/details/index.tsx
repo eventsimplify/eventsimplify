@@ -5,7 +5,6 @@ import EventForm from "@/components/EventForm";
 import { EventService } from "@/services";
 import { useEventContext } from "@/contexts/EventProvider";
 import EventLayoutWithContext from "@/layouts/event";
-import moment from "moment";
 
 const Details = () => {
   const { event } = useEventContext();
@@ -42,8 +41,6 @@ const Details = () => {
         category: event?.category,
         summary: event?.summary,
         description: event?.description,
-        startDate: moment(event?.startDate),
-        endDate: moment(event?.endDate),
       }}
     >
       <EventForm loading={""} />

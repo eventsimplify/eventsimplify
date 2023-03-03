@@ -71,12 +71,10 @@ const Detail = () => {
   };
 
   const isFormChanged = useMemo(() => {
-    console.log(form.isFieldTouched("name"));
     if (form.isFieldTouched("name")) {
       return true;
     }
 
-    console.log(initalQuestions !== questions);
     if (initalQuestions !== questions) {
       return true;
     }

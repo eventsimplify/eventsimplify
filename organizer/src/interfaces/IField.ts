@@ -12,7 +12,8 @@ export default interface IField {
     | "email"
     | "rich-text"
     | "password"
-    | "options";
+    | "options"
+    | "socials";
   label: string;
   placeholder?: string;
   options?: IQuestionOption[];

@@ -1,42 +1,12 @@
-import React, { useState } from "react";
-import { Form } from "antd";
+import React from "react";
 
-import { EventService } from "@/services";
 import EventLayout from "@/layouts/event";
 import OrderForm from "@/components/OrderForm";
 
 const Create = () => {
-  const [loading, setLoading] = useState("");
-  const [form] = Form.useForm();
-
-  const onFinish = async (values: any) => {
-    setLoading("create");
-
-    const formData = {
-      name: values.name,
-      type: values.type,
-      startDate: values.startDate,
-      endDate: values.endDate,
-      summary: values.summary,
-      description: values.description,
-    };
-
-    await EventService.create(formData);
-
-    setLoading("");
-  };
-
   return (
     <EventLayout>
-      <Form
-        form={form}
-        name="eventForm"
-        onFinish={onFinish}
-        layout="vertical"
-        validateTrigger="onSubmit"
-      >
-        <OrderForm loading={loading} />
-      </Form>
+      <OrderForm />
     </EventLayout>
   );
 };

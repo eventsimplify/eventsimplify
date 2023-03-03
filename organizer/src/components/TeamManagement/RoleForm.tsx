@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, Form, Modal } from "antd";
+import { Button, Drawer, Form, Space } from "antd";
 
 import Field from "@/form-controls/Field";
-import Permission from "./Permission";
+import Permissions from "@/components/Permissions";
 import { RoleService } from "@/services";
 
 import { message as messageApi } from "@/components/AntDMessage";
@@ -50,18 +50,21 @@ const RoleForm = ({ getRoles }: { getRoles: () => void }) => {
       <Button type="primary" onClick={showModal}>
         Create new role
       </Button>
-      <Modal
+      <Drawer
         title="Create new role"
         open={isOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        extra={
+          <Space>
+            <Button onClick={handleCancel}>Cancel</Button>
+            <Button onClick={handleOk} type="primary" loading={loading}>
+              Submit
+            </Button>
+          </Space>
+        }
         destroyOnClose
         maskClosable={false}
-        centered
-        width={900}
-        bodyStyle={{ paddingTop: "1rem" }}
-        okButtonProps={{ loading }}
-        okText="Create role"
+        width={720}
+        onClose={handleCancel}
       >
         <Form form={form} name="basic" layout="vertical" autoComplete="off">
           <Field
@@ -72,9 +75,9 @@ const RoleForm = ({ getRoles }: { getRoles: () => void }) => {
             type="text"
           />
 
-          <Permission />
+          <Permissions />
         </Form>
-      </Modal>
+      </Drawer>
     </>
   );
 };

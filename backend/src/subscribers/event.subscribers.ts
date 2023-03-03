@@ -36,7 +36,5 @@ export default class EventEntitySubscriber
     await event.manager.getRepository(Ticket).save(ticket);
 
     await event.manager.getRepository(RegistrationForm).save(form);
-
-    console.log("Event create event triggered");
   }
 }

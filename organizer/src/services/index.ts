@@ -28,6 +28,7 @@ import TicketService from "./ticket.service";
 import InvitationService from "./invitation.service";
 import RoleService from "./role.service";
 import RegistrationFormService from "./registration-form.service";
+import SpeakerService from "./speaker.service";
 
 export {
   AuthService,
@@ -37,4 +38,5 @@ export {
   InvitationService,
   RoleService,
   RegistrationFormService,
+  SpeakerService,
 };

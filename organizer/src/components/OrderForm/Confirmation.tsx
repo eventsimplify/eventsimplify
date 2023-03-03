@@ -4,6 +4,7 @@ import { Col, Divider, Row, Space, Table, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
 import { ITicket } from "@/interfaces";
+import { useOrderFormContext } from "@/contexts/OrderFormProvider";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -51,7 +52,8 @@ const LabelValue = ({
   </Col>
 );
 
-const Confirmation = ({ selectedTickets }: { selectedTickets: ITicket[] }) => {
+const Confirmation = () => {
+  const { selectedTickets } = useOrderFormContext();
   return (
     <div>
       <Title level={4}>Confirm the details</Title>
@@ -62,29 +64,31 @@ const Confirmation = ({ selectedTickets }: { selectedTickets: ITicket[] }) => {
       <Divider />
       <Title level={4}>Ticket information</Title>
       <Divider dashed />
-      <Table
-        columns={columns}
-        dataSource={selectedTickets}
-        pagination={false}
-        bordered
-        size="small"
-        footer={() => (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            <Text strong>
-              Total : Rs.{" "}
-              {selectedTickets.reduce(
-                (total, ticket) => total + ticket.quantity * ticket.price,
-                0
-              )}
-            </Text>
-          </div>
-        )}
-      />
+      <Col span={12}>
+        <Table
+          columns={columns}
+          dataSource={selectedTickets}
+          pagination={false}
+          bordered
+          size="small"
+          footer={() => (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Text strong>
+                Total : Rs.{" "}
+                {selectedTickets.reduce(
+                  (total, ticket) => total + ticket.quantity * ticket.price,
+                  0
+                )}
+              </Text>
+            </div>
+          )}
+        />
+      </Col>
       <Divider />
       <Title level={4}>Attendee information</Title>
       <Divider dashed />

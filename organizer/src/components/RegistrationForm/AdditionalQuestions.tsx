@@ -9,8 +9,6 @@ import {
 } from "@ant-design/icons";
 import { IQuestion } from "@/interfaces";
 
-import EmptyTable from "../EmptyTable";
-
 const { Title, Paragraph } = Typography;
 
 const AdditionalQuestions = ({
@@ -176,11 +174,6 @@ const AdditionalQuestions = ({
         columns={columns}
         dataSource={questions}
         pagination={false}
-        locale={{
-          emptyText: (
-            <EmptyTable emptyText="No additional questions" onCreate={onOpen} />
-          ),
-        }}
       />
     </div>
   );
