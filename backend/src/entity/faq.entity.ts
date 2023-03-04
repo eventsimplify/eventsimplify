@@ -26,7 +26,9 @@ export default class Faq extends BaseEntity {
   @Column()
   eventId: number;
 
-  @ManyToOne(() => Event, (event) => event.speakers)
+  @ManyToOne(() => Event, (event) => event.faqs, {
+    onDelete: "CASCADE",
+  })
   @JoinColumn({ name: "eventId" })
   event: Event;
 

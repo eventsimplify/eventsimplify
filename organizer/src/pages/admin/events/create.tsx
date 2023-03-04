@@ -41,7 +41,10 @@ const Create = () => {
         name="event-form"
         onFinish={onFinish}
         layout="vertical"
-        validateTrigger="onSubmit"
+        validateTrigger="onBlur"
+        initialValues={{
+          venueType: "venue",
+        }}
       >
         <EventForm loading={loading} />
       </Form>

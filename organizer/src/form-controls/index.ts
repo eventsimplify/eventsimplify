@@ -6,6 +6,8 @@ import DatePicker from "./DatePicker";
 import Textarea from "./Textarea";
 import Options from "./Options";
 import Socials from "./Socials";
+import NumberInput from "./NumberInput";
+import PhoneInput from "./PhoneInput";
 
 export {
   TextInput,
@@ -16,4 +18,6 @@ export {
   Textarea,
   Options,
   Socials,
+  NumberInput,
+  PhoneInput,
 };

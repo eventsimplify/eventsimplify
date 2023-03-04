@@ -13,7 +13,7 @@ import {
   DeleteDateColumn,
 } from "typeorm";
 
-import { Ticket, Organization, RegistrationForm, Faq } from "./index";
+import { Ticket, Organization, RegistrationForm, Faq, Settings } from "./index";
 import Speaker from "./speaker.entity";
 
 @Entity({ name: "events" })
@@ -51,7 +51,9 @@ export default class Event extends BaseEntity {
   @Column()
   organizationId: number;
 
-  @ManyToOne(() => Organization, (organization) => organization.events)
+  @ManyToOne(() => Organization, (organization) => organization.events, {
+    onDelete: "CASCADE",
+  })
   @JoinColumn({ name: "organizationId" })
   organization: Organization;
 
@@ -70,6 +72,9 @@ export default class Event extends BaseEntity {
 
   @OneToMany(() => Faq, (faq) => faq.event)
   faqs: Faq[];
+
+  @OneToMany(() => Settings, (settings) => settings.event)
+  settings: Settings[];
 
   // default columns
   @CreateDateColumn()

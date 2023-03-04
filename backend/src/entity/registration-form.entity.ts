@@ -31,7 +31,10 @@ export default class RegistraionForm extends BaseEntity {
   @Column()
   eventId: number;
 
-  @ManyToOne(() => Event, (event) => event.forms)
+  @ManyToOne(() => Event, (event) => event.forms, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn({
     name: "eventId",
   })

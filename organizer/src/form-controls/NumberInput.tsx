@@ -1,9 +1,9 @@
 import React from "react";
-import { Form, DatePicker as Datepicker } from "antd";
+import { Form, InputNumber } from "antd";
 
 import { IFieldProps } from "@/interfaces";
 
-const DatePicker = ({
+const NumberInput = ({
   name,
   label,
   rules,
@@ -13,14 +13,14 @@ const DatePicker = ({
 }: IFieldProps) => {
   return (
     <Form.Item name={name} label={label} rules={rules} extra={extra}>
-      <Datepicker
-        format="MMMM DD YYYY"
-        style={{ width: "100%" }}
+      <InputNumber
         placeholder={placeholder}
         disabled={disabled}
+        style={{ width: "100%" }}
+        min={1}
       />
     </Form.Item>
   );
 };
 
-export default DatePicker;
+export default NumberInput;

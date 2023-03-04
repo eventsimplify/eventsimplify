@@ -14,6 +14,8 @@ import OrderDetails from "./order-details.entity";
 import PaymentDetails from "./payment-details.entity";
 import Speaker from "./speaker.entity";
 import Faq from "./faq.entity";
+import Settings from "./settings.entity";
+import OrganizationVerification from "./organization-verification.entity";
 
 export {
   User,
@@ -32,6 +34,8 @@ export {
   PaymentDetails,
   Speaker,
   Faq,
+  Settings,
+  OrganizationVerification,
 };
 
 export default {
@@ -51,4 +55,6 @@ export default {
   PaymentDetails,
   Speaker,
   Faq,
+  Settings,
+  OrganizationVerification,
 };

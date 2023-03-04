@@ -2,6 +2,7 @@ import { ReactElement, ReactNode, useEffect } from "react";
 import Router from "next/router";
 import type { AppProps } from "next/app";
 import NProgress from "nprogress";
+import locale from "antd/es/date-picker/locale/zh_CN";
 
 // import css
 import "@/styles/globals.css";

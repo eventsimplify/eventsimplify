@@ -17,19 +17,25 @@ export default class OrganizationUser extends BaseEntity {
   @Column()
   organizationId: number;
 
-  @ManyToOne(() => Organization, (organization) => organization.users)
+  @ManyToOne(() => Organization, (organization) => organization.users, {
+    onDelete: "CASCADE",
+  })
   organization: Organization;
 
   @Column()
   userId: number;
 
-  @ManyToOne(() => User, (user) => user.organizations)
+  @ManyToOne(() => User, (user) => user.organizations, {
+    onDelete: "CASCADE",
+  })
   user: User;
 
   @Column()
   roleId: number;
 
-  @ManyToOne(() => Role, (role) => role.users)
+  @ManyToOne(() => Role, (role) => role.users, {
+    onDelete: "CASCADE",
+  })
   @JoinColumn({
     name: "roleId",
   })

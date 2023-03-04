@@ -14,7 +14,10 @@ const DatePicker = ({
   return (
     <Form.Item name={name} label={label} rules={rules} extra={extra}>
       <Datepicker
-        format="MMMM DD YYYY"
+        showTime
+        use12Hours
+        minuteStep={15}
+        format="MMMM DD YYYY hh:mm A"
         style={{ width: "100%" }}
         placeholder={placeholder}
         disabled={disabled}

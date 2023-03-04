@@ -56,7 +56,10 @@ export default class Ticket extends BaseEntity {
   @Column({ nullable: true })
   eventId: number;
 
-  @ManyToOne(() => Event, (event) => event.tickets)
+  @ManyToOne(() => Event, (event) => event.tickets, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn({ name: "eventId" })
   event: Event;
 

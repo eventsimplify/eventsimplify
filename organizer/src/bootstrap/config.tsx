@@ -4,7 +4,6 @@ import {
   MoneyCollectOutlined,
   DiffOutlined,
   FileDoneOutlined,
-  UserOutlined,
   TeamOutlined,
   CalendarOutlined,
   BarChartOutlined,
@@ -13,8 +12,6 @@ import {
   BookOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-
-import { IQuestion } from "../interfaces";
 
 import type { MenuProps } from "antd";
 
@@ -345,96 +342,24 @@ export const locationType = [
   },
 ];
 
-export const getStartedSteps = [
+export const onBoardingSteps = [
   {
-    title: "Organization details",
-    description: "Tell us about your organization",
-    icon: "fas fa-building",
-  },
-];
-
-export const defaultRegistrationQuestions: IQuestion[] = [
-  {
-    type: "radio",
-    name: "prefix",
-    label: "Prefix",
-    options: [
-      {
-        label: "Mr.",
-        value: "Mr.",
-      },
-      {
-        label: "Mrs.",
-        value: "Mrs.",
-      },
-      {
-        label: "Miss",
-        value: "Miss",
-      },
-      {
-        label: "Ms.",
-        value: "Ms.",
-      },
-      {
-        label: "Mx.",
-        value: "Mx.",
-      },
-      {
-        label: "Dr.",
-        value: "Dr.",
-      },
-      {
-        label: "Prof.",
-        value: "Prof.",
-      },
-      {
-        label: "Rev.",
-        value: "Rev.",
-      },
-    ],
-    included: false,
-    required: false,
+    title: "Create your organization",
   },
   {
-    type: "radio",
-    name: "gender",
-    label: "Gender",
-    options: [
-      {
-        label: "Male",
-        value: "male",
-      },
-      {
-        label: "Female",
-        value: "female",
-      },
-      {
-        label: "Other",
-        value: "other",
-      },
-    ],
-    included: false,
-    required: false,
+    title: "Business details",
+    description: "Tell us about your business",
   },
   {
-    type: "number",
-    name: "age",
-    label: "Age",
-    included: false,
-    required: false,
+    title: "Business representative details",
+    description: "Tell us about your business representative",
   },
   {
-    type: "phone",
-    name: "phone",
-    label: "Phone number / Mobile number",
-    included: false,
-    required: false,
+    title: "Business documents",
+    description: "Provide your business documents",
   },
   {
-    type: "address",
-    name: "address",
-    label: "Address",
-    included: false,
-    required: false,
+    title: "Business bank account details",
+    description: "Provide your business bank account details",
   },
 ];

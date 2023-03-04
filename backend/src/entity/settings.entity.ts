@@ -6,33 +6,42 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  ManyToOne,
   JoinColumn,
+  ManyToOne,
 } from "typeorm";
 
-import { Event } from "./index";
+import { Organization, Event } from "./index";
 
-@Entity({ name: "speakers" })
-export default class Speaker extends BaseEntity {
+@Entity({ name: "settings" })
+export default class Settings extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column("text", { nullable: false })
-  name: string;
+  key: string;
 
   @Column("text", { nullable: false })
-  jobTitle: string;
+  value: string;
 
   @Column("text", { nullable: false })
-  company: string;
+  type: string;
 
-  @Column("text", { nullable: false })
+  @Column("text", { nullable: true })
   description: string;
+
+  @Column({ nullable: false })
+  organizationId: number;
+
+  @ManyToOne(() => Organization, (organization) => organization.settings, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "organizationId" })
+  organization: Organization;
 
   @Column()
   eventId: number;
 
-  @ManyToOne(() => Event, (event) => event.speakers, {
+  @ManyToOne(() => Event, (event) => event.settings, {
     onDelete: "CASCADE",
   })
   @JoinColumn({ name: "eventId" })

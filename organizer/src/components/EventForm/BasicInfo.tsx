@@ -1,7 +1,11 @@
 import React from "react";
-import { Col, Row } from "antd";
-import { eventCategories, eventTypes } from "@/bootstrap/config";
+import { Col, Divider, Row, Typography } from "antd";
+
 import Field from "@/form-controls/Field";
+
+import { eventCategories, eventTypes } from "@/bootstrap/config";
+
+const { Title, Paragraph } = Typography;
 
 const BasicInfo = () => {
   return (
@@ -21,7 +25,6 @@ const BasicInfo = () => {
           label="Event type"
           placeholder="Select event type"
           type="dropdown"
-          required
           options={eventTypes}
         />
       </Col>
@@ -31,15 +34,8 @@ const BasicInfo = () => {
           label="Event category"
           placeholder="Select event category"
           type="dropdown"
-          required
           options={eventCategories}
         />
-      </Col>
-      <Col span={12}>
-        <Field name="startDate" label="Event start date" type="date" required />
-      </Col>
-      <Col span={12}>
-        <Field name="endDate" label="Event end date" type="date" required />
       </Col>
     </Row>
   );

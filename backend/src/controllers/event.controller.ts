@@ -94,3 +94,24 @@ export const detail = async (req, res) => {
     errorHandler(res, err);
   }
 };
+
+// @desc    Event remove
+// @route   Delete /events/remove/:id
+// @access  Private
+
+export const remove = async (req, res) => {
+  try {
+    const event = await Event.findOne({
+      where: { id: req.event.id },
+    });
+
+    await event.remove();
+
+    return sendSuccess({
+      res,
+      message: "Event removed successfully!",
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};

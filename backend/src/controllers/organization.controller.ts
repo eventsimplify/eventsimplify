@@ -13,19 +13,17 @@ import { errorHandler, sendError, sendSuccess } from "../utils";
 // @route   POST /organizations/create
 // @access  Private
 export const create = async (req, res) => {
-  const { name, summary, description } = req.body;
+  const { name, summary } = req.body;
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
     summary: Yup.string().required("Summary is a required field"),
-    description: Yup.string().required("Description is a required field"),
   });
 
   try {
     await schema.validate({
       name,
       summary,
-      description,
     });
 
     const organizationExists = await OrganizationUser.findOne({
@@ -47,7 +45,6 @@ export const create = async (req, res) => {
     const organization = await Organization.create({
       name,
       summary,
-      description,
     });
 
     await organization.save();

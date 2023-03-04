@@ -1,7 +1,7 @@
 import { EntitySubscriberInterface, EventSubscriber } from "typeorm";
 import { defaultRegistrationQuestions } from "../config";
 
-import { Event, RegistrationForm, Ticket } from "../entity/index";
+import { Event, RegistrationForm, Settings, Ticket } from "../entity/index";
 
 @EventSubscriber()
 export default class EventEntitySubscriber
@@ -32,9 +32,18 @@ export default class EventEntitySubscriber
     form.additionalQuestions = [];
     form.eventId = event.entity.id;
 
+    //create settings for the event
+    const multipleOrderSettings = new Settings();
+    multipleOrderSettings.key = "multiple_ticket_per_order";
+    multipleOrderSettings.value = "false";
+    multipleOrderSettings.type = "event_settings";
+    multipleOrderSettings.description = "Allow multiple tickets per order";
+    multipleOrderSettings.eventId = event.entity.id;
+    multipleOrderSettings.organizationId = event.entity.organizationId;
+
     // we need to use the event manager to save the ticket because we are in a transaction and we cannot use the repository directly
     await event.manager.getRepository(Ticket).save(ticket);
-
     await event.manager.getRepository(RegistrationForm).save(form);
+    await event.manager.getRepository(Settings).save(multipleOrderSettings);
   }
 }

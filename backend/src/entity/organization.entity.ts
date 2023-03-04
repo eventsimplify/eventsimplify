@@ -7,9 +7,15 @@ import {
   UpdateDateColumn,
   OneToMany,
   DeleteDateColumn,
+  OneToOne,
 } from "typeorm";
 
-import { Event, OrganizationUser } from "./index";
+import {
+  Event,
+  OrganizationUser,
+  OrganizationVerification,
+  Settings,
+} from "./index";
 
 @Entity({ name: "organizations" })
 export default class Organization extends BaseEntity {
@@ -20,10 +26,10 @@ export default class Organization extends BaseEntity {
   name: string;
 
   @Column("text", { nullable: true })
-  summary?: string;
+  summary: string;
 
   @Column("text", { nullable: true })
-  description?: string;
+  description: string;
 
   @OneToMany(() => Event, (event) => event.organization)
   events: Event[];
@@ -33,6 +39,15 @@ export default class Organization extends BaseEntity {
     (organizationUser) => organizationUser.organization
   )
   users: OrganizationUser[];
+
+  @OneToMany(() => Settings, (settings) => settings.organization)
+  settings: Settings[];
+
+  @OneToOne(
+    () => OrganizationVerification,
+    (verification) => verification.organization
+  )
+  verification: OrganizationVerification;
 
   // default columns
   @CreateDateColumn()
