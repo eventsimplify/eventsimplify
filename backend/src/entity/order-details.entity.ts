@@ -5,23 +5,21 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  OneToOne,
-  ManyToMany,
   OneToMany,
 } from "typeorm";
 
-import { Attendee, Order, Ticket } from "./index";
+import { Attendee, OrderDetailsTickets } from "./index";
 
 @Entity({ name: "order_details" })
 export default class OrderDetails extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => Order, (order) => order.order_details)
-  order: Order;
-
-  @ManyToMany(() => Ticket, (ticket) => ticket.id)
-  tickets: Ticket[];
+  @OneToMany(
+    () => OrderDetailsTickets,
+    (order_details_tickets) => order_details_tickets.order_details
+  )
+  tickets: OrderDetailsTickets[];
 
   @OneToMany(() => Attendee, (attendee) => attendee.order_details)
   attendees: Attendee[];
@@ -34,5 +32,5 @@ export default class OrderDetails extends BaseEntity {
   updatedAt: Date;
 
   @DeleteDateColumn()
-  deletedAt?: Date;
+  deletedAt: Date;
 }

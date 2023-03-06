@@ -5,7 +5,9 @@ import Field from "@/form-controls/Field";
 import { useOrderFormContext } from "@/contexts/OrderFormProvider";
 
 const AttendeeInfo = () => {
-  const { setAttendeeInformation, setCurrentStep } = useOrderFormContext();
+  const [form] = Form.useForm();
+  const { setAttendeeInformation, setCurrentStep, attendeeInformation } =
+    useOrderFormContext();
 
   const onFinish = async (values: any) => {
     const { name, email, phone, age, gender } = values;
@@ -26,8 +28,16 @@ const AttendeeInfo = () => {
     <Form
       name="attendeeInfo"
       onFinish={onFinish}
+      form={form}
       layout="vertical"
       validateTrigger="onBlur"
+      initialValues={{
+        name: attendeeInformation?.name || "",
+        email: attendeeInformation?.email || "",
+        phone: attendeeInformation?.phone || "",
+        age: attendeeInformation?.age || "",
+        gender: attendeeInformation?.gender || "",
+      }}
     >
       <Row gutter={[16, 16]}>
         <Col span={12}>
@@ -54,8 +64,9 @@ const AttendeeInfo = () => {
           <Field
             name="phone"
             label="Phone/mobile"
-            type="text"
+            type="phone"
             placeholder="Enter attendee phone/mobile"
+            form={form}
           />
         </Col>
 

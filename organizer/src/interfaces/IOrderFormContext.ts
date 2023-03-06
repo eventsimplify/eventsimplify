@@ -17,5 +17,6 @@ export default interface IOrderFormContext {
   setAttendeeInformation: Dispatch<SetStateAction<IAttendee | null>>;
 
   paymentInformation: IPaymentInformation | null;
+
   setPaymentInformation: Dispatch<SetStateAction<IPaymentInformation | null>>;
 }
