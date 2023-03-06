@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Button, Card, Col, Popconfirm, Tooltip } from "antd";
+import React, { useState } from 'react';
+import { Button, Card, Col, Popconfirm, Tooltip } from 'antd';
 
-import { EditOutlined, CopyOutlined, DeleteOutlined } from "@ant-design/icons";
-import { IRegistrationForm } from "@/interfaces";
-import { useRouter } from "next/router";
-import { useRegistrationFormContext } from "@/contexts/RegistrationFormProvider";
+import { EditOutlined, CopyOutlined, DeleteOutlined } from '@ant-design/icons';
+import { IRegistrationForm } from '@/interfaces';
+import { useRouter } from 'next/router';
+import { useRegistrationFormContext } from '@/contexts/RegistrationFormProvider';
 
 const { Meta } = Card;
 
@@ -17,7 +17,7 @@ const FormItem = ({ form }: { form: IRegistrationForm }) => {
 
   const onEditClick = () => {
     router.push({
-      pathname: "/admin/events/[eventId]/registration-form/[id]",
+      pathname: '/admin/events/[eventId]/registration-form/[id]',
       query: { id: form.id, eventId: router.query.eventId },
     });
   };
@@ -41,18 +41,24 @@ const FormItem = ({ form }: { form: IRegistrationForm }) => {
     <Col span={6}>
       <Card
         actions={[
-          <Button type="text" icon={<EditOutlined />} onClick={onEditClick} />,
+          <Button
+            key={form.id}
+            type="text"
+            icon={<EditOutlined />}
+            onClick={onEditClick}
+          />,
 
-          <Tooltip title="Feature coming soon!!">
+          <Tooltip key={form.id + 'copy'} title="Feature coming soon!!">
             <Button type="text" icon={<CopyOutlined />} disabled />
           </Tooltip>,
           <Popconfirm
+            key={form.id + 'delete'}
             icon={null}
             title="Are you sure to delete this form?"
             description="This action cannot be undone"
             open={open}
             onConfirm={handleOk}
-            okButtonProps={{ loading: loading === "deleteForm" }}
+            okButtonProps={{ loading: loading === 'deleteForm' }}
             onCancel={handleCancel}
             okText="Confirm"
           >

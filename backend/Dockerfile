@@ -1,23 +1,14 @@
 FROM node:14.17.0-alpine
-
-# Install Chromium dependencies
-RUN apk add --no-cache \
-  chromium \
-  nss \
-  freetype \
-  freetype-dev \
-  harfbuzz \
-  ca-certificates \
-  ttf-freefont \
-  nodejs \
-  npm
-
-# Set environment variable to skip puppeteer download
-ENV PUPPETEER_SKIP_DOWNLOAD=true
-
 WORKDIR '/app'
+
+RUN apk update && \
+  apk upgrade && \
+  apk add --no-cache chromium
+
+ENV CHROME_BIN=/usr/bin/chromium-browser
+ENV CHROME_PATH=/usr/lib/chromium/
+
 COPY ./package.json ./
 RUN npm install
 COPY . .
-
 CMD ["npm", "run", "dev"]
