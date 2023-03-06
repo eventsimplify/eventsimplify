@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
-import { Button, Card, Typography } from "antd";
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import React, { useMemo } from 'react';
+import { Button, Card, Typography } from 'antd';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
-import { ITicket } from "@/interfaces";
-import { useOrderFormContext } from "@/contexts/OrderFormProvider";
+import { ITicket } from '@/interfaces';
+import { useOrderFormContext } from '@/contexts/OrderFormProvider';
 
 const { Title, Text } = Typography;
 const { Meta } = Card;
@@ -52,6 +52,7 @@ const Ticket = ({ ticket }: { ticket: ITicket }) => {
     <Card
       actions={[
         <Button
+          key={ticket.id}
           icon={<MinusOutlined />}
           size="middle"
           onClick={handleRemoveTicket}
@@ -61,6 +62,7 @@ const Ticket = ({ ticket }: { ticket: ITicket }) => {
           {ticketQuantity}
         </Title>,
         <Button
+          key={ticket.id}
           icon={<PlusOutlined />}
           size="middle"
           onClick={handleAddTicket}
