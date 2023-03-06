@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import IAttendee from "./IAttendee";
+import IPaymentInformation from "./IPaymentInformation";
 import ITicket from "./ITicket";
 
 export default interface IOrderFormContext {
@@ -14,4 +15,7 @@ export default interface IOrderFormContext {
 
   attendeeInformation: IAttendee | null;
   setAttendeeInformation: Dispatch<SetStateAction<IAttendee | null>>;
+
+  paymentInformation: IPaymentInformation | null;
+  setPaymentInformation: Dispatch<SetStateAction<IPaymentInformation | null>>;
 }

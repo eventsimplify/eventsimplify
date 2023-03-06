@@ -10,8 +10,7 @@ import OrderFormProvider, {
 } from "@/contexts/OrderFormProvider";
 
 const OrderForm = () => {
-  const { currentStep, setCurrentStep, loading, selectedTickets } =
-    useOrderFormContext();
+  const { currentStep, setCurrentStep, loading } = useOrderFormContext();
 
   const orderSteps = [
     {
@@ -44,14 +43,14 @@ const OrderForm = () => {
           >
             Previous
           </Button>
-          {[0, 2].includes(currentStep) && (
+          {currentStep === 0 && (
             <Button
               type="primary"
               htmlType="button"
               loading={loading === "create"}
               onClick={() => setCurrentStep(currentStep + 1)}
             >
-              Next
+              Confirm ticket information
             </Button>
           )}
 
@@ -59,10 +58,21 @@ const OrderForm = () => {
             <Button
               type="primary"
               htmlType="submit"
-              form="attendeeInfoForm"
+              form="attendeeInfo"
               loading={loading === "create"}
             >
-              Next
+              Confirm attendee information
+            </Button>
+          )}
+
+          {currentStep === 2 && (
+            <Button
+              type="primary"
+              htmlType="submit"
+              form="paymentInfo"
+              loading={loading === "create"}
+            >
+              Confirm payment information
             </Button>
           )}
 
@@ -72,7 +82,7 @@ const OrderForm = () => {
               htmlType="submit"
               loading={loading === "create"}
             >
-              Create order
+              Place order
             </Button>
           )}
         </Space>

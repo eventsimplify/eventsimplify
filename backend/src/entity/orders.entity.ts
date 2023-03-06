@@ -40,7 +40,7 @@ export default class Order extends BaseEntity {
 
   @OneToOne(() => OrderDetails, (orderDetails) => orderDetails.order)
   @JoinColumn({ name: "order_detail_id" })
-  orderDetails: OrderDetails;
+  order_details: OrderDetails;
 
   //relations with payment details
   @Column()

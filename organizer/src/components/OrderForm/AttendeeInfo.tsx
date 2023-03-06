@@ -10,7 +10,7 @@ const AttendeeInfo = () => {
   const onFinish = async (values: any) => {
     const { name, email, phone, age, gender } = values;
 
-    const attendee = {
+    const attendee: any = {
       name,
       email,
       phone,
@@ -24,10 +24,10 @@ const AttendeeInfo = () => {
 
   return (
     <Form
-      name="attendeeInfoForm"
+      name="attendeeInfo"
       onFinish={onFinish}
       layout="vertical"
-      validateTrigger="onSubmit"
+      validateTrigger="onBlur"
     >
       <Row gutter={[16, 16]}>
         <Col span={12}>

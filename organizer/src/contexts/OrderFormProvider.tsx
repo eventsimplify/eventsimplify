@@ -2,7 +2,12 @@ import React, { createContext, useContext, useMemo, useState } from "react";
 
 import Loader from "@/components/Loader";
 import { useEventContext } from "./EventProvider";
-import { IAttendee, IOrderFormContext, ITicket } from "@/interfaces";
+import {
+  IAttendee,
+  IOrderFormContext,
+  IPaymentInformation,
+  ITicket,
+} from "@/interfaces";
 
 export const OrderFormContext = createContext({} as IOrderFormContext);
 
@@ -26,6 +31,9 @@ const OrderFormProvider = (props: any) => {
   const [attendeeInformation, setAttendeeInformation] =
     useState<IAttendee | null>(null);
 
+  const [paymentInformation, setPaymentInformation] =
+    useState<IPaymentInformation | null>(null);
+
   const value = useMemo(
     () => ({
       currentStep,
@@ -36,8 +44,16 @@ const OrderFormProvider = (props: any) => {
       setSelectedTickets,
       attendeeInformation,
       setAttendeeInformation,
+      paymentInformation,
+      setPaymentInformation,
     }),
-    [currentStep, loading, selectedTickets, attendeeInformation]
+    [
+      currentStep,
+      loading,
+      selectedTickets,
+      attendeeInformation,
+      paymentInformation,
+    ]
   );
 
   if (!event) {

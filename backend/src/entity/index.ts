@@ -16,6 +16,7 @@ import Speaker from "./speaker.entity";
 import Faq from "./faq.entity";
 import Settings from "./settings.entity";
 import OrganizationVerification from "./organization-verification.entity";
+import Attendee from "./attendee.entity";
 
 export {
   User,
@@ -36,6 +37,7 @@ export {
   Faq,
   Settings,
   OrganizationVerification,
+  Attendee,
 };
 
 export default {
@@ -57,4 +59,5 @@ export default {
   Faq,
   Settings,
   OrganizationVerification,
+  Attendee,
 };

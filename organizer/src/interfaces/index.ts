@@ -17,6 +17,7 @@ import IOrderFormContext from "./IOrderFormContext";
 import IAttendee from "./IAttendee";
 import ISpeaker from "./ISpeaker";
 import IFaq from "./IFaq";
+import IPaymentInformation from "./IPaymentInformation";
 
 export type {
   IField,
@@ -38,4 +39,5 @@ export type {
   IAttendee,
   ISpeaker,
   IFaq,
+  IPaymentInformation,
 };
