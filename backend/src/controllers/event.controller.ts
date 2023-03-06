@@ -61,6 +61,7 @@ export const list = async (req, res) => {
     const events = await Event.find({
       where: { organizationId: req.organization.id },
       relations: ["tickets"],
+      select: ["id", "name", "type", "startDate", "endDate"],
     });
 
     return sendSuccess({
@@ -88,6 +89,27 @@ export const detail = async (req, res) => {
       res,
       data: event,
       message: "Event fetched successfully!",
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};
+
+// @desc    Event remove
+// @route   Delete /events/remove/:id
+// @access  Private
+
+export const remove = async (req, res) => {
+  try {
+    const event = await Event.findOne({
+      where: { id: req.event.id },
+    });
+
+    await event.remove();
+
+    return sendSuccess({
+      res,
+      message: "Event removed successfully!",
     });
   } catch (err) {
     errorHandler(res, err);

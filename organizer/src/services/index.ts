@@ -1,4 +1,5 @@
 import axios from "axios";
+import Router from "next/router";
 
 axios.defaults.withCredentials = true;
 axios.defaults.params = {};
@@ -11,6 +12,12 @@ axios.interceptors.request.use(function (config) {
     return config;
   }
 
+  const eventId = Router.query.eventId;
+
+  if (eventId) {
+    config.headers["event"] = eventId;
+  }
+
   return config;
 });
 
@@ -20,6 +27,9 @@ import OrganizationService from "./organization.service";
 import TicketService from "./ticket.service";
 import InvitationService from "./invitation.service";
 import RoleService from "./role.service";
+import RegistrationFormService from "./registration-form.service";
+import SpeakerService from "./speaker.service";
+import FaqService from "./faq.service";
 
 export {
   AuthService,
@@ -28,4 +38,7 @@ export {
   TicketService,
   InvitationService,
   RoleService,
+  RegistrationFormService,
+  SpeakerService,
+  FaqService,
 };

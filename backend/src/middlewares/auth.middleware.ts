@@ -18,7 +18,7 @@ export const protect = async (req, res, next) => {
   let decoded: any = jwt_decode(token);
 
   let user = await User.findOne({
-    where: { id: decoded.id },
+    where: { providerId: decoded.id },
     relations: ["organizations", "organizations.organization"],
   });
 
@@ -32,6 +32,9 @@ export const protect = async (req, res, next) => {
   }
 
   req.user = user;
+
+  // set user to global variable
+  globalThis.user = user;
 
   next();
 };
@@ -80,6 +83,14 @@ export const protectWithOrganizationAndEvent = async (req, res, next) => {
 
     if (!eventId) {
       eventId = req.params.eventId;
+    }
+
+    if (!eventId) {
+      eventId = req.body.eventId;
+    }
+
+    if (!eventId) {
+      eventId = req.headers["event"];
     }
 
     if (!eventId || eventId === "undefined") {

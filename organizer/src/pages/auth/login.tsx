@@ -6,9 +6,7 @@ import { AuthService } from "@/services";
 import AuthPageLayout from "@/layouts/auth-page";
 import Field from "@/form-controls/Field";
 
-import { NextPageWithLayout } from "../_app";
-
-const Login: NextPageWithLayout = () => {
+const Login = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState("");
   const router = useRouter();

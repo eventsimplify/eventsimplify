@@ -1,10 +1,9 @@
 import React from "react";
-// import { SaveOutlined } from "@ant-design/icons";
-import { Row, Col, Card, Button, Space, Divider } from "antd";
+import { Row, Col, Card, Button, Space } from "antd";
 
 import BasicInfo from "./BasicInfo";
-import Details from "./Details";
-// import Status from "./Status";
+import LocationInfo from "./LocationInfo";
+import DateInfo from "./DateInfo";
 
 const EventForm = ({ loading }: { loading: string }) => {
   return (
@@ -24,12 +23,14 @@ const EventForm = ({ loading }: { loading: string }) => {
             </Space>
           }
         >
-          <Col span={24}>
+          <Col span={14}>
             <BasicInfo />
           </Col>
-          <Divider />
-          <Col span={24}>
-            <Details />
+          <Col span={14}>
+            <LocationInfo />
+          </Col>
+          <Col span={14}>
+            <DateInfo />
           </Col>
         </Card>
       </Col>

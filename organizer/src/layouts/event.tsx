@@ -14,7 +14,7 @@ const { Content } = Layout;
 const EventLayout = ({ children }: { children: React.ReactNode }) => {
   const { event, loading } = useEventContext();
 
-  if (loading) {
+  if (loading === "event") {
     return <Loader />;
   }
 

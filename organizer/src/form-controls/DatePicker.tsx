@@ -9,14 +9,12 @@ const DatePicker = ({
   rules,
   placeholder,
   disabled,
+  extra,
 }: IFieldProps) => {
   return (
-    <Form.Item name={name} label={label} rules={rules}>
+    <Form.Item name={name} label={label} rules={rules} extra={extra}>
       <Datepicker
-        showTime
-        use12Hours
-        minuteStep={15}
-        format="MMMM DD YYYY hh:mm A"
+        format="MMMM DD YYYY"
         style={{ width: "100%" }}
         placeholder={placeholder}
         disabled={disabled}

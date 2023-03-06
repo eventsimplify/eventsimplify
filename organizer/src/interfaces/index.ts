@@ -9,6 +9,15 @@ import IEventContext from "./IEventContext";
 import IRole from "./IRole";
 import IInvitation from "./IInvitation";
 import ITeamManagementContext from "./ITeamManagementContext";
+import IQuestion from "./IQuestion";
+import IQuestionOption from "./IQuestionOption";
+import IRegistrationForm from "./IRegistrationForm";
+import IRegistrationFormContext from "./IRegistrationFormContext";
+import IOrderFormContext from "./IOrderFormContext";
+import IAttendee from "./IAttendee";
+import ISpeaker from "./ISpeaker";
+import IFaq from "./IFaq";
+import IPaymentInformation from "./IPaymentInformation";
 
 export type {
   IField,
@@ -22,4 +31,13 @@ export type {
   IRole,
   IInvitation,
   ITeamManagementContext,
+  IQuestion,
+  IQuestionOption,
+  IRegistrationForm,
+  IRegistrationFormContext,
+  IOrderFormContext,
+  IAttendee,
+  ISpeaker,
+  IFaq,
+  IPaymentInformation,
 };

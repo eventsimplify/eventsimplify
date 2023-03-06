@@ -8,9 +8,9 @@ import {
   DeleteDateColumn,
   OneToMany,
 } from "typeorm";
-import IPermission from "../interfaces/IPermission";
-import OrganizationUser from "./organization-user.entity";
-import User from "./user.entity";
+
+import { IPermission } from "../interfaces";
+import { OrganizationUser, User } from "./index";
 
 @Entity({ name: "roles" })
 export default class Role extends BaseEntity {
@@ -21,7 +21,7 @@ export default class Role extends BaseEntity {
   name: string;
 
   @Column("text", { nullable: false, default: "created" })
-  type!: string;
+  type: string;
 
   @Column("jsonb", { nullable: false, default: [] })
   permissions: IPermission[];

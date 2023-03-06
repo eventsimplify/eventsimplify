@@ -1,28 +1,33 @@
-import React, { useState } from "react";
-import { Col, Row } from "antd";
+import React, { useMemo } from "react";
+import { Col, Row, Typography } from "antd";
 
 import Ticket from "./Ticket";
-import Field from "@/form-controls/Field";
 import { ITicket } from "@/interfaces";
 import { useEventContext } from "@/contexts/EventProvider";
+import { useOrderFormContext } from "@/contexts/OrderFormProvider";
+
+const { Title, Paragraph } = Typography;
 
 const Tickets = () => {
   const { event } = useEventContext();
+  const { selectedTickets } = useOrderFormContext();
 
-  const [selectedTickets, setSelectedTickets] = useState<ITicket[]>([]);
+  const totalPrice = useMemo(() => {
+    let total = 0;
+    selectedTickets.forEach((ticket) => {
+      total += ticket.quantity * ticket.price;
+    });
+    return total;
+  }, [selectedTickets]);
 
   return (
     <Row gutter={[24, 16]}>
       <Col span={24}>
-        <Field
-          name="paymentMethod"
-          label="Payment method"
-          type="text"
-          required
-          placeholder="Enter payment method"
-        />
+        <Title level={4}>These are the tickets available for this event</Title>
+        <Paragraph>
+          Select the tickets you want to sell and the quantity for each
+        </Paragraph>
       </Col>
-
       {event?.tickets?.map((ticket: ITicket) => (
         <Col span={6} key={ticket.id}>
           <Ticket ticket={ticket} />
@@ -34,7 +39,7 @@ const Tickets = () => {
           marginTop: "1rem",
         }}
       >
-        <h3>Total: Rs 100.000</h3>
+        <Title level={4}>Total price: Rs. {totalPrice}</Title>
       </Col>
     </Row>
   );

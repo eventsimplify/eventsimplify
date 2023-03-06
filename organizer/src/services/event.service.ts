@@ -35,10 +35,21 @@ const detail = async (id: string) => {
   }
 };
 
+const remove = async (id: number) => {
+  try {
+    const { data } = await axios.delete(`${API_URL}/remove/${id}`);
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
 const exportedObject = {
   create,
   list,
   detail,
+  remove,
 };
 
 export default exportedObject;

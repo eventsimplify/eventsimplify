@@ -13,7 +13,8 @@ import {
   DeleteDateColumn,
 } from "typeorm";
 
-import { Ticket, Organization } from "./index";
+import { Ticket, Organization, RegistrationForm, Faq, Settings } from "./index";
+import Speaker from "./speaker.entity";
 
 @Entity({ name: "events" })
 export default class Event extends BaseEntity {
@@ -32,10 +33,10 @@ export default class Event extends BaseEntity {
   @Column("text", { nullable: false })
   type: string;
 
-  @Column("date", { nullable: false })
+  @Column("timestamptz", { nullable: false })
   startDate: string;
 
-  @Column("date", { nullable: false })
+  @Column("timestamptz", { nullable: false })
   endDate: string;
 
   @Column("text", { nullable: true })
@@ -50,13 +51,30 @@ export default class Event extends BaseEntity {
   @Column()
   organizationId: number;
 
-  @ManyToOne(() => Organization, (organization) => organization.events)
+  @ManyToOne(() => Organization, (organization) => organization.events, {
+    onDelete: "CASCADE",
+  })
   @JoinColumn({ name: "organizationId" })
   organization: Organization;
 
   // relations with tickets
   @OneToMany(() => Ticket, (ticket) => ticket.event)
   tickets: Ticket[];
+
+  @OneToMany(
+    () => RegistrationForm,
+    (registrationForm) => registrationForm.event
+  )
+  forms: RegistrationForm[];
+
+  @OneToMany(() => Speaker, (speaker) => speaker.event)
+  speakers: Speaker[];
+
+  @OneToMany(() => Faq, (faq) => faq.event)
+  faqs: Faq[];
+
+  @OneToMany(() => Settings, (settings) => settings.event)
+  settings: Settings[];
 
   // default columns
   @CreateDateColumn()

@@ -51,26 +51,21 @@ const TicketFormDialog = ({
   return (
     <Drawer
       title="Add new ticket"
-      width={500}
+      width={700}
       onClose={onClose}
       open={open}
       footer={
         <Space>
-          <Button
-            size="large"
-            onClick={onClose}
-            disabled={loading === "create"}
-          >
+          <Button onClick={onClose} disabled={loading === "create"}>
             Cancel
           </Button>
           <Button
-            size="large"
             form="ticketForm"
             type="primary"
             htmlType="submit"
             loading={loading === "create"}
           >
-            Save
+            Create ticket
           </Button>
         </Space>
       }

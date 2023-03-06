@@ -1,18 +1,8 @@
-import React, { useMemo, useState } from "react";
-import {
-  Col,
-  Collapse,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Row,
-} from "antd";
+import React, { useState } from "react";
+import { Col, Collapse, Form, Row } from "antd";
 
 import { SettingOutlined } from "@ant-design/icons";
-import { useEventContext } from "@/contexts/EventProvider";
-import moment from "moment";
+import Field from "@/form-controls/Field";
 
 const { Panel } = Collapse;
 
@@ -23,29 +13,14 @@ const options = [
 
 const TicketForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
   const [form] = Form.useForm();
-  const { event } = useEventContext();
   const [ticketType, setTicketType] = useState("free");
   const [formSubmitted, setFormSubmitted] = useState(false);
-
-  const priceRules = useMemo(() => {
-    if (ticketType === "free") return [];
-
-    return [
-      {
-        required: true,
-        message: "Please enter the price of the ticket",
-      },
-    ];
-  }, [ticketType]);
 
   return (
     <Form
       form={form}
       layout="vertical"
       name="ticketForm"
-      validateMessages={{
-        required: "Please enter ${label}",
-      }}
       onValuesChange={(changedValues) => {
         if (changedValues.type) {
           setTicketType(changedValues.type);
@@ -56,73 +31,47 @@ const TicketForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
         quantity: 100,
         minPerOrder: 1,
         maxPerOrder: 10,
-        startDate: moment(),
-        endDate: moment(event?.endDate),
       }}
       onFinish={onSubmit}
       validateTrigger={formSubmitted ? ["onChange"] : ["onSubmit"]}
-      size="large"
       onFinishFailed={() => {
         setFormSubmitted(true);
       }}
     >
-      <Form.Item
+      <Field
         name="type"
         label="Ticket type"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Radio.Group
-          options={options}
-          optionType="button"
-          buttonStyle="solid"
-          size="middle"
-        />
-      </Form.Item>
+        required
+        options={options}
+        type="radio"
+        optionType="button"
+      />
 
-      <Form.Item
+      <Field
         name="name"
         label="Ticket name"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input placeholder="Enter the name of the ticket" />
-      </Form.Item>
+        required
+        placeholder="Enter the name of the ticket"
+        type="text"
+      />
 
-      <Form.Item
+      <Field
         name="quantity"
         label="Ticket quantity"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <InputNumber
-          placeholder="Enter the name of the ticket"
-          style={{ width: "100%" }}
-          min={1}
-        />
-      </Form.Item>
+        required
+        placeholder="Enter the name of the ticket"
+        type="number"
+      />
 
-      <Form.Item
-        name="price"
-        label="Ticket price"
-        hidden={ticketType === "free"}
-        rules={priceRules}
-      >
-        <InputNumber
+      {ticketType === "paid" && (
+        <Field
+          name="price"
+          label="Ticket price"
+          required
           placeholder="Enter the price of the ticket"
-          style={{ width: "100%" }}
-          min={1}
+          type="number"
         />
-      </Form.Item>
+      )}
 
       <Form.Item
         label="Ticket start and end date"
@@ -132,51 +81,24 @@ const TicketForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
       >
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item
+            <Field
               name="startDate"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
+              label=""
+              required
+              placeholder="Ticket sale start date"
+              type="date"
               extra="Ticket sale start date"
-            >
-              <DatePicker
-                style={{ width: "100%" }}
-                placeholder="Ticket sale start date"
-                format={"DD/MM/YYYY"}
-              />
-            </Form.Item>
+            />
           </Col>
           <Col span={12}>
-            <Form.Item
+            <Field
               name="endDate"
-              rules={[
-                {
-                  required: true,
-                },
-                {
-                  validator: (_, value) => {
-                    if (value < form.getFieldValue("startDate")) {
-                      return Promise.reject(
-                        new Error(
-                          "Ticket sale end date cannot be less than ticket sale start date"
-                        )
-                      );
-                    }
-
-                    return Promise.resolve();
-                  },
-                },
-              ]}
+              label=""
+              required
+              placeholder="Ticket sale end date"
+              type="date"
               extra="Ticket sale end date"
-            >
-              <DatePicker
-                style={{ width: "100%" }}
-                placeholder="Ticket sale start date"
-                format={"DD/MM/YYYY"}
-              />
-            </Form.Item>
+            />
           </Col>
         </Row>
       </Form.Item>
@@ -192,87 +114,39 @@ const TicketForm = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
         <Panel header="Advance settings" key="1">
           <Form.Item
             label="Tickets per order"
-            style={{ marginBottom: -20 }}
+            style={{ marginBottom: 0 }}
             required={true}
           >
             <Row gutter={16}>
               <Col span={12}>
-                <Form.Item
+                <Field
                   name="minPerOrder"
+                  label=""
+                  required
+                  placeholder="Minimum tickets per order"
+                  type="number"
                   extra="Minimum tickets per order"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter the minimum tickets per order",
-                    },
-                    {
-                      type: "number",
-                      min: 1,
-                    },
-                    {
-                      type: "number",
-                      max: 100,
-                    },
-                    {
-                      validator: (_, value) => {
-                        if (value > form.getFieldValue("maxPerOrder")) {
-                          return Promise.reject(
-                            new Error(
-                              "Minimum tickets per order cannot be greater than maximum tickets per order"
-                            )
-                          );
-                        }
-
-                        return Promise.resolve();
-                      },
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    placeholder="Minimum tickets per order"
-                    min={1}
-                    max={100}
-                    style={{ width: "100%" }}
-                  />
-                </Form.Item>
+                />
               </Col>
               <Col span={12}>
-                <Form.Item
+                <Field
                   name="maxPerOrder"
+                  label=""
+                  required
+                  placeholder="Maximum tickets per order"
+                  type="number"
                   extra="Maximum tickets per order"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter the maximum tickets per order",
-                    },
-                    {
-                      validator: (_, value) => {
-                        if (value < form.getFieldValue("minPerOrder")) {
-                          return Promise.reject(
-                            new Error(
-                              "Maximum tickets per order cannot be less than minimum tickets per order"
-                            )
-                          );
-                        }
-
-                        return Promise.resolve();
-                      },
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    placeholder="Maximum tickets per order"
-                    min={1}
-                    max={100}
-                    style={{ width: "100%" }}
-                  />
-                </Form.Item>
+                />
               </Col>
             </Row>
           </Form.Item>
-          <Form.Item name="description" label="Description">
-            <Input.TextArea placeholder="Enter the description of the ticket (optional)" />
-          </Form.Item>
+
+          <Field
+            name="description"
+            label="Ticket description"
+            placeholder="Enter the description of the ticket"
+            type="textarea"
+          />
         </Panel>
       </Collapse>
     </Form>

@@ -1,25 +1,29 @@
 import * as Yup from "yup";
 
-import { Invitations, OrganizationUser, Organization, Role } from "../entity";
+import {
+  Invitations,
+  OrganizationUser,
+  Organization,
+  Role,
+  Permission,
+} from "../entity";
 import { errorHandler, sendError, sendSuccess } from "../utils";
 
 // @desc    Organization create
 // @route   POST /organizations/create
 // @access  Private
 export const create = async (req, res) => {
-  const { name, summary, description } = req.body;
+  const { name, summary } = req.body;
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
     summary: Yup.string().required("Summary is a required field"),
-    description: Yup.string().required("Description is a required field"),
   });
 
   try {
     await schema.validate({
       name,
       summary,
-      description,
     });
 
     const organizationExists = await OrganizationUser.findOne({
@@ -41,7 +45,6 @@ export const create = async (req, res) => {
     const organization = await Organization.create({
       name,
       summary,
-      description,
     });
 
     await organization.save();
@@ -102,12 +105,15 @@ export const getStaff = async (req, res) => {
       relations: ["users"],
     });
 
+    const permissions = await Permission.find({});
+
     return sendSuccess({
       res,
       data: {
         invitations,
         staffs: organization.users,
         roles,
+        permissions,
       },
       message: "Staff fetched successfully!",
     });

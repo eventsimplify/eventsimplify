@@ -7,7 +7,11 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
+  BeforeInsert,
 } from "typeorm";
+
+import crypto from "crypto";
+
 import { OrganizationUser } from "./index";
 
 @Entity({ name: "users" })
@@ -30,6 +34,20 @@ export default class User extends BaseEntity {
   )
   organizations: OrganizationUser[];
 
+  @Column("boolean", { default: true })
+  active: boolean;
+
+  @Column("boolean", { default: false })
+  blocked: boolean;
+
+  @Column("text", { nullable: false, default: "email" })
+  provider: string;
+
+  @Column("text", {
+    nullable: true,
+  })
+  providerId: string;
+
   // default columns
   @CreateDateColumn()
   createdAt: Date;
@@ -39,4 +57,9 @@ export default class User extends BaseEntity {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @BeforeInsert()
+  async beforeInsert() {
+    this.providerId = crypto.createHmac("sha256", this.email).digest("hex");
+  }
 }

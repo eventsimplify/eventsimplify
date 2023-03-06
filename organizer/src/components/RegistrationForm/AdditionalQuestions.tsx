@@ -1,101 +1,178 @@
 import React from "react";
-import { Divider, Switch, Table, Typography } from "antd";
+import { Button, Divider, Space, Switch, Table, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
+import {
+  UpOutlined,
+  DownOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import { IQuestion } from "@/interfaces";
 
-import { DragOutlined } from "@ant-design/icons";
+const { Title, Paragraph } = Typography;
 
-const { Title, Paragraph, Text } = Typography;
+const AdditionalQuestions = ({
+  questions,
+  setQuestions,
+  onOpen,
+  setSelectedQuestion,
+}: {
+  questions: IQuestion[];
+  setQuestions: (questions: IQuestion[]) => void;
+  onOpen: () => void;
+  setSelectedQuestion: (question: IQuestion) => void;
+}) => {
+  const handleMoveUp = (index: number) => {
+    const newQuestions = [...questions];
+    const temp = newQuestions[index];
+    newQuestions[index] = newQuestions[index - 1];
+    newQuestions[index - 1] = temp;
+    setQuestions(newQuestions);
+  };
 
-interface DataType {
-  key: string;
-  name: string;
-  include: boolean;
-  required: boolean;
-}
+  const handleMoveDown = (index: number) => {
+    const newQuestions = [...questions];
+    const temp = newQuestions[index];
+    newQuestions[index] = newQuestions[index + 1];
+    newQuestions[index + 1] = temp;
+    setQuestions(newQuestions);
+  };
 
-const columns: ColumnsType<DataType> = [
-  {
-    key: "sort",
-    width: "5%",
-    title: "Sort",
-    render: () => (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          cursor: "move",
-        }}
-      >
-        <DragOutlined
-          style={{
-            color: "#999",
-            fontSize: 20,
-          }}
+  const handleInclude = (index: number) => {
+    const newQuestions = [...questions];
+    newQuestions[index].included = !newQuestions[index].included;
+    // If the question is not included, it should not be required
+    if (!newQuestions[index].included) {
+      newQuestions[index].required = false;
+    }
+    setQuestions(newQuestions);
+  };
+
+  const handleRequired = (index: number) => {
+    const newQuestions = [...questions];
+    newQuestions[index].required = !newQuestions[index].required;
+
+    // If the question is required, it should be included
+    if (newQuestions[index].required) {
+      newQuestions[index].included = true;
+    }
+    setQuestions(newQuestions);
+  };
+
+  const handleDelete = (index: number) => {
+    const newQuestions = [...questions];
+    newQuestions.splice(index, 1);
+    setQuestions(newQuestions);
+  };
+
+  const handleEdit = (index: number) => {
+    setSelectedQuestion(questions[index]);
+    onOpen();
+  };
+
+  const columns: ColumnsType<IQuestion> = [
+    {
+      key: "sort",
+      width: "5%",
+      title: "Sort",
+      dataIndex: "key",
+      render: (_, __, index) => (
+        <Space>
+          <Button
+            shape="circle"
+            size="small"
+            icon={<UpOutlined />}
+            disabled={index === 0}
+            onClick={() => handleMoveUp(index)}
+          />
+          <Button
+            size="small"
+            shape="circle"
+            icon={<DownOutlined />}
+            disabled={index === questions.length - 1}
+            onClick={() => handleMoveDown(index)}
+          />
+        </Space>
+      ),
+    },
+    {
+      title: "Question name",
+      dataIndex: "label",
+      width: "55%",
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      width: "10%",
+    },
+    {
+      title: "Include",
+      dataIndex: "included",
+      width: "10%",
+      render: (text, _, index) => (
+        <Switch
+          checked={text}
+          size="small"
+          onChange={() => handleInclude(index)}
         />
-      </div>
-    ),
-  },
-  {
-    title: "Question name",
-    dataIndex: "name",
-    width: "65%",
-  },
-  {
-    title: "Include",
-    dataIndex: "include",
-    width: "15%",
-    render: (text) => <Switch defaultChecked size="small" />,
-  },
-  {
-    title: "Required",
-    dataIndex: "required",
-    width: "15%",
-    render: (text) => <Switch defaultChecked size="small" />,
-  },
-];
+      ),
+    },
+    {
+      title: "Required",
+      dataIndex: "required",
+      width: "10%",
+      render: (text, _, index) => (
+        <Switch
+          checked={text}
+          size="small"
+          onChange={() => handleRequired(index)}
+        />
+      ),
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      width: "10%",
+      render: (_, __, index) => (
+        <Space>
+          <Button
+            type="text"
+            size="small"
+            icon={<EditOutlined />}
+            onClick={() => handleEdit(index)}
+          />
+          <Button
+            type="link"
+            size="small"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={() => handleDelete(index)}
+          />
+        </Space>
+      ),
+    },
+  ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "Prefix (Mr., Mrs., etc.)",
-    include: true,
-    required: false,
-  },
-  {
-    key: "2",
-    name: "Gender",
-    include: true,
-    required: false,
-  },
-  {
-    key: "3",
-    name: "Age",
-    include: true,
-    required: false,
-  },
-  {
-    key: "4",
-    name: "Phone number",
-    include: true,
-    required: false,
-  },
-];
-
-const AdditionalQuestions = () => {
   return (
     <div>
-      <Title level={3}>Collect more information</Title>
-      <Paragraph>
-        You can collect more information about your attendees by adding custom
-        questions to your registration form.
-      </Paragraph>
+      <div className="flex-justify">
+        <div>
+          <Title level={3}>Collect more information</Title>
+          <Paragraph>
+            You can collect more information about your attendees by adding
+            custom questions to your registration form.
+          </Paragraph>
+        </div>
+        <Button type="primary" onClick={onOpen}>
+          Add question
+        </Button>
+      </div>
       <Divider />
       <Table
         bordered
-        rowKey="key"
+        rowKey={(record) => record.name}
         columns={columns}
-        dataSource={data}
+        dataSource={questions}
         pagination={false}
       />
     </div>

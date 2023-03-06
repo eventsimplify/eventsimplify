@@ -8,9 +8,11 @@ import {
   ManyToOne,
   JoinColumn,
   DeleteDateColumn,
+  ManyToMany,
 } from "typeorm";
 
-import { Event } from "./index";
+import { Event, OrderDetails } from "./index";
+import Order from "./orders.entity";
 
 @Entity({ name: "tickets" })
 export default class Ticket extends BaseEntity {
@@ -54,9 +56,15 @@ export default class Ticket extends BaseEntity {
   @Column({ nullable: true })
   eventId: number;
 
-  @ManyToOne(() => Event, (event) => event.tickets)
+  @ManyToOne(() => Event, (event) => event.tickets, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn({ name: "eventId" })
   event: Event;
+
+  @ManyToMany(() => OrderDetails, (orderDetails) => orderDetails.tickets)
+  orders: OrderDetails[];
 
   // default columns
   @CreateDateColumn()

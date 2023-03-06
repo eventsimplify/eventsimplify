@@ -5,8 +5,12 @@ import ticket from "./ticket.route";
 import files from "./file.route";
 import invitation from "./invitation.route";
 import role from "./role.route";
+import registrationForm from "./registration-form.route";
+import speaker from "./speaker.route";
+import faq from "./faq.route";
 
 import { sendError } from "../utils";
+import { generatePdf, scheduler } from "../utils/pdfs";
 
 const rootRoutes = (app) => {
   app.use("/auth", auth);
@@ -16,6 +20,15 @@ const rootRoutes = (app) => {
   app.use("/files", files);
   app.use("/invitations", invitation);
   app.use("/roles", role);
+  app.use("/registration-forms", registrationForm);
+  app.use("/speakers", speaker);
+  app.use("/faqs", faq);
+
+  app.use("/test", async (req, res) => {
+    await scheduler();
+
+    res.end();
+  });
 
   app.use("*", (req, res) => {
     return sendError({

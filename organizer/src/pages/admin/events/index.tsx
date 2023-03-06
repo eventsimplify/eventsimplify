@@ -11,58 +11,6 @@ import { useRouter } from "next/router";
 import { EventService } from "@/services";
 import Link from "next/link";
 
-const columns: ColumnsType<IEvent> = [
-  {
-    title: "Event banner",
-    dataIndex: "banner",
-    width: "10%",
-    render: (text) => (
-      <img
-        src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F434879029%2F94212246415%2F1%2Foriginal.20230119-101032?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=09431ea2850f2ed6d4eb01f66dae80a1"
-        alt="banner"
-        width="100%"
-      />
-    ),
-  },
-  {
-    title: "Event name",
-    dataIndex: "name",
-    width: "40%",
-    render: (text, record) => {
-      return (
-        <Link
-          href={{
-            pathname: "/admin/events/[id]",
-            query: { id: record.id },
-          }}
-        >
-          {text}
-        </Link>
-      );
-    },
-  },
-  {
-    title: "Tickets sold",
-    dataIndex: "ticketSold",
-    width: "20%",
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
-    width: "20%",
-    render: (text) => <Tag color="success">{text}</Tag>,
-  },
-  {
-    title: "Action",
-    width: "10%",
-    render: () => (
-      <Space>
-        <Button danger icon={<DeleteOutlined />} />
-      </Space>
-    ),
-  },
-];
-
 const Events = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
   const [loading, setLoading] = useState("");
@@ -87,6 +35,68 @@ const Events = () => {
     getEvents();
   }, []);
 
+  const onDelete = async (id: number) => {
+    setLoading("events");
+    await EventService.remove(id);
+    getEvents();
+  };
+
+  const columns: ColumnsType<IEvent> = [
+    {
+      title: "Event banner",
+      dataIndex: "banner",
+      width: "10%",
+      render: (text) => (
+        <img
+          src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F434879029%2F94212246415%2F1%2Foriginal.20230119-101032?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=09431ea2850f2ed6d4eb01f66dae80a1"
+          alt="banner"
+          width="100%"
+        />
+      ),
+    },
+    {
+      title: "Event name",
+      dataIndex: "name",
+      width: "40%",
+      render: (text, record) => {
+        return (
+          <Link
+            href={{
+              pathname: "/admin/events/[id]",
+              query: { id: record.id },
+            }}
+          >
+            {text}
+          </Link>
+        );
+      },
+    },
+    {
+      title: "Tickets sold",
+      dataIndex: "ticketSold",
+      width: "20%",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      width: "20%",
+      render: (text) => <Tag color="success">{text}</Tag>,
+    },
+    {
+      title: "Action",
+      width: "10%",
+      render: (text, record) => (
+        <Space>
+          <Button
+            danger
+            icon={<DeleteOutlined />}
+            onClick={() => onDelete(record?.id)}
+          />
+        </Space>
+      ),
+    },
+  ];
+
   return (
     <div className="table-card">
       <div className="table-header">
@@ -97,12 +107,11 @@ const Events = () => {
       </div>
       <Divider />
       <Table
-        rowKey={(record) => record.id.toString()}
+        rowKey={(record) => record?.slug}
         columns={columns}
         dataSource={events}
         loading={loading === "events"}
         bordered
-        //@ts-ignore
         onChange={handleTableChange}
         pagination={{
           showSizeChanger: true,

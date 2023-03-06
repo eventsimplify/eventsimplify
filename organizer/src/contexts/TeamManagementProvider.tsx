@@ -14,6 +14,7 @@ import {
 } from "@/interfaces";
 import { OrganizationService, RoleService } from "@/services";
 import { useAppContext } from "./AppProvider";
+import IPermission from "@/interfaces/IPermission";
 
 export const TeamManagementContext = createContext(
   {} as ITeamManagementContext
@@ -33,6 +34,11 @@ const TeamManagementProvider = (props: any) => {
   const [staffs, setStaffs] = useState<IUser[]>([]);
   const [invitations, setInvitations] = useState<IInvitation[]>([]);
   const [roles, setRoles] = useState<IRole[]>([]);
+  const [permissions, setPermissions] = useState<IPermission[]>([]);
+
+  const [selectedPermissions, setSelectedPermissions] = useState<IPermission[]>(
+    []
+  );
 
   const getStaffs = async () => {
     setLoading("team-management");
@@ -40,6 +46,7 @@ const TeamManagementProvider = (props: any) => {
     setStaffs(data?.staffs || []);
     setInvitations(data?.invitations || []);
     setRoles(data?.roles || []);
+    setPermissions(data?.permissions || []);
     setLoading("");
   };
 
@@ -67,6 +74,9 @@ const TeamManagementProvider = (props: any) => {
       roles,
       setRoles,
       deleteRole,
+      permissions,
+      selectedPermissions,
+      setSelectedPermissions,
     }),
     [staffs, invitations, loading]
   );

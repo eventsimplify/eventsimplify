@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Button, Divider, Table } from "antd";
 
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 
-import EventLayout from "@/layouts/event";
 import { useRouter } from "next/router";
 import { TicketService } from "@/services";
 import EventFilters from "@/components/Filters/EventFilters";
 import TicketFormDialog from "@/components/TicketForm";
 import { ITicket } from "@/interfaces";
 import Actions from "@/components/Table/Actions";
+import EventLayoutWithContext from "@/layouts/event";
 
 const columns: ColumnsType<ITicket> = [
   {
@@ -35,7 +35,7 @@ const columns: ColumnsType<ITicket> = [
   },
 ];
 
-const Tickets: React.FC = () => {
+const Tickets = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [loading, setLoading] = useState("");
   const [open, setOpen] = useState(false);
@@ -62,7 +62,7 @@ const Tickets: React.FC = () => {
   }, [router.query.eventId]);
 
   return (
-    <EventLayout>
+    <>
       <TicketFormDialog open={open} setOpen={setOpen} getTickets={getTickets} />
       <div className="table-card">
         <div className="table-header">
@@ -78,13 +78,16 @@ const Tickets: React.FC = () => {
           dataSource={tickets}
           loading={loading === "get"}
           bordered
-          //@ts-ignore
           onChange={handleTableChange}
           pagination={false}
         />
       </div>
-    </EventLayout>
+    </>
   );
+};
+
+Tickets.getLayout = (page: ReactElement) => {
+  return <EventLayoutWithContext>{page}</EventLayoutWithContext>;
 };
 
 export default Tickets;

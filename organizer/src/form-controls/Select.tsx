@@ -14,10 +14,11 @@ const Select = ({
   return (
     <Form.Item name={name} label={label} rules={rules}>
       <AntDSelect
-        showSearch
+        showSearch={false}
         placeholder={placeholder}
         disabled={disabled}
         options={options}
+        allowClear
       />
     </Form.Item>
   );
