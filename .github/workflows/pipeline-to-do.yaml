@@ -1,7 +1,7 @@
 name: Droplet Pipeline
 on:
   push:
-    branches: [deployment]
+    branches: [final_deployment]
 jobs:
   push_to_droplet:
     runs-on: self-hosted
