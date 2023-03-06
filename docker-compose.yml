@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+      - organizer
+
+  backend:
+    build: ./backend
+    environment:
+      - DATABASE_URL=postgres://postgres:mysecretpassword@postgres:5432/mydb
+    depends_on:
+      - postgres
+
+  organizer:
+    build: ./organizer
+    environment:
+      - DATABASE_URL=postgres://postgres:mysecretpassword@postgres:5432/mydb
+    depends_on:
+      - postgres
+
+  postgres:
+    build:
+      context: ./postgres
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:

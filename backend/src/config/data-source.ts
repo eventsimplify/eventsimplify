@@ -13,11 +13,11 @@ const caCert = fs.readFileSync(path.join(__dirname, "certificate.crt"));
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: 'postgres',
+  port: 5432, // This is the default Postgres port
+  username: 'postgres', // This is the default Postgres username
+  password: 'mysecretpassword', // This is the password you set for the `postgres` user in your `docker-compose.yml` file
+  database: 'mydb',
   ssl: process.env.NODE_ENV === "production" && {
     rejectUnauthorized: true,
     ca: caCert,
