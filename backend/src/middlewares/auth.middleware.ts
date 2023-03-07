@@ -18,8 +18,17 @@ export const protect = async (req, res, next) => {
 
   let decoded: any = jwt_decode(token);
 
+  if (!decoded.id) {
+    return sendError({
+      res,
+      status: 401,
+      data: null,
+      message: "Login is required to access this!",
+    });
+  }
+
   let user = await User.findOne({
-    where: { providerId: Equal(decoded.id) },
+    where: { providerId: decoded.id },
     relations: ["organizations", "organizations.organization"],
   });
 
