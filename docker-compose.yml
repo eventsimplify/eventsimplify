@@ -11,27 +11,23 @@ services:
 
   backend:
     build: ./backend
-    environment:
-      - DATABASE_URL=postgres://postgres:mysecretpassword@postgres:5432/mydb
     depends_on:
       - postgres
-    # ports:
-    #   - "9000:9000"
+    ports:
+      - 9000:9000
+  
 
   organizer:
     build: ./organizer
-    # ports:
-    #   - "3000:3000"
+ 
 
-  postgres:
-    build:
-      context: ./postgres
-    environment:
-      POSTGRES_PASSWORD: mysecretpassword
-    # ports:
-    #   - "5432:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
+#   postgres:
+#     build: ./postgres
+#     environment:
+#       POSTGRES_PASSWORD: mysecretpassword
+  
+#     volumes:
+#       - postgres-data:/var/lib/postgresql/data
 
-volumes:
-  postgres-data:
+# volumes:
+#   postgres-data:
