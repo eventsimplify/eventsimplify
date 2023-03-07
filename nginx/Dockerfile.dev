@@ -1,0 +1,8 @@
+FROM nginx
+COPY ./default.dev.conf /etc/nginx/conf.d/default.conf
+
+# Install inotify-tools for watching file changes
+RUN apt-get update && apt-get install -y inotify-tools
+
+# Start nginx and watch for file changes
+CMD service nginx start && while inotifywait -e modify /etc/nginx/conf.d/default.conf; do nginx -s reload; done

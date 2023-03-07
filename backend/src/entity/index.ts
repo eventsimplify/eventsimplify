@@ -17,6 +17,7 @@ import Faq from "./faq.entity";
 import Settings from "./settings.entity";
 import OrganizationVerification from "./organization-verification.entity";
 import Attendee from "./attendee.entity";
+import OrderDetailsTickets from "./order-details-tickets.entity";
 
 export {
   User,
@@ -38,6 +39,7 @@ export {
   Settings,
   OrganizationVerification,
   Attendee,
+  OrderDetailsTickets,
 };
 
 export default {
@@ -60,4 +62,5 @@ export default {
   Settings,
   OrganizationVerification,
   Attendee,
+  OrderDetailsTickets,
 };

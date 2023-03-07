@@ -8,26 +8,23 @@ services:
     depends_on:
       - backend
       - organizer
+    restart: always
 
   backend:
     build: ./backend
-    depends_on:
-      - postgres
-    # ports:
-    #   - 9000:9000
-  
+    restart: always
+    
 
   organizer:
     build: ./organizer
+    restart: always
+   
+  
+
+
+
+
+
  
 
-  postgres:
-    build: ./postgres
-    environment:
-      POSTGRES_PASSWORD: mysecretpassword
-  
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
 
-volumes:
-  postgres-data:

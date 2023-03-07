@@ -15,8 +15,6 @@ export const create = async (req, res) => {
     type: Yup.string().required("Type is a required field"),
     startDate: Yup.date().required("Start date is a required field"),
     endDate: Yup.date().required("End date is a required field"),
-    summary: Yup.string().required("Summary is a required field"),
-    description: Yup.string().required("Description is a required field"),
   });
 
   try {
@@ -26,8 +24,6 @@ export const create = async (req, res) => {
       tags,
       startDate,
       endDate,
-      summary,
-      description,
     });
 
     const event = await Event.create({
