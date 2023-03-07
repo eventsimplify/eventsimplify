@@ -13,8 +13,8 @@ services:
     build: ./backend
     depends_on:
       - postgres
-    ports:
-      - 9000:9000
+    # ports:
+    #   - 9000:9000
   
 
   organizer:
