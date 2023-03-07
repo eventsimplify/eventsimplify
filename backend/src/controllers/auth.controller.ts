@@ -54,7 +54,7 @@ export const login = async (req, res) => {
 
     let user = await User.findOne({
       where: { email },
-      select: ["id", "name", "email"],
+      select: ["name", "email", "providerId"],
     });
 
     const token = generateToken(user.providerId);
@@ -64,9 +64,7 @@ export const login = async (req, res) => {
     return sendSuccess({
       res,
       message: "User has been logged in successfully.",
-      data: {
-        user,
-      },
+      data: user,
     });
   } catch (err) {
     errorHandler(res, err);
@@ -145,6 +143,8 @@ export const me = async (req, res) => {
         "organizations.role",
       ],
     });
+
+    console.log(user);
 
     if (!user) {
       return sendError({

@@ -1,0 +1,15 @@
+{
+  "name": "eventsimplify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-all": "docker-compose up",
+    "build-postgres": "docker-compose up postgres",
+    "build-organizer": "docker-compose up organizer",
+    "build-backend": "docker-compose up backend"
+  },
+  "author": "",
+  "license": "ISC"
+}

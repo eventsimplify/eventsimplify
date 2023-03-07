@@ -1,4 +1,5 @@
 import jwt_decode from "jwt-decode";
+import { Equal } from "typeorm";
 
 import { User, Event } from "../entity";
 import { sendError, getToken } from "../utils";
@@ -18,7 +19,7 @@ export const protect = async (req, res, next) => {
   let decoded: any = jwt_decode(token);
 
   let user = await User.findOne({
-    where: { providerId: decoded.id },
+    where: { providerId: Equal(decoded.id) },
     relations: ["organizations", "organizations.organization"],
   });
 
