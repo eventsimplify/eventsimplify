@@ -1,19 +1,18 @@
 import React, { useMemo } from "react";
 import { Button, Card, Typography } from "antd";
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 
 import { ITicket } from "@/interfaces";
 import { useOrderFormContext } from "@/contexts/OrderFormProvider";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const { Meta } = Card;
 
-const Ticket = ({ ticket }: { ticket: ITicket }) => {
+const SingleTicket = ({ ticket }: { ticket: ITicket }) => {
   const { selectedTickets, setSelectedTickets } = useOrderFormContext();
 
   const { name, maxPerOrder } = ticket;
 
-  const handleAddTicket = () => {
+  const onClickHandle = () => {
     const ticketIndex = selectedTickets.findIndex(
       (selectedTicket) => selectedTicket.id === ticket.id
     );
@@ -23,20 +22,9 @@ const Ticket = ({ ticket }: { ticket: ITicket }) => {
       ticket.quantity = 1;
       setSelectedTickets([...selectedTickets, ticket]);
     } else {
+      // remove ticket
       const newSelectedTickets = [...selectedTickets];
-      newSelectedTickets[ticketIndex].quantity += 1;
-      setSelectedTickets(newSelectedTickets);
-    }
-  };
-
-  const handleRemoveTicket = () => {
-    const ticketIndex = selectedTickets.findIndex(
-      (selectedTicket) => selectedTicket.id === ticket.id
-    );
-
-    if (ticketIndex !== -1) {
-      const newSelectedTickets = [...selectedTickets];
-      newSelectedTickets[ticketIndex].quantity -= 1;
+      newSelectedTickets.splice(ticketIndex, 1);
       setSelectedTickets(newSelectedTickets);
     }
   };
@@ -48,26 +36,24 @@ const Ticket = ({ ticket }: { ticket: ITicket }) => {
     return selectedTicket?.quantity || 0;
   }, [selectedTickets]);
 
+  const isTicketSelected = useMemo(() => {
+    return selectedTickets.some(
+      (selectedTicket) => selectedTicket.id === ticket.id
+    );
+  }, [selectedTickets]);
+
   return (
     <Card
       actions={[
         <Button
-          key="remove"
-          icon={<MinusOutlined />}
+          key="select"
+          type={isTicketSelected ? "primary" : "default"}
           size="middle"
-          onClick={handleRemoveTicket}
-          disabled={ticketQuantity === 0}
-        />,
-        <Title key="edit" level={5}>
-          {ticketQuantity}
-        </Title>,
-        <Button
-          key="add"
-          icon={<PlusOutlined />}
-          size="middle"
-          onClick={handleAddTicket}
+          onClick={onClickHandle}
           disabled={ticketQuantity === maxPerOrder}
-        />,
+        >
+          {isTicketSelected ? "Selected" : "Select this ticket"}
+        </Button>,
       ]}
     >
       <Meta
@@ -78,4 +64,4 @@ const Ticket = ({ ticket }: { ticket: ITicket }) => {
   );
 };
 
-export default Ticket;
+export default SingleTicket;

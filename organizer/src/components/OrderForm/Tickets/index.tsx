@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import { Col, Row, Typography } from "antd";
 
-import Ticket from "./Ticket";
 import { ITicket } from "@/interfaces";
 import { useEventContext } from "@/contexts/EventProvider";
 import { useOrderFormContext } from "@/contexts/OrderFormProvider";
+import SingleTicket from "./SingleTicket";
 
 const { Title, Paragraph } = Typography;
 
@@ -30,7 +30,7 @@ const Tickets = () => {
       </Col>
       {event?.tickets?.map((ticket: ITicket) => (
         <Col span={6} key={ticket.id}>
-          <Ticket ticket={ticket} />
+          <SingleTicket ticket={ticket} />
         </Col>
       ))}
       <Col

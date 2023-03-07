@@ -12,6 +12,7 @@ const PhoneInput = ({
   placeholder,
   disabled,
   extra,
+  form,
 }: IFieldProps) => {
   return (
     <Form.Item name={name} label={label} rules={rules} extra={extra}>
@@ -20,11 +21,15 @@ const PhoneInput = ({
           <Option value="+977">+977</Option>
         </Select>
         <Input
+          defaultValue={form?.getFieldValue(name)}
           placeholder={placeholder}
           disabled={disabled}
           style={{ width: "85%" }}
           type="tel"
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          onChange={(e) => {
+            const { value } = e.target;
+            form?.setFieldsValue({ [name]: value });
+          }}
         />
       </Input.Group>
     </Form.Item>

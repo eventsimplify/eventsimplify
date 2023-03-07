@@ -1,16 +1,14 @@
-import React from 'react';
-import { Card, Avatar, Col, Space, Typography, Button, Popconfirm } from 'antd';
+import React from "react";
+import { Card, Avatar, Col, Space, Typography, Button, Popconfirm } from "antd";
 
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { ISpeaker } from '@/interfaces';
-import { useEventContext } from '@/contexts/EventProvider';
-import parse from 'html-react-parser';
-import ShowRichText from '../ShowRichText';
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { ISpeaker } from "@/interfaces";
+import { useEventContext } from "@/contexts/EventProvider";
 
-const { Paragraph, Text } = Typography;
+const { Text } = Typography;
 
 const SpeakerItem = ({ speaker }: { speaker: ISpeaker }) => {
-  const { id, name, description, jobTitle } = speaker;
+  const { id, name, jobTitle } = speaker;
 
   const { setSpeaker, deleteSpeaker, loading } = useEventContext();
 
@@ -28,13 +26,13 @@ const SpeakerItem = ({ speaker }: { speaker: ISpeaker }) => {
       <Card
         actions={[
           <Button
-            key={id}
+            key="edit"
             type="text"
             icon={<EditOutlined />}
             onClick={handleEdit}
           />,
           <Popconfirm
-            key={id + 'delete'}
+            key="delete"
             icon={null}
             title="Are you sure to delete this speaker?"
             description="This action cannot be undone"
@@ -42,7 +40,7 @@ const SpeakerItem = ({ speaker }: { speaker: ISpeaker }) => {
             cancelText="Cancel"
             onConfirm={onConfirm}
             okButtonProps={{
-              loading: loading === 'delete-speaker',
+              loading: loading === "delete-speaker",
               danger: true,
             }}
           >
@@ -55,7 +53,7 @@ const SpeakerItem = ({ speaker }: { speaker: ISpeaker }) => {
           size="small"
           style={{
             flexGrow: 1,
-            height: '100%',
+            height: "100%",
           }}
         >
           <Space size="small">

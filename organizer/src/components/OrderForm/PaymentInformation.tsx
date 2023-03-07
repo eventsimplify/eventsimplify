@@ -2,10 +2,24 @@ import React from "react";
 import { Col, Form, Row } from "antd";
 
 import Field from "@/form-controls/Field";
+import { useOrderFormContext } from "@/contexts/OrderFormProvider";
 
 const PaymentInformation = () => {
+  const { setPaymentInformation, setCurrentStep, paymentInformation } =
+    useOrderFormContext();
+
   const onFinish = async (values: any) => {
-    console.log(values);
+    const { status, provider, providerId, notes } = values;
+
+    const payment: any = {
+      status,
+      provider,
+      providerId,
+      notes,
+    };
+
+    setPaymentInformation(payment);
+    setCurrentStep(3);
   };
 
   return (
@@ -16,6 +30,9 @@ const PaymentInformation = () => {
       validateTrigger="onBlur"
       initialValues={{
         provider: "cash",
+        status: paymentInformation?.status || "pending",
+        providerId: paymentInformation?.providerId || "",
+        notes: paymentInformation?.notes || "",
       }}
     >
       <Row gutter={[16, 16]}>
@@ -52,13 +69,22 @@ const PaymentInformation = () => {
             ]}
           />
         </Col>
-        <Col span={12} />
         <Col span={12}>
           <Field
             name="providerId"
             label="Payment provider ID / Transaction ID"
             type="text"
             placeholder="Enter payment provider ID"
+          />
+        </Col>
+
+        <Col span={12}>
+          <Field
+            name="paymentDate"
+            label="Payment date"
+            type="date"
+            placeholder="Enter payment date"
+            required
           />
         </Col>
 

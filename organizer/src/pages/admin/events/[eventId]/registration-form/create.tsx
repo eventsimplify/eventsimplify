@@ -5,7 +5,6 @@ import { EyeOutlined } from "@ant-design/icons";
 
 import EventLayoutWithContext from "@/layouts/event";
 import Form from "@/components/RegistrationForm";
-import { defaultRegistrationQuestions } from "@/bootstrap/config";
 import { IQuestion } from "@/interfaces";
 import { RegistrationFormService } from "@/services";
 import { useRouter } from "next/router";
@@ -15,9 +14,7 @@ const RegistrationForm = () => {
   const [form] = AntDForm.useForm();
   const [loading, setLoading] = useState(false);
 
-  const [questions, setQuestions] = useState<IQuestion[]>(
-    defaultRegistrationQuestions
-  );
+  const [questions, setQuestions] = useState<IQuestion[]>([]);
 
   const [additionalQuestions, setAdditionalQuestions] = useState<IQuestion[]>(
     []

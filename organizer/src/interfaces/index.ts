@@ -18,6 +18,7 @@ import IAttendee from "./IAttendee";
 import ISpeaker from "./ISpeaker";
 import IFaq from "./IFaq";
 import IPaymentInformation from "./IPaymentInformation";
+import IOrder from "./IOrder";
 
 export type {
   IField,
@@ -40,4 +41,5 @@ export type {
   ISpeaker,
   IFaq,
   IPaymentInformation,
+  IOrder,
 };

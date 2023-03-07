@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from 'react';
-import { Button, Form, Modal } from 'antd';
+import React, { useMemo, useState } from "react";
+import { Button, Form, Modal } from "antd";
 
-import { message } from '@/components/AntDMessage';
+import { message } from "@/components/AntDMessage";
 
-import Field from '@/form-controls/Field';
-import { InvitationService } from '@/services';
-import { useTeamManagementContext } from '@/contexts/TeamManagementProvider';
+import Field from "@/form-controls/Field";
+import { InvitationService } from "@/services";
+import { useTeamManagementContext } from "@/contexts/TeamManagementProvider";
 
 const StaffForm = ({ getStaffs }: { getStaffs: () => void }) => {
   const { roles } = useTeamManagementContext();
@@ -32,7 +32,7 @@ const StaffForm = ({ getStaffs }: { getStaffs: () => void }) => {
 
       setLoading(false);
     } catch (errorInfo) {
-      message.error('Please fill in all required fields');
+      message.error("Please fill in all required fields");
     } finally {
       setLoading(false);
       form.resetFields();
@@ -47,7 +47,7 @@ const StaffForm = ({ getStaffs }: { getStaffs: () => void }) => {
     () =>
       roles.map((role) => ({
         label: role.name,
-        value: role.id.toString(),
+        value: role.id,
       })),
     [roles]
   );

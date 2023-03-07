@@ -32,7 +32,7 @@ const Options = ({
     setText("");
   };
 
-  const handleDeleteOption = (value: string) => {
+  const handleDeleteOption = (value: string | number) => {
     if (!setOptions) return;
 
     const newOptions = options?.filter((option) => option.value !== value);
