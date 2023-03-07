@@ -6,8 +6,6 @@ import Entities from "../entity";
 //subscribers imports
 import { EventEntitySubscriber } from "../subscribers";
 
-console.log(process.env.DB_USERNAME);
-
 export const AppDataSource = new DataSource({
   type: "postgres",
   host: process.env.DB_HOST,
