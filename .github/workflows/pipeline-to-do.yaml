@@ -12,7 +12,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.0.0
+      - name: Run Docker compose down before
+        run : echo ${{secrets.DROPLET_PW}} | sudo docker-compose down
       - name: Run Docker Compose
-        run: |
-          echo ${{secrets.DROPLET_PW}} | sudo -S docker-compose down
-          echo ${{secrets.DROPLET_PW}} | sudo -S docker-compose up --build -d
+        run: echo ${{secrets.DROPLET_PW}} | sudo -S docker-compose up --build -d
