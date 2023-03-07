@@ -1,5 +1,7 @@
 import express from "express";
-import dotenv from "dotenv";
+import loadEnv from "./src/config/env";
+
+loadEnv();
 
 import { middlewaresConfig } from "./src/middlewares";
 import connectDB from "./src/config/database";
@@ -13,12 +15,6 @@ middlewaresConfig(app);
 
 /* Config */
 connectDB();
-dotenv.config({
-  path:
-    process.env.NODE_ENV === "production"
-      ? "./env/prod.env"
-      : "./env/local.env",
-});
 
 rootRoutes(app);
 

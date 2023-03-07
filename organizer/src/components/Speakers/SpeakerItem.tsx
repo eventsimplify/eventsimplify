@@ -4,13 +4,11 @@ import { Card, Avatar, Col, Space, Typography, Button, Popconfirm } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ISpeaker } from "@/interfaces";
 import { useEventContext } from "@/contexts/EventProvider";
-import parse from "html-react-parser";
-import ShowRichText from "../ShowRichText";
 
-const { Paragraph, Text } = Typography;
+const { Text } = Typography;
 
 const SpeakerItem = ({ speaker }: { speaker: ISpeaker }) => {
-  const { id, name, description, jobTitle } = speaker;
+  const { id, name, jobTitle } = speaker;
 
   const { setSpeaker, deleteSpeaker, loading } = useEventContext();
 
@@ -27,8 +25,14 @@ const SpeakerItem = ({ speaker }: { speaker: ISpeaker }) => {
     <Col span={6}>
       <Card
         actions={[
-          <Button type="text" icon={<EditOutlined />} onClick={handleEdit} />,
+          <Button
+            key="edit"
+            type="text"
+            icon={<EditOutlined />}
+            onClick={handleEdit}
+          />,
           <Popconfirm
+            key="delete"
             icon={null}
             title="Are you sure to delete this speaker?"
             description="This action cannot be undone"

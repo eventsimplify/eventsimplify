@@ -46,6 +46,7 @@ const SingleTicket = ({ ticket }: { ticket: ITicket }) => {
     <Card
       actions={[
         <Button
+          key="select"
           type={isTicketSelected ? "primary" : "default"}
           size="middle"
           onClick={onClickHandle}

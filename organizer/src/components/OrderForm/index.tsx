@@ -108,10 +108,12 @@ const OrderForm = () => {
           title="Order placed successfully"
           subTitle="Order has been placed successfully. You can view the order in the orders section."
           extra={[
-            <Button type="primary" onClick={goToOrders}>
+            <Button key="orders" type="primary" onClick={goToOrders}>
               Go to orders
             </Button>,
-            <Button onClick={createAnotherOrder}>Create another order</Button>,
+            <Button key="create-order" onClick={createAnotherOrder}>
+              Create another order
+            </Button>,
           ]}
         />
       </Card>
@@ -124,6 +126,7 @@ const OrderForm = () => {
       extra={
         <Space>
           <Button
+            key="previous"
             htmlType="button"
             disabled={loading === "create"}
             onClick={() => setCurrentStep(currentStep - 1)}
@@ -131,25 +134,41 @@ const OrderForm = () => {
             Previous
           </Button>
           {currentStep === 0 && (
-            <Button type="primary" htmlType="button" onClick={onTicketConfirm}>
+            <Button
+              key="ticket-info"
+              type="primary"
+              htmlType="button"
+              onClick={onTicketConfirm}
+            >
               Save and continue
             </Button>
           )}
 
           {currentStep === 1 && (
-            <Button type="primary" htmlType="submit" form="attendeeInfo">
+            <Button
+              key="attendee-info"
+              type="primary"
+              htmlType="submit"
+              form="attendeeInfo"
+            >
               Save and continue
             </Button>
           )}
 
           {currentStep === 2 && (
-            <Button type="primary" htmlType="submit" form="paymentInfo">
+            <Button
+              key="payment-info"
+              type="primary"
+              htmlType="submit"
+              form="paymentInfo"
+            >
               Save and continue
             </Button>
           )}
 
           {currentStep === orderSteps.length - 1 && (
             <Button
+              key="place-order"
               type="primary"
               htmlType="button"
               loading={loading === "create"}

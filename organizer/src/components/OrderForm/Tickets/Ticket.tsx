@@ -52,6 +52,7 @@ const Ticket = ({ ticket }: { ticket: ITicket }) => {
     <Card
       actions={[
         <Button
+          key="remove"
           icon={<MinusOutlined />}
           size="middle"
           onClick={handleRemoveTicket}
@@ -61,6 +62,7 @@ const Ticket = ({ ticket }: { ticket: ITicket }) => {
           {ticketQuantity}
         </Title>,
         <Button
+          key="add"
           icon={<PlusOutlined />}
           size="middle"
           onClick={handleAddTicket}

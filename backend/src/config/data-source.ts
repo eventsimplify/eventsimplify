@@ -6,10 +6,7 @@ import Entities from "../entity";
 //subscribers imports
 import { EventEntitySubscriber } from "../subscribers";
 
-//importing ssl certificate
-import fs from "fs";
-import path from "path";
-const caCert = fs.readFileSync(path.join(__dirname, "certificate.crt"));
+console.log(process.env.DB_USERNAME);
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -18,10 +15,6 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  ssl: process.env.NODE_ENV === "production" && {
-    rejectUnauthorized: true,
-    ca: caCert,
-  },
   synchronize: true,
   logging: false,
   entities: [...Object.values(Entities)],

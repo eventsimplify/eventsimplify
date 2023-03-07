@@ -41,12 +41,17 @@ const FormItem = ({ form }: { form: IRegistrationForm }) => {
     <Col span={6}>
       <Card
         actions={[
-          <Button type="text" icon={<EditOutlined />} onClick={onEditClick} />,
-
-          <Tooltip title="Feature coming soon!!">
+          <Button
+            key="edit"
+            type="text"
+            icon={<EditOutlined />}
+            onClick={onEditClick}
+          />,
+          <Tooltip title="Feature coming soon!!" key="copy">
             <Button type="text" icon={<CopyOutlined />} disabled />
           </Tooltip>,
           <Popconfirm
+            key="delete"
             icon={null}
             title="Are you sure to delete this form?"
             description="This action cannot be undone"
