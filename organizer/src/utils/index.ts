@@ -1,4 +1,10 @@
 import { handleAxiosError, handleError, handleSuccess } from "./reponse.utils";
-import { getFirstLetterFromName } from "./utils";
+import { getFirstLetterFromName, getTagColorByStatus } from "./utils";
 
-export { handleAxiosError, handleSuccess, handleError, getFirstLetterFromName };
+export {
+  handleAxiosError,
+  handleSuccess,
+  handleError,
+  getFirstLetterFromName,
+  getTagColorByStatus,
+};

@@ -1,29 +1,26 @@
-import React, { ReactElement, useEffect, useMemo, useState } from 'react';
-import { Button, Card, Space, Form as AntDForm } from 'antd';
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
+import { Button, Card, Space, Form as AntDForm } from "antd";
 
-import { EyeOutlined } from '@ant-design/icons';
+import { EyeOutlined } from "@ant-design/icons";
 
-import EventLayoutWithContext from '@/layouts/event';
-import Form from '@/components/RegistrationForm';
-import { defaultRegistrationQuestions } from '@/bootstrap/config';
-import { IQuestion, IRegistrationForm } from '@/interfaces';
-import { RegistrationFormService } from '@/services';
-import { useRouter } from 'next/router';
-import Loader from '@/components/Loader';
+import EventLayoutWithContext from "@/layouts/event";
+import Form from "@/components/RegistrationForm";
+import { IQuestion, IRegistrationForm } from "@/interfaces";
+import { RegistrationFormService } from "@/services";
+import { useRouter } from "next/router";
+import Loader from "@/components/Loader";
 
 const Detail = () => {
   const router = useRouter();
   const [form] = AntDForm.useForm();
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState("");
   const [initalQuestions, setInitialQuestions] = useState<IQuestion[]>([]);
 
   const [initialAdditionalQuestions, setInitialAdditionalQuestions] = useState<
     IQuestion[]
   >([]);
 
-  const [questions, setQuestions] = useState<IQuestion[]>(
-    defaultRegistrationQuestions
-  );
+  const [questions, setQuestions] = useState<IQuestion[]>([]);
   const [additionalQuestions, setAdditionalQuestions] = useState<IQuestion[]>(
     []
   );
@@ -31,7 +28,7 @@ const Detail = () => {
   const [formDetail, setFormDetail] = useState<IRegistrationForm | null>(null);
 
   const getFormDetail = async () => {
-    setLoading('detail');
+    setLoading("detail");
     const response = await RegistrationFormService.detail(
       router.query.id as string
     );
@@ -43,7 +40,7 @@ const Detail = () => {
       setInitialAdditionalQuestions(response.additionalQuestions);
       setAdditionalQuestions(response.additionalQuestions);
     }
-    setLoading('');
+    setLoading("");
   };
 
   useEffect(() => {
@@ -53,7 +50,7 @@ const Detail = () => {
   }, [router.query.id]);
 
   const onFinish = async (values: any) => {
-    setLoading('update');
+    setLoading("update");
 
     const formData = {
       name: values.name,
@@ -67,11 +64,11 @@ const Detail = () => {
     setInitialQuestions(questions);
     setInitialAdditionalQuestions(additionalQuestions);
 
-    setLoading('');
+    setLoading("");
   };
 
   const isFormChanged = useMemo(() => {
-    if (form.isFieldTouched('name')) {
+    if (form.isFieldTouched("name")) {
       return true;
     }
 
@@ -92,7 +89,7 @@ const Detail = () => {
     additionalQuestions,
   ]);
 
-  if (loading === 'detail' || formDetail === null) {
+  if (loading === "detail" || formDetail === null) {
     return <Loader />;
   }
 
@@ -116,7 +113,7 @@ const Detail = () => {
               type="primary"
               htmlType="submit"
               form="registrationForm"
-              loading={loading === 'update'}
+              loading={loading === "update"}
               disabled={!isFormChanged}
             >
               Update

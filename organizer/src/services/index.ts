@@ -30,6 +30,7 @@ import RoleService from "./role.service";
 import RegistrationFormService from "./registration-form.service";
 import SpeakerService from "./speaker.service";
 import FaqService from "./faq.service";
+import OrderService from "./order.service";
 
 export {
   AuthService,
@@ -41,4 +42,5 @@ export {
   RegistrationFormService,
   SpeakerService,
   FaqService,
+  OrderService,
 };

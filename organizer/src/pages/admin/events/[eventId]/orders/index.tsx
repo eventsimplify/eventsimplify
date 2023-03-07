@@ -1,58 +1,91 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { Button, Divider, Table } from "antd";
+import { Button, Divider, Table, Tag } from "antd";
 
-import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
+import type { ColumnsType } from "antd/es/table";
 
-import EventLayout from "@/layouts/event";
 import { useRouter } from "next/router";
-import { TicketService } from "@/services";
+import { OrderService } from "@/services";
 import EventFilters from "@/components/Filters/EventFilters";
-import { ITicket } from "@/interfaces";
+import { IOrder } from "@/interfaces";
 import Actions from "@/components/Table/Actions";
 import { useEventContext } from "@/contexts/EventProvider";
 import EventLayoutWithContext from "@/layouts/event";
+import { getTagColorByStatus } from "@/utils";
+import format from "date-fns/format";
 
-const columns: ColumnsType<ITicket> = [
+const columns: ColumnsType<IOrder> = [
   {
-    title: "Ticket name",
-    dataIndex: "name",
-    width: "40%",
+    title: "No. of tickets",
+    width: 100,
+    render: (_, record) => record.order_details.tickets.length,
   },
   {
-    title: "Tickets sold",
-    dataIndex: "sold",
-    width: "20%",
+    title: "Ticket",
+    width: 200,
+    render: (_, record) => record.order_details.tickets[0].ticket?.name,
   },
   {
-    title: "Price",
-    dataIndex: "price",
-    width: "20%",
+    title: "Order date",
+    width: 200,
+    render: (_, record) =>
+      record?.createdAt && format(new Date(record?.createdAt), "dd/MM/yyyy"),
   },
+  {
+    title: "Attendee email",
+    width: 200,
+    render: (_, record) => record.order_details.attendees[0].email,
+  },
+  {
+    title: "Attendee name",
+    width: 200,
+    render: (_, record) => record.order_details.attendees[0].name,
+  },
+  {
+    title: "Type",
+    width: 150,
+    render: (_, record) => (
+      <Tag color="blue">{record.payment_details.type}</Tag>
+    ),
+  },
+  {
+    title: "Payment method",
+    width: 150,
+    render: (_, record) => record.payment_details.provider,
+  },
+  {
+    title: "Status",
+    width: 150,
+    render: (_, record) => (
+      <Tag color={getTagColorByStatus(record.payment_details.status)}>
+        {record.payment_details.status}
+      </Tag>
+    ),
+  },
+  {
+    title: "Order total",
+    width: 150,
+    render: (_, record) => "Rs. " + record.total,
+  },
+
   {
     title: "Action",
-    width: "10%",
+    width: 100,
     render: () => <Actions />,
   },
 ];
 
 const Orders = () => {
   const { event } = useEventContext();
-  const [tickets, setTickets] = useState<ITicket[]>([]);
+  const [orders, setOrders] = useState<IOrder[]>([]);
   const [loading, setLoading] = useState("");
 
   const router = useRouter();
 
-  const handleTableChange = (pagination: TablePaginationConfig) => {
-    console.log(pagination);
-  };
-
   const getTickets = async () => {
-    setLoading("get");
-    if (!event) return null;
-    const data = await TicketService.list({
-      eventId: String(event.id),
-    });
-    setTickets(data || []);
+    setLoading("orders");
+    const data = await OrderService.list();
+    console.log(data);
+    setOrders(data || []);
     setLoading("");
   };
 
@@ -81,12 +114,11 @@ const Orders = () => {
       <Table
         rowKey={(record) => record.id.toString()}
         columns={columns}
-        dataSource={tickets}
-        loading={loading === "get"}
+        dataSource={orders}
+        loading={loading === "orders"}
         bordered
-        //@ts-ignore
-        onChange={handleTableChange}
         pagination={false}
+        scroll={{ x: 1600 }}
       />
     </div>
   );
