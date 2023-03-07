@@ -1,15 +1,15 @@
-import React from "react";
-import dynamic from "next/dynamic";
-import { Form } from "antd";
+import React from 'react';
+import dynamic from 'next/dynamic';
+import { Form } from 'antd';
 
-import { IFieldProps } from "@/interfaces";
+import { IFieldProps } from '@/interfaces';
 
-const ReactQuill = dynamic(import("react-quill"), {
+const ReactQuill = dynamic(import('react-quill'), {
   ssr: false,
   loading: () => <p>Loading ...</p>,
 });
 
-import "react-quill/dist/quill.snow.css";
+import 'react-quill/dist/quill.snow.css';
 
 const RichText = ({ name, label, rules, placeholder, form }: IFieldProps) => {
   return (
@@ -21,7 +21,7 @@ const RichText = ({ name, label, rules, placeholder, form }: IFieldProps) => {
           form?.setFieldValue(name, v);
         }}
         style={{
-          minHeight: "200px",
+          minHeight: '200px',
         }}
       />
     </Form.Item>
