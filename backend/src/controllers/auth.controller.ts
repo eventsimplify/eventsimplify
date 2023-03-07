@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 import bcrypt from "bcryptjs";
 
-import { IUser } from "../interfaces";
 import { User } from "../entity";
 import {
   errorHandler,

@@ -11,6 +11,7 @@ import faq from "./faq.route";
 import order from "./order.route";
 
 import { sendError } from "../utils";
+import { generatePdf } from "../utils/pdfs";
 
 const rootRoutes = (app) => {
   app.use("/auth", auth);
@@ -24,6 +25,13 @@ const rootRoutes = (app) => {
   app.use("/speakers", speaker);
   app.use("/faqs", faq);
   app.use("/orders", order);
+
+  app.use("/test", async (req, res) => {
+    const pdf = await generatePdf();
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
+    res.send(pdf);
+  });
 
   app.use("*", (req, res) => {
     return sendError({

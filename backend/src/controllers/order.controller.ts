@@ -108,6 +108,7 @@ export const list = async (req, res) => {
         "order_details.tickets.ticket",
         "payment_details",
       ],
+      order: { createdAt: "DESC" },
     });
 
     return sendSuccess({ res, data: orders });

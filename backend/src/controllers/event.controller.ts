@@ -24,8 +24,6 @@ export const create = async (req, res) => {
       tags,
       startDate,
       endDate,
-      summary,
-      description,
     });
 
     const event = await Event.create({

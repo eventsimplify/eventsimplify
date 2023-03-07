@@ -84,7 +84,6 @@ const Orders = () => {
   const getTickets = async () => {
     setLoading("orders");
     const data = await OrderService.list();
-    console.log(data);
     setOrders(data || []);
     setLoading("");
   };
