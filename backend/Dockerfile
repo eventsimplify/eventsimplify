@@ -3,7 +3,7 @@ WORKDIR '/app'
 
 RUN apk update && \
   apk upgrade && \
-  apk add --no-cache chromium
+  apk add chromium
 
 ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV CHROME_PATH=/usr/lib/chromium/
