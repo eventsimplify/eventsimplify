@@ -7,12 +7,11 @@ import {
   DeleteDateColumn,
   Column,
   JoinColumn,
-  ManyToOne,
   OneToOne,
+  ManyToOne,
 } from "typeorm";
 
 import { Organization } from "./index";
-import Order from "./orders.entity";
 
 @Entity({ name: "payment_details" })
 export default class PaymentDetails extends BaseEntity {
@@ -21,21 +20,14 @@ export default class PaymentDetails extends BaseEntity {
 
   //relations with organization
   @Column()
-  organizationId: number;
+  organization_id: number;
 
-  @ManyToOne(() => Organization, (organization) => organization.events)
-  @JoinColumn({ name: "organizationId" })
+  @ManyToOne(() => Organization, (organization) => organization.id)
+  @JoinColumn({ name: "organization_id" })
   organization: Organization;
 
   @Column("int", { nullable: false })
   total: number;
-
-  @Column()
-  orderId: number;
-
-  @OneToOne(() => Order, (order) => order.id)
-  @JoinColumn({ name: "orderId" })
-  order: Order;
 
   @Column("text", { nullable: false, default: "online" })
   type: "online" | "manual";
@@ -52,7 +44,7 @@ export default class PaymentDetails extends BaseEntity {
   @Column("text", { nullable: true })
   notes: string;
 
-  @Column("timestamptz", { nullable: false })
+  @Column("timestamptz", { nullable: true })
   paymentDate: string;
 
   // default columns

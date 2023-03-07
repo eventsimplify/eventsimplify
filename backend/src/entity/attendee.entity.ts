@@ -7,9 +7,11 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   ManyToOne,
+  JoinColumn,
+  OneToOne,
 } from "typeorm";
 
-import { OrderDetails } from ".";
+import { OrderDetails, Event } from ".";
 
 @Entity({ name: "attendees" })
 export default class Attendee extends BaseEntity {
@@ -31,8 +33,23 @@ export default class Attendee extends BaseEntity {
   @Column("text", { nullable: true })
   gender: string;
 
-  @ManyToOne(() => OrderDetails, (orderDetails) => orderDetails.id)
+  @Column()
+  order_detail_id: number;
+
+  @ManyToOne(() => OrderDetails, (orderDetails) => orderDetails.attendees)
+  @JoinColumn({
+    name: "order_detail_id",
+  })
   order_details: OrderDetails;
+
+  @Column()
+  event_id: number;
+
+  @ManyToOne(() => Event, (event) => event.id)
+  @JoinColumn({
+    name: "event_id",
+  })
+  event: Event;
 
   // default columns
   @CreateDateColumn()

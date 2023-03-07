@@ -7,8 +7,8 @@ import {
   DeleteDateColumn,
   Column,
   JoinColumn,
-  ManyToOne,
   OneToOne,
+  ManyToOne,
 } from "typeorm";
 
 import { Event, OrderDetails, Organization, PaymentDetails } from "./index";
@@ -20,25 +20,25 @@ export default class Order extends BaseEntity {
 
   //relations with organization
   @Column()
-  organizationId: number;
+  organization_id: number;
 
-  @ManyToOne(() => Organization, (organization) => organization.events)
-  @JoinColumn({ name: "organizationId" })
+  @ManyToOne(() => Organization, (organization) => organization.id)
+  @JoinColumn({ name: "organization_id" })
   organization: Organization;
 
   //relations with event
   @Column()
-  eventId: number;
+  event_id: number;
 
-  @OneToOne(() => Event, (event) => event.id)
-  @JoinColumn({ name: "eventId" })
+  @ManyToOne(() => Event, (event) => event.id)
+  @JoinColumn({ name: "event_id" })
   event: Event;
 
   //relations with order details
   @Column()
-  order_details_id: number;
+  order_detail_id: number;
 
-  @OneToOne(() => OrderDetails, (orderDetails) => orderDetails.order)
+  @OneToOne(() => OrderDetails, (orderDetails) => orderDetails.id)
   @JoinColumn({ name: "order_detail_id" })
   order_details: OrderDetails;
 
@@ -47,7 +47,7 @@ export default class Order extends BaseEntity {
   payment_detail_id: number;
 
   @OneToOne(() => PaymentDetails, (paymentDetails) => paymentDetails.id)
-  @JoinColumn({ name: "payment_detail_d" })
+  @JoinColumn({ name: "payment_detail_id" })
   payment_details: PaymentDetails;
 
   //relation with total amount

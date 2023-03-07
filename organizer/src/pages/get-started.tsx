@@ -1,18 +1,18 @@
-import React, { ReactElement, useState } from "react";
-import { Button, Card, Form } from "antd";
+import React, { ReactElement, useState } from 'react';
+import { Button, Card, Form } from 'antd';
 
-import GetStartedForm from "@/components/GetStartedForm";
-import GetStartedLayout from "@/layouts/get-started";
-import { OrganizationService } from "@/services";
-import { useRouter } from "next/router";
+import GetStartedForm from '@/components/GetStartedForm';
+import GetStartedLayout from '@/layouts/get-started';
+import { OrganizationService } from '@/services';
+import { useRouter } from 'next/router';
 
 const GetStarted = () => {
   const router = useRouter();
   const [form] = Form.useForm();
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState('');
 
   const onFinish = async (values: any) => {
-    setLoading("create");
+    setLoading('create');
     const response = await OrganizationService.create({
       name: values.name,
       summary: values.summary,
@@ -20,10 +20,10 @@ const GetStarted = () => {
     });
 
     if (response) {
-      router.push("/admin/dashboard");
+      router.push('/admin/dashboard');
     }
 
-    setLoading("");
+    setLoading('');
   };
 
   return (
@@ -40,7 +40,7 @@ const GetStarted = () => {
           <Button
             type="primary"
             htmlType="submit"
-            loading={loading === "create"}
+            loading={loading === 'create'}
           >
             Create an organization
           </Button>
