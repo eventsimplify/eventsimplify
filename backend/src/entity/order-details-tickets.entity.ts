@@ -35,7 +35,7 @@ export default class OrderDetailsTickets extends BaseEntity {
   })
   ticket: Ticket;
 
-  @Column()
+  @Column("int")
   quantity: number;
 
   // default columns

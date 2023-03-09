@@ -12,6 +12,7 @@ import {
   Socials,
   NumberInput,
   PhoneInput,
+  Banner,
 } from "./index";
 import PasswordInput from "./Password";
 
@@ -106,6 +107,10 @@ const Field = ({ ...field }: IField) => {
 
     case "phone": {
       return <PhoneInput key={name} {...props} />;
+    }
+
+    case "banner": {
+      return <Banner key={name} {...props} />;
     }
 
     default:

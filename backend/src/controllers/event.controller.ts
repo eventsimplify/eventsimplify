@@ -12,7 +12,6 @@ export const create = async (req, res) => {
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
-    type: Yup.string().required("Type is a required field"),
     startDate: Yup.date().required("Start date is a required field"),
     endDate: Yup.date().required("End date is a required field"),
   });
@@ -78,7 +77,7 @@ export const detail = async (req, res) => {
   try {
     const event = await Event.findOne({
       where: { id: req.event.id },
-      relations: ["tickets"],
+      relations: ["tickets", "banner"],
     });
 
     return sendSuccess({

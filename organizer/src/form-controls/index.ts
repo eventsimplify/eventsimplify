@@ -8,6 +8,7 @@ import Options from "./Options";
 import Socials from "./Socials";
 import NumberInput from "./NumberInput";
 import PhoneInput from "./PhoneInput";
+import Banner from "./Banner";
 
 export {
   TextInput,
@@ -20,4 +21,5 @@ export {
   Socials,
   NumberInput,
   PhoneInput,
+  Banner,
 };

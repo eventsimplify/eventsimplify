@@ -11,6 +11,8 @@ const Details = () => {
   const [loading, setLoading] = useState("");
   const [form] = Form.useForm();
 
+  console.log(event);
+
   const onFinish = async (values: any) => {
     setLoading("create");
 
@@ -41,6 +43,7 @@ const Details = () => {
         category: event?.category,
         summary: event?.summary,
         description: event?.description,
+        banner: event?.banner || [],
       }}
     >
       <EventForm loading={""} />

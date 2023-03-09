@@ -144,8 +144,6 @@ export const me = async (req, res) => {
       ],
     });
 
-    console.log(user);
-
     if (!user) {
       return sendError({
         res,

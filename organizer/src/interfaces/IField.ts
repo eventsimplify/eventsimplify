@@ -16,7 +16,8 @@ export default interface IField {
     | "options"
     | "socials"
     | "number"
-    | "phone";
+    | "phone"
+    | "banner";
   label: string;
   placeholder?: string;
   options?: IQuestionOption[];

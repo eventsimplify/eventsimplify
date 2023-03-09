@@ -18,6 +18,7 @@ import Settings from "./settings.entity";
 import OrganizationVerification from "./organization-verification.entity";
 import Attendee from "./attendee.entity";
 import OrderDetailsTickets from "./order-details-tickets.entity";
+import File from "./file.entity";
 
 export {
   User,
@@ -40,6 +41,7 @@ export {
   OrganizationVerification,
   Attendee,
   OrderDetailsTickets,
+  File,
 };
 
 export default {
@@ -63,4 +65,5 @@ export default {
   OrganizationVerification,
   Attendee,
   OrderDetailsTickets,
+  File,
 };

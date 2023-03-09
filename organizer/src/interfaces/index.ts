@@ -19,6 +19,7 @@ import ISpeaker from "./ISpeaker";
 import IFaq from "./IFaq";
 import IPaymentInformation from "./IPaymentInformation";
 import IOrder from "./IOrder";
+import IFile from "./IFile";
 
 export type {
   IField,
@@ -42,4 +43,5 @@ export type {
   IFaq,
   IPaymentInformation,
   IOrder,
+  IFile,
 };

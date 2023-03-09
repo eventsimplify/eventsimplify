@@ -4,6 +4,7 @@ import { Row, Col, Card, Button, Space } from "antd";
 import BasicInfo from "./BasicInfo";
 import LocationInfo from "./LocationInfo";
 import DateInfo from "./DateInfo";
+import Details from "./Details";
 
 const EventForm = ({ loading }: { loading: string }) => {
   return (
@@ -31,6 +32,9 @@ const EventForm = ({ loading }: { loading: string }) => {
           </Col>
           <Col span={14}>
             <DateInfo />
+          </Col>
+          <Col span={14}>
+            <Details />
           </Col>
         </Card>
       </Col>

@@ -38,7 +38,6 @@ const EventProvider = (props: any) => {
   }, []);
 
   const getEvent = async () => {
-    setLoading("event");
     const data = await EventService.detail(router.query.eventId as string);
     setEvent(data);
     setLoading("");
@@ -97,6 +96,7 @@ const EventProvider = (props: any) => {
       createSpeaker,
       updateSpeaker,
       deleteSpeaker,
+      getEvent,
     }),
     [event, loading, speakers, speaker]
   );

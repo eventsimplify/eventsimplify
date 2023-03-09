@@ -18,4 +18,6 @@ export default interface IEventContext {
   createSpeaker: (formData: Partial<ISpeaker>) => {};
   updateSpeaker: (formData: Partial<ISpeaker>) => {};
   deleteSpeaker: (id: number) => {};
+
+  getEvent: () => {};
 }

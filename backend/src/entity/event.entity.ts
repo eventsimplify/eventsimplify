@@ -12,6 +12,7 @@ import {
   JoinColumn,
   DeleteDateColumn,
 } from "typeorm";
+import File from "./file.entity";
 
 import { Ticket, Organization, RegistrationForm, Faq, Settings } from "./index";
 import Speaker from "./speaker.entity";
@@ -30,7 +31,7 @@ export default class Event extends BaseEntity {
   })
   slug: string;
 
-  @Column("text", { nullable: false })
+  @Column("text", { nullable: true })
   type: string;
 
   @Column("timestamptz", { nullable: false })
@@ -40,7 +41,7 @@ export default class Event extends BaseEntity {
   endDate: string;
 
   @Column("text", { nullable: true })
-  summary?: string;
+  summary: string;
 
   @Column("text", { nullable: true })
   description?: string;
@@ -75,6 +76,9 @@ export default class Event extends BaseEntity {
 
   @OneToMany(() => Settings, (settings) => settings.event)
   settings: Settings[];
+
+  @OneToMany(() => File, (file) => file.event)
+  banner: File[];
 
   // default columns
   @CreateDateColumn()

@@ -1,71 +1,21 @@
-import React, { useState } from "react";
-import { UploadOutlined } from "@ant-design/icons";
+import React from "react";
 
-import {
-  Button,
-  Col,
-  Form,
-  Row,
-  Upload,
-  UploadFile,
-  UploadProps,
-  Input,
-} from "antd";
+import { Col, Row } from "antd";
 import RichText from "@/form-controls/RichText";
 
 import Field from "@/form-controls/Field";
-import axios from "axios";
 
 const Details = () => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-
-  const uploadProps: UploadProps = {
-    multiple: false,
-    listType: "picture",
-    fileList,
-    onChange: ({ fileList }) => {
-      setFileList(fileList);
-
-      handleUpload();
-    },
-    name: "banner",
-    accept: "image/*",
-    progress: {
-      strokeColor: {
-        "0%": "#108ee9",
-        "100%": "#87d068",
-      },
-      strokeWidth: 3,
-    },
-  };
-
-  const handleUpload = async () => {
-    if (fileList.length === 0) return false;
-
-    console.log(fileList);
-
-    const formData = new FormData();
-    formData.append("file", fileList[0].originFileObj as Blob);
-
-    await axios.post("http://localhost:9000/files/upload", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    return false;
-  };
-
   return (
     <Row gutter={[16, 0]}>
-      <Col span={8}>
-        <Form.Item name="banner" label="Banner image">
-          <Upload {...uploadProps}>
-            {fileList.length === 0 && (
-              <Button icon={<UploadOutlined />}>Upload</Button>
-            )}
-          </Upload>
-        </Form.Item>
+      <Col span={24}>
+        <Field
+          name="banner"
+          label="Event banner"
+          extra="Upload a banner for your event. This will be the first thing attendees see when they visit your event page."
+          placeholder="Please input your event banner!"
+          type="banner"
+        />
       </Col>
       <Col span={24}>
         <Field
