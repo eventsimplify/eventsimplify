@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Divider, Form, Row, Typography } from "antd";
 
 import Field from "@/form-controls/Field";
+import { OrganizationService } from "@/services";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -10,13 +11,36 @@ const BusinessRepresentative = ({
 }: {
   setCurrentStep: (step: number) => void;
 }) => {
+  const [loading, setLoading] = useState("");
+
+  const onFinish = async (values: any) => {
+    setLoading("representative-details");
+
+    const formData = {
+      name: values.name,
+      job_title: values.job_title,
+      date_of_birth: values.date_of_birth,
+      phone: values.phone,
+      id_type: values.id_type,
+    };
+
+    const response = await OrganizationService.saveRepresentativeDetails(
+      formData
+    );
+
+    if (response) {
+      setCurrentStep(3);
+    }
+    setLoading("");
+  };
+
   return (
     <Form
       layout="vertical"
+      validateTrigger="onBlur"
+      onFinish={onFinish}
       initialValues={{
-        country: "Nepal",
-        businessType: "individual",
-        businessStructure: "sole-proprietorship",
+        id_type: "citizenship",
       }}
     >
       <Row gutter={[16, 0]}>
@@ -24,9 +48,13 @@ const BusinessRepresentative = ({
           <Title level={4}>Verify your personal details</Title>
           <Paragraph>
             This account should be activated by someone authorized to sign on
-            your organization’s behalf. If that’s not you, please ask the right
+            your organizations behalf. If thats not you, please ask the right
             person to complete this form.
           </Paragraph>
+          <Text strong type="danger">
+            Fill out the details below matching your documents. If the
+            information doesn't match, your account may not be verified.
+          </Text>
         </Col>
         <Col span={24}>
           <Divider />
@@ -44,16 +72,7 @@ const BusinessRepresentative = ({
         </Col>
         <Col span={12}>
           <Field
-            name="email"
-            label="Email address"
-            type="email"
-            required
-            placeholder="Enter your email address"
-          />
-        </Col>
-        <Col span={12}>
-          <Field
-            name="jobTitle"
+            name="job_title"
             label="Job title"
             type="text"
             required
@@ -62,7 +81,7 @@ const BusinessRepresentative = ({
         </Col>
         <Col span={12}>
           <Field
-            name="dateOfBirth"
+            name="date_of_birth"
             label="Date of birth"
             type="date"
             required
@@ -94,7 +113,7 @@ const BusinessRepresentative = ({
 
         <Col span={12}>
           <Field
-            name="idType"
+            name="id_type"
             label="ID type"
             type="dropdown"
             required
@@ -102,7 +121,7 @@ const BusinessRepresentative = ({
             options={[
               {
                 label: "Citizenship ID",
-                value: "citizenship-id",
+                value: "citizenship",
               },
               {
                 label: "Driving License",
@@ -123,8 +142,12 @@ const BusinessRepresentative = ({
           }}
           span={24}
         >
-          <Button type="primary" htmlType="button" loading>
-            Continue
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading === "representative-details"}
+          >
+            Confirm representative details and continue
           </Button>
         </Col>
       </Row>

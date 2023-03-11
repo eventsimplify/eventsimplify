@@ -26,7 +26,19 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (!organization) {
-    return <Redirect to="/get-started" />;
+    return <Redirect to="/admin/onboarding" />;
+  }
+
+  if (!organization.verification) {
+    return <Redirect to="/admin/onboarding" />;
+  }
+
+  if (
+    ["in_progress", "verified", "verify_later"].includes(
+      organization.verification.status
+    ) === false
+  ) {
+    return <Redirect to="/admin/onboarding" />;
   }
 
   return (

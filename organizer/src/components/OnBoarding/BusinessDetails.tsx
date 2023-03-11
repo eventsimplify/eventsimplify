@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Divider, Form, Row, Typography } from "antd";
 
 import Field from "@/form-controls/Field";
+import { OrganizationService } from "@/services";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -10,14 +11,42 @@ const BusinessDetails = ({
 }: {
   setCurrentStep: (step: number) => void;
 }) => {
+  const [loading, setLoading] = useState("");
+
+  const onFinish = async (values: any) => {
+    setLoading("business-details");
+
+    const formData = {
+      name: values.name,
+      type: values.type,
+      structure: values.structure,
+      address: {
+        country: values.country,
+        state: values.state,
+        city: values.city,
+        area: values.area,
+        address: values.address,
+      },
+    };
+
+    const response = await OrganizationService.saveBusinessDetails(formData);
+
+    if (response) {
+      setCurrentStep(2);
+    }
+    setLoading("");
+  };
+
   return (
     <Form
       layout="vertical"
       initialValues={{
         country: "Nepal",
-        businessType: "individual",
-        businessStructure: "sole-proprietorship",
+        type: "individual",
+        structure: "sole-proprietorship",
       }}
+      validateTrigger="onBlur"
+      onFinish={onFinish}
     >
       <Row gutter={[16, 0]}>
         <Col span={24}>
@@ -25,6 +54,10 @@ const BusinessDetails = ({
           <Paragraph>
             We need to know a little bit about your business to get you started.
           </Paragraph>
+          <Text strong type="danger">
+            Fill out the details below matching your business documents. If the
+            information doesn't match, your account may not be verified.
+          </Text>
         </Col>
         <Col span={24}>
           <Divider />
@@ -32,7 +65,7 @@ const BusinessDetails = ({
 
         <Col span={24}>
           <Field
-            name="businessName"
+            name="name"
             label="Legal business name"
             type="text"
             required
@@ -42,7 +75,7 @@ const BusinessDetails = ({
         </Col>
         <Col span={12}>
           <Field
-            name="businessType"
+            name="type"
             label="Business type"
             type="dropdown"
             required
@@ -55,7 +88,7 @@ const BusinessDetails = ({
         </Col>
         <Col span={12}>
           <Field
-            name="businessStructure"
+            name="structure"
             label="Business structure"
             type="dropdown"
             required
@@ -131,8 +164,12 @@ const BusinessDetails = ({
           }}
           span={24}
         >
-          <Button type="primary" htmlType="submit">
-            Next
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading === "business-details"}
+          >
+            Confirm business details and continue
           </Button>
         </Col>
       </Row>

@@ -14,8 +14,9 @@ import {
   PhoneInput,
   Banner,
   DateTimePicker,
+  PasswordInput,
+  FileUpload,
 } from "./index";
-import PasswordInput from "./Password";
 
 const Field = ({ ...field }: IField) => {
   const {
@@ -116,6 +117,10 @@ const Field = ({ ...field }: IField) => {
 
     case "banner": {
       return <Banner key={name} {...props} />;
+    }
+
+    case "file": {
+      return <FileUpload key={name} {...props} />;
     }
 
     default:

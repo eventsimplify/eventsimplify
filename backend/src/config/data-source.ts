@@ -4,7 +4,11 @@ import { DataSource } from "typeorm";
 // entity imports
 import Entities from "../entity";
 //subscribers imports
-import { EventEntitySubscriber, FileEntitySubscriber } from "../subscribers";
+import {
+  EventEntitySubscriber,
+  FileEntitySubscriber,
+  OrganizationSubscriber,
+} from "../subscribers";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -17,5 +21,9 @@ export const AppDataSource = new DataSource({
   logging: false,
   entities: [...Object.values(Entities)],
   migrations: [],
-  subscribers: [EventEntitySubscriber, FileEntitySubscriber],
+  subscribers: [
+    EventEntitySubscriber,
+    FileEntitySubscriber,
+    OrganizationSubscriber,
+  ],
 });

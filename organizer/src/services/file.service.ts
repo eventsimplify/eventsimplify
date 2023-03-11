@@ -27,9 +27,23 @@ const remove = async (id: string) => {
   }
 };
 
+const uploadFile = async (file: any) => {
+  try {
+    const formData = new FormData();
+    await formData.append("file", file);
+
+    const { data } = await axios.post(`${API_URL}/upload`, formData);
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
 const exportedObject = {
   uploadBanner,
   remove,
+  uploadFile,
 };
 
 export default exportedObject;

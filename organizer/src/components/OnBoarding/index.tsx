@@ -33,7 +33,8 @@ const BusinessInformation = ({
         <Col span={24}>
           <Title level={4}>Get started by creating your organization.</Title>
           <Paragraph>
-            We need to know about your organization to get you started.
+            We need to know about your organization to get you started. You can
+            change this information later in organization profile section.
           </Paragraph>
         </Col>
         <Col span={24}>
@@ -57,6 +58,16 @@ const BusinessInformation = ({
             extra="This is a short summary of your company that will appear on your organizer profile."
             type="textarea"
             placeholder="Enter a summary of your company."
+          />
+        </Col>
+        <Col span={24}>
+          <Field
+            name="description"
+            label="Company description"
+            required
+            extra="This is a detailed description of your company that will appear on your organizer profile."
+            type="rich-text"
+            placeholder="Enter a description of your company."
           />
         </Col>
         <Col

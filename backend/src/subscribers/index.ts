@@ -1,4 +1,5 @@
 import EventEntitySubscriber from "./event.subscribers";
 import FileEntitySubscriber from "./file.subscribers";
+import OrganizationSubscriber from "./organization.subscribers";
 
-export { EventEntitySubscriber, FileEntitySubscriber };
+export { EventEntitySubscriber, FileEntitySubscriber, OrganizationSubscriber };
