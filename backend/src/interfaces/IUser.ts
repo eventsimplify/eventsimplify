@@ -6,8 +6,9 @@ export default interface IUser extends IBase {
   email: string;
   password: string;
   organizations?: IOrganizationUser[];
+  confirmed: boolean;
   active: boolean;
   blocked: boolean;
-  providerId: string;
+  provider_id: string;
   provider: string;
 }

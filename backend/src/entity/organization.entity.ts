@@ -8,6 +8,7 @@ import {
   OneToMany,
   DeleteDateColumn,
   OneToOne,
+  JoinColumn,
 } from "typeorm";
 
 import {
@@ -43,19 +44,25 @@ export default class Organization extends BaseEntity {
   @OneToMany(() => Settings, (settings) => settings.organization)
   settings: Settings[];
 
+  @Column("text", { nullable: true })
+  verification_id: string;
+
   @OneToOne(
     () => OrganizationVerification,
     (verification) => verification.organization
   )
+  @JoinColumn({
+    name: "verification_id",
+  })
   verification: OrganizationVerification;
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 }

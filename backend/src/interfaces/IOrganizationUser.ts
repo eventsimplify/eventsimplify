@@ -1,5 +1,6 @@
 export default interface IOrganizationUser {
-  organizationId: number;
-  userId: number;
+  organization_id: number;
+  user_id: number;
   role: string;
+  role_id: number;
 }

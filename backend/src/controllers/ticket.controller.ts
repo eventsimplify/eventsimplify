@@ -10,14 +10,14 @@ export const create = async (req, res) => {
   const {
     name,
     type,
-    startDate,
-    endDate,
+    start_date,
+    end_date,
     description,
     quantity,
     price,
     visibility,
-    minPerOrder,
-    maxPerOrder,
+    min_per_order,
+    max_per_order,
   } = req.body;
 
   const schema = Yup.object().shape({
@@ -25,8 +25,8 @@ export const create = async (req, res) => {
     type: Yup.string()
       .oneOf(["free", "paid"])
       .required("Type is a required field"),
-    startDate: Yup.date().required("Start date is a required field"),
-    endDate: Yup.date().required("End date is a required field"),
+    start_date: Yup.date().required("Start date is a required field"),
+    end_date: Yup.date().required("End date is a required field"),
     quantity: Yup.number().required("Quantity is a required field"),
   });
 
@@ -34,8 +34,8 @@ export const create = async (req, res) => {
     await schema.validate({
       name,
       type,
-      startDate,
-      endDate,
+      start_date,
+      end_date,
       description,
       quantity,
     });
@@ -43,15 +43,15 @@ export const create = async (req, res) => {
     await Ticket.create({
       name,
       type,
-      startDate,
-      endDate,
+      start_date,
+      end_date,
       description,
       quantity,
       price,
       visibility,
-      minPerOrder,
-      maxPerOrder,
-      eventId: req.event.id,
+      min_per_order,
+      max_per_order,
+      event_id: req.event.id,
     }).save();
 
     return sendSuccess({
@@ -72,14 +72,13 @@ export const list = async (req, res) => {
   try {
     const tickets = await Ticket.find({
       where: {
-        eventId: req.event.id,
+        event_id: req.event.id,
       },
     });
 
     return sendSuccess({
       res,
       data: tickets,
-      message: "Tickets fetched successfully!",
     });
   } catch (err) {
     errorHandler(res, err);

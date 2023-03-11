@@ -17,7 +17,8 @@ export default interface IField {
     | "socials"
     | "number"
     | "phone"
-    | "banner";
+    | "banner"
+    | "datetime";
   label: string;
   placeholder?: string;
   options?: IQuestionOption[];

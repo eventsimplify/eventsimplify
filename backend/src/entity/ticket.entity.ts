@@ -12,7 +12,6 @@ import {
 } from "typeorm";
 
 import { Event, OrderDetails } from "./index";
-import Order from "./orders.entity";
 
 @Entity({ name: "tickets" })
 export default class Ticket extends BaseEntity {
@@ -35,32 +34,32 @@ export default class Ticket extends BaseEntity {
   sold: number;
 
   @Column("date", { nullable: false })
-  startDate: string;
+  start_date: string;
 
   @Column("date", { nullable: false })
-  endDate: string;
+  end_date: string;
 
   @Column("int", { nullable: false, default: 1 })
-  minPerOrder: number;
+  min_per_order: number;
 
   @Column("int", { nullable: false, default: 10 })
-  maxPerOrder: number;
+  max_per_order: number;
 
   @Column("text", { nullable: false, default: "public" })
   visibility: "public" | "private";
 
   @Column("text", { nullable: true })
-  description?: string;
+  description: string;
 
   // relations with tickets
   @Column({ nullable: true })
-  eventId: number;
+  event_id: number;
 
   @ManyToOne(() => Event, (event) => event.tickets, {
     cascade: true,
     onDelete: "CASCADE",
   })
-  @JoinColumn({ name: "eventId" })
+  @JoinColumn({ name: "event_id" })
   event: Event;
 
   @ManyToMany(() => OrderDetails, (orderDetails) => orderDetails.tickets)
@@ -68,11 +67,11 @@ export default class Ticket extends BaseEntity {
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt?: Date;
+  deleted_at: Date;
 }

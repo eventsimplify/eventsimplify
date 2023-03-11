@@ -19,6 +19,7 @@ import OrganizationVerification from "./organization-verification.entity";
 import Attendee from "./attendee.entity";
 import OrderDetailsTickets from "./order-details-tickets.entity";
 import File from "./file.entity";
+import Venue from "./venue.entity";
 
 export {
   User,
@@ -42,6 +43,7 @@ export {
   Attendee,
   OrderDetailsTickets,
   File,
+  Venue,
 };
 
 export default {
@@ -66,4 +68,5 @@ export default {
   Attendee,
   OrderDetailsTickets,
   File,
+  Venue,
 };

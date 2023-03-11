@@ -36,7 +36,7 @@ export const manualCreate = async (req, res) => {
       paymentInformation,
     });
 
-    const { status, provider, notes, paymentDate } = paymentInformation;
+    const { status, provider, notes, payment_date } = paymentInformation;
 
     const { name, email, phone, age, gender } = attendeeInformation;
 
@@ -45,7 +45,7 @@ export const manualCreate = async (req, res) => {
 
     for (const ticket of tickets) {
       await OrderDetailsTickets.create({
-        order_details_id: order_details.id,
+        order_detail_id: order_details.id,
         ticket_id: ticket.id,
         quantity: ticket.quantity,
       }).save();
@@ -73,7 +73,7 @@ export const manualCreate = async (req, res) => {
       status,
       provider,
       notes: notes || null,
-      paymentDate,
+      payment_date,
     }).save();
 
     await Order.create({
@@ -108,7 +108,7 @@ export const list = async (req, res) => {
         "order_details.tickets.ticket",
         "payment_details",
       ],
-      order: { createdAt: "DESC" },
+      order: { created_at: "DESC" },
     });
 
     return sendSuccess({ res, data: orders });

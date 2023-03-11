@@ -25,7 +25,7 @@ export const inviteStaff = async (req, res) => {
     const invitationExists = await Invitations.findOne({
       where: {
         email: email,
-        organizationId: req.organization.id,
+        organization_id: req.organization.id,
       },
     });
 
@@ -42,7 +42,7 @@ export const inviteStaff = async (req, res) => {
     const roleExists = await Role.findOne({
       where: {
         id: role,
-        organizationId: req.organization.id,
+        organization_id: req.organization.id,
       },
     });
 
@@ -57,9 +57,9 @@ export const inviteStaff = async (req, res) => {
 
     const invitation = await Invitations.create({
       email,
-      organizationId: req.organization.id,
-      expiresAt: new Date(new Date().setDate(new Date().getDate() + 7)),
-      roleId: roleExists.id,
+      organization_id: req.organization.id,
+      expires_at: new Date(new Date().setDate(new Date().getDate() + 7)),
+      role_id: roleExists.id,
     });
 
     await invitation.save();
@@ -167,7 +167,7 @@ export const acceptInvitation = async (req, res) => {
       });
     }
 
-    if (invitation.expiresAt < new Date()) {
+    if (invitation.expires_at < new Date()) {
       return sendError({
         res,
         status: 400,
@@ -178,8 +178,8 @@ export const acceptInvitation = async (req, res) => {
 
     const organizationUserExists = await OrganizationUser.findOne({
       where: {
-        userId: req.user.id,
-        organizationId: invitation.organizationId,
+        user_id: req.user.id,
+        organization_id: invitation.organization_id,
       },
     });
 
@@ -193,9 +193,9 @@ export const acceptInvitation = async (req, res) => {
     }
 
     await OrganizationUser.create({
-      userId: req.user.id,
-      organizationId: invitation.organizationId,
-      roleId: invitation.roleId,
+      user_id: req.user.id,
+      organization_id: invitation.organization_id,
+      role_id: invitation.role_id,
     }).save();
 
     await Invitations.delete({

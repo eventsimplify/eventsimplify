@@ -24,21 +24,21 @@ export default class Faq extends BaseEntity {
   answer: string;
 
   @Column()
-  eventId: number;
+  event_id: number;
 
   @ManyToOne(() => Event, (event) => event.faqs, {
     onDelete: "CASCADE",
   })
-  @JoinColumn({ name: "eventId" })
+  @JoinColumn({ name: "event_id" })
   event: Event;
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 }

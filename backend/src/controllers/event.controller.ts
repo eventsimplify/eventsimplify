@@ -1,19 +1,27 @@
 import * as Yup from "yup";
 
-import { Event } from "../entity";
+import { Attendee, Event, File, Order, Venue } from "../entity";
 import { errorHandler, sendSuccess } from "../utils";
 
 // @desc    Event create
 // @route   POST /events/create
 // @access  Private
 export const create = async (req, res) => {
-  const { name, type, tags, startDate, endDate, summary, description } =
-    req.body;
+  const {
+    name,
+    type,
+    tags,
+    start_date,
+    end_date,
+    summary,
+    description,
+    venue,
+  } = req.body;
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
-    startDate: Yup.date().required("Start date is a required field"),
-    endDate: Yup.date().required("End date is a required field"),
+    start_date: Yup.date().required("Start date is a required field"),
+    end_date: Yup.date().required("End date is a required field"),
   });
 
   try {
@@ -21,21 +29,46 @@ export const create = async (req, res) => {
       name,
       type,
       tags,
-      startDate,
-      endDate,
+      start_date,
+      end_date,
     });
+
+    const {
+      name: venue_name,
+      type: venue_type,
+      address1,
+      address2,
+      city,
+      state,
+      post_code,
+      country,
+      longitude,
+      latitude,
+    } = venue;
+
+    const newVenue = await Venue.create({
+      name: venue_name,
+      type: venue_type,
+      address1,
+      address2,
+      city,
+      state,
+      post_code,
+      country,
+      longitude,
+      latitude,
+    }).save();
 
     const event = await Event.create({
       name,
       type,
-      startDate,
-      endDate,
+      start_date,
+      end_date,
       summary,
       description,
-      organizationId: req.organization.id,
-    });
-
-    await event.save();
+      organization_id: req.organization.id,
+      venue_id: newVenue.id,
+    }).save();
 
     return sendSuccess({
       res,
@@ -53,16 +86,19 @@ export const create = async (req, res) => {
 
 export const list = async (req, res) => {
   try {
-    const events = await Event.find({
-      where: { organizationId: req.organization.id },
-      relations: ["tickets"],
-      select: ["id", "name", "type", "startDate", "endDate"],
-    });
+    const events = await Event.createQueryBuilder("event")
+      .where("event.organization_id = :id", { id: req.organization.id })
+      .leftJoinAndMapMany(
+        "event.banner",
+        File,
+        "f",
+        "f.relation_id = event.id AND f.relation_type = 'event' AND f.field = 'banner'"
+      )
+      .getMany();
 
     return sendSuccess({
       res,
       data: events,
-      message: "Events fetched successfully!",
     });
   } catch (err) {
     errorHandler(res, err);
@@ -75,15 +111,20 @@ export const list = async (req, res) => {
 
 export const detail = async (req, res) => {
   try {
-    const event = await Event.findOne({
-      where: { id: req.event.id },
-      relations: ["tickets", "banner"],
-    });
+    const event = await Event.createQueryBuilder("event")
+      .leftJoinAndSelect("event.tickets", "tickets")
+      .where("event.id = :id", { id: req.event.id })
+      .leftJoinAndMapMany(
+        "event.banner",
+        File,
+        "f",
+        "f.relation_id = event.id AND f.relation_type = 'event' AND f.field = 'banner'"
+      )
+      .getOne();
 
     return sendSuccess({
       res,
       data: event,
-      message: "Event fetched successfully!",
     });
   } catch (err) {
     errorHandler(res, err);
@@ -100,11 +141,61 @@ export const remove = async (req, res) => {
       where: { id: req.event.id },
     });
 
-    await event.remove();
+    await event.softRemove();
 
     return sendSuccess({
       res,
       message: "Event removed successfully!",
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};
+
+//@desc Event dashboard
+//@route GET /events/dashboard/:id
+//@access Private
+
+export const dashboard = async (req, res) => {
+  try {
+    // get event
+    const event = await Event.createQueryBuilder("event")
+      .leftJoinAndSelect("event.tickets", "tickets")
+      .where("event.id = :id", { id: req.event.id })
+      .getOne();
+
+    // get total orders
+    const totalOrders = await Order.count({
+      where: { event_id: req.event.id },
+    });
+
+    // get total attendees
+    const totalAttendees = await Attendee.count({
+      where: { event_id: req.event.id },
+    });
+
+    // get recent 5 orders
+    const recentOrders = await Order.find({
+      where: { organization_id: req.organization.id, event_id: req.event.id },
+      relations: [
+        "order_details",
+        "order_details.attendees",
+        "order_details.tickets",
+        "order_details.tickets.ticket",
+        "payment_details",
+      ],
+      order: { created_at: "DESC" },
+      take: 5,
+    });
+
+    return sendSuccess({
+      res,
+      data: {
+        event,
+        totalOrders,
+        totalAttendees,
+        recentOrders,
+      },
     });
   } catch (err) {
     errorHandler(res, err);

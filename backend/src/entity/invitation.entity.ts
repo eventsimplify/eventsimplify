@@ -26,29 +26,29 @@ export default class Invitations extends BaseEntity {
   token: string;
 
   @Column("date", { nullable: false })
-  expiresAt: Date;
+  expires_at: Date;
 
   @Column("text", { nullable: false })
-  organizationId: number;
+  organization_id: number;
 
   @ManyToOne(() => Organization, (organization) => organization.events)
-  @JoinColumn({ name: "organizationId" })
+  @JoinColumn({ name: "organization_id" })
   organization: Organization;
 
   @Column()
-  roleId: number;
+  role_id: number;
 
   @OneToOne(() => Role, (role) => role.id)
-  @JoinColumn({ name: "roleId" })
+  @JoinColumn({ name: "role_id" })
   role: Role;
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 }

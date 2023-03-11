@@ -5,6 +5,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   JoinColumn,
+  CreateDateColumn,
+  DeleteDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 
 import { Organization, User, Role } from "./index";
@@ -15,29 +18,41 @@ export default class OrganizationUser extends BaseEntity {
   public id: number;
 
   @Column()
-  organizationId: number;
+  organization_id: number;
 
   @ManyToOne(() => Organization, (organization) => organization.users, {
     onDelete: "CASCADE",
   })
+  @JoinColumn({ name: "organization_id" })
   organization: Organization;
 
   @Column()
-  userId: number;
+  user_id: number;
 
   @ManyToOne(() => User, (user) => user.organizations, {
     onDelete: "CASCADE",
   })
+  @JoinColumn({ name: "user_id" })
   user: User;
 
   @Column()
-  roleId: number;
+  role_id: number;
 
   @ManyToOne(() => Role, (role) => role.users, {
     onDelete: "CASCADE",
   })
   @JoinColumn({
-    name: "roleId",
+    name: "role_id",
   })
   role: Role;
+
+  // default columns
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
+
+  @DeleteDateColumn()
+  deleted_at?: Date;
 }

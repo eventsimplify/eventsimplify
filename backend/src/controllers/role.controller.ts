@@ -14,7 +14,7 @@ export const getAll = async (req, res) => {
           type: "default",
         },
         {
-          organizationId: req.organization.id,
+          organization_id: req.organization.id,
         },
       ],
       relations: ["users"],
@@ -51,7 +51,7 @@ export const create = async (req, res) => {
     const roleExists = await Role.findOne({
       where: {
         name,
-        organizationId: req.organization.id,
+        organization_id: req.organization.id,
       },
     });
 
@@ -67,7 +67,7 @@ export const create = async (req, res) => {
     const role = await Role.create({
       name,
       permissions,
-      organizationId: req.organization.id,
+      organization_id: req.organization.id,
     });
 
     await role.save();
@@ -170,7 +170,7 @@ export const remove = async (req, res) => {
     //check if role is used by any user
     const organizationUser = await OrganizationUser.findOne({
       where: {
-        roleId: role.id,
+        role_id: role.id,
       },
     });
 

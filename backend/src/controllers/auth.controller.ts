@@ -54,10 +54,10 @@ export const login = async (req, res) => {
 
     let user = await User.findOne({
       where: { email },
-      select: ["name", "email", "providerId"],
+      select: ["name", "email", "provider_id"],
     });
 
-    const token = generateToken(user.providerId);
+    const token = generateToken(user.provider_id);
 
     await setCookie(res, token);
 
@@ -113,7 +113,7 @@ export const register = async (req, res) => {
 
     await user.save();
 
-    const token = generateToken(user.providerId);
+    const token = generateToken(user.provider_id);
 
     await setCookie(res, token);
 
@@ -142,6 +142,7 @@ export const me = async (req, res) => {
         "organizations.organization",
         "organizations.role",
       ],
+      select: ["id", "name", "email", "organizations"],
     });
 
     if (!user) {
@@ -156,11 +157,8 @@ export const me = async (req, res) => {
     if (user.organizations.length === 0) {
       return sendSuccess({
         res,
-        message: "User has been fetched successfully.",
         data: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
+          ...user,
           organization: null,
           totalOrganizations: 0,
           organizations: [],
@@ -177,11 +175,8 @@ export const me = async (req, res) => {
 
       return sendSuccess({
         res,
-        message: "User has been fetched successfully.",
         data: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
+          ...user,
           organization: organization,
           totalOrganizations: user.organizations.length,
           organizations: user.organizations,
@@ -190,7 +185,7 @@ export const me = async (req, res) => {
     }
 
     const organizationExists = user.organizations.find(
-      (org) => org.organizationId === Number(organizationId)
+      (org) => org.organization_id === Number(organizationId)
     );
 
     if (!organizationExists) {
@@ -206,11 +201,8 @@ export const me = async (req, res) => {
 
     return sendSuccess({
       res,
-      message: "User has been fetched successfully.",
       data: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
+        ...user,
         organization: organization,
         totalOrganizations: user.organizations.length,
         organizations: user.organizations,

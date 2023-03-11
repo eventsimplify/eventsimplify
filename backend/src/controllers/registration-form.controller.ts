@@ -7,7 +7,7 @@ import { errorHandler, sendError, sendSuccess } from "../utils";
 // @route   POST /registration-forms/create
 // @access  Private
 export const create = async (req, res) => {
-  const { name, questions, additionalQuestions } = req.body;
+  const { name, questions, additional_questions } = req.body;
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
@@ -17,14 +17,14 @@ export const create = async (req, res) => {
     await schema.validate({
       name,
       questions,
-      additionalQuestions,
+      additional_questions,
     });
 
     const form = await RegistrationForm.create({
       name,
       questions,
-      additionalQuestions,
-      eventId: req.event.id,
+      additional_questions,
+      event_id: req.event.id,
     }).save();
 
     await form.save();
@@ -47,7 +47,7 @@ export const list = async (req, res) => {
   try {
     const forms = await RegistrationForm.find({
       where: {
-        eventId: req.event.id,
+        event_id: req.event.id,
       },
     });
 
@@ -69,7 +69,7 @@ export const detail = async (req, res) => {
   try {
     const form = await RegistrationForm.findOne({
       where: {
-        eventId: req.event.id,
+        event_id: req.event.id,
         id: req.params.id,
       },
     });
@@ -104,7 +104,7 @@ export const update = async (req, res) => {
 
     const form = await RegistrationForm.findOne({
       where: {
-        eventId: req.event.id,
+        event_id: req.event.id,
         id: req.params.id,
       },
     });
@@ -119,7 +119,7 @@ export const update = async (req, res) => {
 
     form.name = name;
     form.questions = questions;
-    form.additionalQuestions = additionalQuestions;
+    form.additional_questions = additionalQuestions;
 
     await form.save();
 
@@ -144,7 +144,7 @@ export const remove = async (req, res) => {
     const form = await RegistrationForm.findOne({
       where: {
         id,
-        eventId: req.event.id,
+        event_id: req.event.id,
       },
     });
 

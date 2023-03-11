@@ -44,9 +44,10 @@ const Details = () => {
         summary: event?.summary,
         description: event?.description,
         banner: event?.banner || [],
+        locationType: "online",
       }}
     >
-      <EventForm loading={""} />
+      <EventForm loading={""} locationType={"online"} />
     </Form>
   );
 };

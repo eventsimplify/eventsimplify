@@ -11,11 +11,19 @@ import {
   ManyToOne,
   JoinColumn,
   DeleteDateColumn,
+  OneToOne,
 } from "typeorm";
-import File from "./file.entity";
 
-import { Ticket, Organization, RegistrationForm, Faq, Settings } from "./index";
-import Speaker from "./speaker.entity";
+import {
+  Ticket,
+  Organization,
+  RegistrationForm,
+  Faq,
+  Settings,
+  File,
+  Speaker,
+  Venue,
+} from "./index";
 
 @Entity({ name: "events" })
 export default class Event extends BaseEntity {
@@ -35,10 +43,10 @@ export default class Event extends BaseEntity {
   type: string;
 
   @Column("timestamptz", { nullable: false })
-  startDate: string;
+  start_date: string;
 
   @Column("timestamptz", { nullable: false })
-  endDate: string;
+  end_date: string;
 
   @Column("text", { nullable: true })
   summary: string;
@@ -46,16 +54,16 @@ export default class Event extends BaseEntity {
   @Column("text", { nullable: true })
   description?: string;
 
-  @Column("text", { nullable: false, default: "saved" })
+  @Column("text", { nullable: false, default: "draft" })
   status: "draft" | "published" | "saved" | "scheduled";
 
   @Column()
-  organizationId: number;
+  organization_id: number;
 
   @ManyToOne(() => Organization, (organization) => organization.events, {
     onDelete: "CASCADE",
   })
-  @JoinColumn({ name: "organizationId" })
+  @JoinColumn({ name: "organization_id" })
   organization: Organization;
 
   // relations with tickets
@@ -77,18 +85,30 @@ export default class Event extends BaseEntity {
   @OneToMany(() => Settings, (settings) => settings.event)
   settings: Settings[];
 
-  @OneToMany(() => File, (file) => file.event)
+  @OneToMany(() => File, (file) => file.relation_id, {
+    cascade: true,
+    onDelete: "CASCADE",
+  })
   banner: File[];
+
+  @Column()
+  venue_id: number;
+
+  @OneToOne(() => Venue, (venue) => venue.id)
+  @JoinColumn({
+    name: "venue_id",
+  })
+  venue: Venue;
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 
   //create slug before inserting into database
   @BeforeInsert()

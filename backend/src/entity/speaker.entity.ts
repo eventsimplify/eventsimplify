@@ -21,7 +21,7 @@ export default class Speaker extends BaseEntity {
   name: string;
 
   @Column("text", { nullable: false })
-  jobTitle: string;
+  job_title: string;
 
   @Column("text", { nullable: false })
   company: string;
@@ -30,21 +30,21 @@ export default class Speaker extends BaseEntity {
   description: string;
 
   @Column()
-  eventId: number;
+  event_id: number;
 
   @ManyToOne(() => Event, (event) => event.speakers, {
     onDelete: "CASCADE",
   })
-  @JoinColumn({ name: "eventId" })
+  @JoinColumn({ name: "event_id" })
   event: Event;
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 }

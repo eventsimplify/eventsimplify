@@ -12,7 +12,6 @@ const router = express.Router();
 router.route("/create").post(protectWithOrganization, create);
 router.route("/list").get(protectWithOrganization, list);
 router.route("/detail/:eventId").get(protectWithOrganizationAndEvent, detail);
-
 router
   .route("/remove/:eventId")
   .delete(protectWithOrganizationAndEvent, remove);

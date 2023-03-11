@@ -3,8 +3,8 @@ import {
   S3Client,
   PutObjectCommand,
   GetObjectCommand,
-  DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
+
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { File } from "../entity";
@@ -51,12 +51,14 @@ export const uploadBanner = async (req, res) => {
     // upload file to the bucket
     await s3client.send(new PutObjectCommand(params));
 
-    await File.create({
+    const file = await File.create({
       name: originalname,
       mimetype: mimetype,
       size: size,
       key,
-      event_id: req.event.id,
+      relation_id: req.event.id,
+      relation_type: "event",
+      field: "banner",
     }).save();
 
     return sendSuccess({

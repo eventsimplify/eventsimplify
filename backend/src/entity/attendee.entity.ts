@@ -8,7 +8,6 @@ import {
   DeleteDateColumn,
   ManyToOne,
   JoinColumn,
-  OneToOne,
 } from "typeorm";
 
 import { OrderDetails, Event } from ".";
@@ -53,11 +52,11 @@ export default class Attendee extends BaseEntity {
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 }

@@ -9,6 +9,7 @@ import Socials from "./Socials";
 import NumberInput from "./NumberInput";
 import PhoneInput from "./PhoneInput";
 import Banner from "./Banner";
+import DateTimePicker from "./DateTimePicker";
 
 export {
   TextInput,
@@ -22,4 +23,5 @@ export {
   NumberInput,
   PhoneInput,
   Banner,
+  DateTimePicker,
 };

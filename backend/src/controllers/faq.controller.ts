@@ -23,7 +23,7 @@ export const create = async (req, res) => {
     await Faq.create({
       question,
       answer,
-      eventId: req.event.id,
+      event_id: req.event.id,
     }).save();
 
     return sendSuccess({
@@ -44,7 +44,7 @@ export const list = async (req, res) => {
   try {
     const faqs = await Faq.find({
       where: {
-        eventId: req.event.id,
+        event_id: req.event.id,
       },
     });
 
@@ -78,7 +78,7 @@ export const update = async (req, res) => {
 
     const faq = await Faq.findOne({
       where: {
-        eventId: req.event.id,
+        event_id: req.event.id,
         id: req.params.id,
       },
     });
@@ -117,7 +117,7 @@ export const remove = async (req, res) => {
     const faq = await Faq.findOne({
       where: {
         id,
-        eventId: req.event.id,
+        event_id: req.event.id,
       },
     });
 

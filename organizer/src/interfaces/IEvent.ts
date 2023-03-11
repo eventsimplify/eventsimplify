@@ -7,8 +7,8 @@ export default interface IEvent extends IBase {
   slug: string;
   type: string;
   category: string;
-  startDate: Date;
-  endDate: Date;
+  start_date: Date;
+  end_date: Date;
   summary?: string;
   description?: string;
   status: "draft" | "published";

@@ -1,9 +1,9 @@
 export default interface IBase {
   id: number;
-  createdAt: Date;
-  updatedAt: Date;
-  createdBy?: number;
-  updatedBy?: number;
-  deletedAt?: Date;
-  deletedBy?: number;
+  created_at: Date;
+  updated_at: Date;
+  created_by?: number;
+  updated_by?: number;
+  deleted_at?: Date;
+  deleted_by?: number;
 }

@@ -30,30 +30,30 @@ export default class Settings extends BaseEntity {
   description: string;
 
   @Column({ nullable: false })
-  organizationId: number;
+  organization_id: number;
 
   @ManyToOne(() => Organization, (organization) => organization.settings, {
     onDelete: "CASCADE",
   })
-  @JoinColumn({ name: "organizationId" })
+  @JoinColumn({ name: "organization_id" })
   organization: Organization;
 
   @Column()
-  eventId: number;
+  event_id: number;
 
   @ManyToOne(() => Event, (event) => event.settings, {
     onDelete: "CASCADE",
   })
-  @JoinColumn({ name: "eventId" })
+  @JoinColumn({ name: "event_id" })
   event: Event;
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 }

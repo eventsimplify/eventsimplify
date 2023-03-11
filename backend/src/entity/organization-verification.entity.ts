@@ -28,9 +28,12 @@ export default class OrganizationVerification extends BaseEntity {
   })
   status: "not_started" | "pending" | "approved" | "rejected";
 
+  @Column()
+  organization_id: number;
+
   @OneToOne(() => Organization, (organization) => organization.verification)
   @JoinColumn({
-    name: "organizationId",
+    name: "organization_id",
   })
   organization: Organization;
 
@@ -38,21 +41,21 @@ export default class OrganizationVerification extends BaseEntity {
     nullable: false,
     default: {},
   })
-  businessDetails: IBusinessDetails;
+  business_details: IBusinessDetails;
 
   @Column("jsonb", {
     nullable: false,
     default: {},
   })
-  representativeDetails: IRepresentativeDetails;
+  representative_details: IRepresentativeDetails;
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 }

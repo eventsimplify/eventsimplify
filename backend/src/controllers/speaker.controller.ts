@@ -7,11 +7,11 @@ import { errorHandler, sendError, sendSuccess } from "../utils";
 // @route   POST /speakers
 // @access  Private
 export const create = async (req, res) => {
-  const { name, jobTitle, company, description } = req.body;
+  const { name, job_title, company, description } = req.body;
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
-    jobTitle: Yup.string().required("Job title is a required field"),
+    job_title: Yup.string().required("Job title is a required field"),
     company: Yup.string().required("Company is a required field"),
     description: Yup.string().required("Description is a required field"),
   });
@@ -19,17 +19,17 @@ export const create = async (req, res) => {
   try {
     await schema.validate({
       name,
-      jobTitle,
+      job_title,
       company,
       description,
     });
 
     await Speaker.create({
       name,
-      jobTitle,
+      job_title,
       company,
       description,
-      eventId: req.event.id,
+      event_id: req.event.id,
     }).save();
 
     return sendSuccess({
@@ -50,7 +50,7 @@ export const list = async (req, res) => {
   try {
     const speakers = await Speaker.find({
       where: {
-        eventId: req.event.id,
+        event_id: req.event.id,
       },
     });
 
@@ -88,7 +88,7 @@ export const update = async (req, res) => {
 
     const speaker = await Speaker.findOne({
       where: {
-        eventId: req.event.id,
+        event_id: req.event.id,
         id: req.params.id,
       },
     });
@@ -102,7 +102,7 @@ export const update = async (req, res) => {
     }
 
     speaker.name = name;
-    speaker.jobTitle = jobTitle;
+    speaker.job_title = jobTitle;
     speaker.company = company;
     speaker.description = description;
 
@@ -129,7 +129,7 @@ export const remove = async (req, res) => {
     const speaker = await Speaker.findOne({
       where: {
         id,
-        eventId: req.event.id,
+        event_id: req.event.id,
       },
     });
 

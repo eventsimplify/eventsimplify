@@ -26,27 +26,27 @@ export default class RegistraionForm extends BaseEntity {
   questions: IQuestion[];
 
   @Column("jsonb", { nullable: false, default: [] })
-  additionalQuestions: IQuestion[];
+  additional_questions: IQuestion[];
 
   @Column()
-  eventId: number;
+  event_id: number;
 
   @ManyToOne(() => Event, (event) => event.forms, {
     cascade: true,
     onDelete: "CASCADE",
   })
   @JoinColumn({
-    name: "eventId",
+    name: "event_id",
   })
   event: Event;
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 }

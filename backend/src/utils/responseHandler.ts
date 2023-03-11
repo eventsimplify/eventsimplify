@@ -11,11 +11,9 @@ export const sendSuccess = ({
   data?: any;
   message?: string;
 }) => {
-  res.message = message;
-
   res.status(status).json({
     status: "ok",
-    message,
+    message: message ? message : null,
     data,
   });
 };

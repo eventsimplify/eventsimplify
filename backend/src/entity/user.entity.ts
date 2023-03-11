@@ -37,29 +37,32 @@ export default class User extends BaseEntity {
   @Column("boolean", { default: true })
   active: boolean;
 
+  @Column("boolean", { default: true })
+  confirmed: boolean;
+
   @Column("boolean", { default: false })
   blocked: boolean;
 
-  @Column("text", { nullable: false, default: "email" })
+  @Column("text", { nullable: false, default: "credentials" })
   provider: string;
 
   @Column("text", {
     nullable: true,
   })
-  providerId: string;
+  provider_id: string;
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date;
+  deleted_at: Date;
 
   @BeforeInsert()
   async beforeInsert() {
-    this.providerId = crypto.createHmac("sha256", this.email).digest("hex");
+    this.provider_id = crypto.createHmac("sha256", this.email).digest("hex");
   }
 }

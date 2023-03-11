@@ -9,9 +9,10 @@ export default interface IEvent extends IBase {
   type: string;
   description?: string;
   summary?: string;
-  startDate: string;
-  endDate: string;
+  start_date: Date;
+  end_date: Date;
   status: "draft" | "published" | "saved" | "scheduled";
   tickets: ITicket[];
   organization: IOrganization;
+  organization_id: number;
 }

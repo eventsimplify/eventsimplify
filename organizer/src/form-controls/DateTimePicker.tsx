@@ -3,7 +3,7 @@ import { Form, DatePicker as Datepicker } from "antd";
 
 import { IFieldProps } from "@/interfaces";
 
-const DatePicker = ({
+const DateTimePicker = ({
   name,
   label,
   rules,
@@ -14,9 +14,9 @@ const DatePicker = ({
   return (
     <Form.Item name={name} label={label} rules={rules} extra={extra}>
       <Datepicker
-        showTime
         use12Hours
         minuteStep={15}
+        showTime
         format="MMMM DD YYYY hh:mm A"
         style={{ width: "100%" }}
         placeholder={placeholder}
@@ -26,4 +26,4 @@ const DatePicker = ({
   );
 };
 
-export default DatePicker;
+export default DateTimePicker;

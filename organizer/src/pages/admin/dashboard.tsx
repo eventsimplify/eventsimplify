@@ -14,7 +14,7 @@ import {
 } from "react-share";
 
 //component imports
-import RecentOrders from "@/components/RecentOrders";
+import RecentOrders from "@/components/EventDashboard/RecentOrders";
 
 //layout imports
 import DashboardLayout from "@/layouts/dashboard";

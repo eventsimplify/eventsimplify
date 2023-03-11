@@ -7,7 +7,6 @@ import {
   DeleteDateColumn,
   Column,
   JoinColumn,
-  OneToOne,
   ManyToOne,
 } from "typeorm";
 
@@ -39,21 +38,21 @@ export default class PaymentDetails extends BaseEntity {
   provider: string;
 
   @Column("text", { nullable: true })
-  paymentId: string;
+  payment_id: string;
 
   @Column("text", { nullable: true })
   notes: string;
 
   @Column("timestamptz", { nullable: true })
-  paymentDate: string;
+  payment_date: string;
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt?: Date;
+  deleted_at: Date;
 }

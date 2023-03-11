@@ -28,8 +28,8 @@ export const create = async (req, res) => {
 
     const organizationExists = await OrganizationUser.findOne({
       where: {
-        userId: req.user.id,
-        roleId: 1,
+        user_id: req.user.id,
+        role_id: 1,
       },
     });
 
@@ -59,9 +59,9 @@ export const create = async (req, res) => {
 
     // create organization user role
     await OrganizationUser.create({
-      organizationId: organization.id,
-      userId: req.user.id,
-      roleId: ownerRole.id,
+      organization_id: organization.id,
+      user_id: req.user.id,
+      role_id: ownerRole.id,
     }).save();
 
     return sendSuccess({
@@ -88,7 +88,7 @@ export const getStaff = async (req, res) => {
 
     const invitations = await Invitations.find({
       where: {
-        organizationId: req.organization.id,
+        organization_id: req.organization.id,
       },
       relations: ["role"],
     });
@@ -99,7 +99,7 @@ export const getStaff = async (req, res) => {
           type: "default",
         },
         {
-          organizationId: req.organization.id,
+          organization_id: req.organization.id,
         },
       ],
       relations: ["users"],
@@ -152,7 +152,7 @@ export const removeStaff = async (req, res) => {
     });
 
     // check if user is owner
-    if (organizationUser.roleId === ownerRole.id) {
+    if (organizationUser.role_id === ownerRole.id) {
       return sendError({
         res,
         status: 400,

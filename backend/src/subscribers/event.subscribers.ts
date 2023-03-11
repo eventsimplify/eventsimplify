@@ -18,19 +18,19 @@ export default class EventEntitySubscriber
     ticket.type = "free";
     ticket.price = 100;
     ticket.quantity = 100;
-    ticket.minPerOrder = 1;
-    ticket.maxPerOrder = 10;
+    ticket.min_per_order = 1;
+    ticket.max_per_order = 10;
     ticket.visibility = "public";
-    ticket.startDate = event.entity.createdAt;
-    ticket.endDate = event.entity.endDate;
-    ticket.eventId = event.entity.id;
+    ticket.start_date = event.entity.created_at;
+    ticket.end_date = event.entity.end_date;
+    ticket.event_id = event.entity.id;
 
     // create general admission registration form
     const form = new RegistrationForm();
     form.name = "General Admission";
     form.questions = defaultRegistrationQuestions;
-    form.additionalQuestions = [];
-    form.eventId = event.entity.id;
+    form.additional_questions = [];
+    form.event_id = event.entity.id;
 
     //create settings for the event
     const multipleOrderSettings = new Settings();
@@ -38,8 +38,8 @@ export default class EventEntitySubscriber
     multipleOrderSettings.value = "false";
     multipleOrderSettings.type = "event_settings";
     multipleOrderSettings.description = "Allow multiple tickets per order";
-    multipleOrderSettings.eventId = event.entity.id;
-    multipleOrderSettings.organizationId = event.entity.organizationId;
+    multipleOrderSettings.event_id = event.entity.id;
+    multipleOrderSettings.organization_id = event.entity.organization_id;
 
     // we need to use the event manager to save the ticket because we are in a transaction and we cannot use the repository directly
     await event.manager.getRepository(Ticket).save(ticket);

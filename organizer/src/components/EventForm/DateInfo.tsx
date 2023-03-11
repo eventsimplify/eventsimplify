@@ -21,42 +21,22 @@ const DateInfo = () => {
           plans to attend.
         </Paragraph>
       </Col>
-      <Col span={18}>
+      <Col span={24}>
         <Field
-          name="startDate"
+          name="start_date"
           label="Start date"
-          type="date"
+          type="datetime"
           required
           placeholder="Start date"
         />
       </Col>
-
-      <Col span={6}>
+      <Col span={24}>
         <Field
-          name="startTime"
-          label="Start time"
-          type="date"
-          required
-          placeholder="Start time"
-        />
-      </Col>
-      <Col span={18}>
-        <Field
-          name="endDate"
+          name="end_date"
           label="Event end date"
-          type="date"
+          type="datetime"
           required
           placeholder="Event end date"
-        />
-      </Col>
-
-      <Col span={6}>
-        <Field
-          name="endTime"
-          label="Event end time"
-          type="date"
-          required
-          placeholder="Event end time"
         />
       </Col>
     </Row>

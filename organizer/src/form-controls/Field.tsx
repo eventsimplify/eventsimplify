@@ -13,6 +13,7 @@ import {
   NumberInput,
   PhoneInput,
   Banner,
+  DateTimePicker,
 } from "./index";
 import PasswordInput from "./Password";
 
@@ -75,6 +76,10 @@ const Field = ({ ...field }: IField) => {
 
     case "date": {
       return <DatePicker key={name} {...props} />;
+    }
+
+    case "datetime": {
+      return <DateTimePicker key={name} {...props} />;
     }
 
     case "radio": {

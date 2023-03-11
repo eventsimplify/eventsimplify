@@ -8,34 +8,43 @@ import {
   DeleteDateColumn,
 } from "typeorm";
 
-@Entity({ name: "files" })
-export default class File extends BaseEntity {
+@Entity({ name: "venues" })
+export default class Venue extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column("text", { nullable: false })
+  type: string;
+
+  @Column("text", { nullable: true })
   name: string;
 
-  @Column("text", { nullable: false })
-  key: string;
-
-  @Column("int", { nullable: true, default: 0 })
-  size: number;
+  @Column("text", { nullable: true })
+  address1: string;
 
   @Column("text", { nullable: true })
-  mimetype: string;
+  address2: string;
 
   @Column("text", { nullable: true })
-  url: string;
-
-  @Column("int", { nullable: true })
-  relation_id: number;
+  city: string;
 
   @Column("text", { nullable: true })
-  relation_type: string;
+  state: string;
 
   @Column("text", { nullable: true })
-  field: string;
+  post_code: string;
+
+  @Column("text", { nullable: true })
+  country: string;
+
+  @Column("text", { nullable: true })
+  longitude: string;
+
+  @Column("text", { nullable: true })
+  latitude: string;
+
+  @Column("jsonb", { nullable: true })
+  address: string;
 
   // default columns
   @CreateDateColumn()

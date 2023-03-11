@@ -18,11 +18,11 @@ export default class OrderDetailsTickets extends BaseEntity {
   id: number;
 
   @Column()
-  order_details_id: number;
+  order_detail_id: number;
 
   @ManyToOne(() => OrderDetails, (order_details) => order_details.tickets)
   @JoinColumn({
-    name: "order_details_id",
+    name: "order_detail_id",
   })
   order_details: Order;
 
@@ -40,11 +40,11 @@ export default class OrderDetailsTickets extends BaseEntity {
 
   // default columns
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 
   @DeleteDateColumn()
-  deletedAt?: Date;
+  deleted_at: Date;
 }
