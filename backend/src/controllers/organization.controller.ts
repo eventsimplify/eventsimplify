@@ -6,8 +6,11 @@ import {
   Organization,
   Role,
   Permission,
+  OrganizationVerification,
 } from "../entity";
+import MulterFile from "../interfaces/IFile";
 import { errorHandler, sendError, sendSuccess } from "../utils";
+import { uploadFile } from "./file.controller";
 
 // @desc    Organization create
 // @route   POST /organizations/create
@@ -167,6 +170,245 @@ export const removeStaff = async (req, res) => {
       res,
       data: null,
       message: "Staff removed successfully!",
+    });
+  } catch (error) {
+    errorHandler(res, error);
+  }
+};
+
+// @desc skip verification
+// @route PUT /organizations/skip-verification/:id
+// @access Private
+
+export const skipVerification = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const organizationVerification = await OrganizationVerification.findOne({
+      where: {
+        organization_id: req.organization.id,
+      },
+    });
+
+    if (!organizationVerification) {
+      return sendError({
+        res,
+        status: 404,
+        data: null,
+        message: "Verification not found!",
+      });
+    }
+
+    organizationVerification.status = "verify_later";
+
+    await organizationVerification.save();
+
+    return sendSuccess({
+      res,
+      data: null,
+      message: "You have skipped verification!",
+    });
+  } catch (error) {
+    errorHandler(res, error);
+  }
+};
+
+//@desc Get onboarding
+// @route GET /organizations/onboarding
+// @access Private
+
+export const getOnboarding = async (req, res) => {
+  try {
+    let organizationVerification = null;
+
+    organizationVerification = await OrganizationVerification.findOne({
+      where: {
+        organization_id: req.organization.id,
+      },
+      select: [
+        "id",
+        "status",
+        "current_step",
+        "business_details",
+        "representative_details",
+      ],
+    });
+
+    return sendSuccess({
+      res,
+      data: organizationVerification,
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};
+
+// @desc Save business details
+// @route PUT /organizations/onboarding/business-details
+// @access Private
+export const saveBusinessDetails = async (req, res) => {
+  const { name, type, structure, address } = req.body;
+
+  const schema = Yup.object().shape({
+    name: Yup.string().required("Business name is a required field"),
+    type: Yup.string().required("Business type is a required field"),
+    structure: Yup.string().required("Business structure is a required field"),
+    address: Yup.object().shape({
+      country: Yup.string().required("Country is a required field"),
+      state: Yup.string().required("State is a required field"),
+      city: Yup.string().required("City is a required field"),
+      area: Yup.string().required("Area is a required field"),
+      address: Yup.string().required("Full address is a required field"),
+    }),
+  });
+
+  try {
+    await schema.validate({
+      name,
+      type,
+      structure,
+      address,
+    });
+
+    const organizationVerification = await OrganizationVerification.findOne({
+      where: {
+        organization_id: req.organization.id,
+      },
+    });
+
+    if (!organizationVerification) {
+      return sendError({
+        res,
+        status: 404,
+        data: null,
+        message: "Verification not found!",
+      });
+    }
+
+    organizationVerification.business_details = {
+      name,
+      type,
+      structure,
+      address,
+    };
+    organizationVerification.current_step = 2;
+
+    await organizationVerification.save();
+
+    return sendSuccess({
+      res,
+      data: null,
+      message: "Business details saved successfully!",
+    });
+  } catch (error) {
+    errorHandler(res, error);
+  }
+};
+
+// @desc Save representative details
+// @route PUT /organizations/onboarding/representative-details
+// @access Private
+
+export const saveRepresentativeDetails = async (req, res) => {
+  const { name, job_title, date_of_birth, phone, id_type } = req.body;
+
+  const schema = Yup.object().shape({
+    name: Yup.string().required("Name is a required field"),
+    job_title: Yup.string().required("Job title is a required field"),
+    date_of_birth: Yup.string().required("Date of birth is a required field"),
+    phone: Yup.string().required("Phone number is a required field"),
+    id_type: Yup.string().required("ID type is a required field"),
+  });
+
+  try {
+    await schema.validate({
+      name,
+      job_title,
+      date_of_birth,
+      phone,
+      id_type,
+    });
+
+    const organizationVerification = await OrganizationVerification.findOne({
+      where: {
+        organization_id: req.organization.id,
+      },
+    });
+
+    if (!organizationVerification) {
+      return sendError({
+        res,
+        status: 404,
+        data: null,
+        message: "Verification not found!",
+      });
+    }
+
+    organizationVerification.representative_details = {
+      name,
+      job_title,
+      date_of_birth,
+      phone,
+      id_type,
+    };
+    organizationVerification.current_step = 3;
+
+    await organizationVerification.save();
+
+    return sendSuccess({
+      res,
+      data: null,
+      message: "Representative details saved successfully!",
+    });
+  } catch (error) {
+    errorHandler(res, error);
+  }
+};
+
+// @desc Save business documents
+// @route PUT /organizations/onboarding/business-documents
+// @access Private
+
+export const saveBusinessDocuments = async (req, res) => {
+  try {
+    const organizationVerification = await OrganizationVerification.findOne({
+      where: {
+        organization_id: req.organization.id,
+      },
+    });
+
+    if (!organizationVerification) {
+      return sendError({
+        res,
+        status: 404,
+        data: null,
+        message: "Verification not found!",
+      });
+    }
+
+    // loop through files and upload
+    const files = Object.keys(req.files);
+
+    for (const key of files) {
+      const file = req.files[key][0];
+
+      await uploadFile({
+        file,
+        folder: "business-documents",
+        relation_id: organizationVerification.id,
+        relation_type: "organization_verifications",
+        field: file.fieldname,
+      });
+    }
+
+    organizationVerification.current_step = 4;
+    organizationVerification.status = "in_progress";
+    await organizationVerification.save();
+
+    return sendSuccess({
+      res,
+      data: null,
+      message: "Business documents saved successfully!",
     });
   } catch (error) {
     errorHandler(res, error);

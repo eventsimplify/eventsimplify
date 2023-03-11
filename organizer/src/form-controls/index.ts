@@ -7,9 +7,11 @@ import Textarea from "./Textarea";
 import Options from "./Options";
 import Socials from "./Socials";
 import NumberInput from "./NumberInput";
+import PasswordInput from "./Password";
 import PhoneInput from "./PhoneInput";
 import Banner from "./Banner";
 import DateTimePicker from "./DateTimePicker";
+import FileUpload from "./FileUpload";
 
 export {
   TextInput,
@@ -24,4 +26,6 @@ export {
   PhoneInput,
   Banner,
   DateTimePicker,
+  PasswordInput,
+  FileUpload,
 };

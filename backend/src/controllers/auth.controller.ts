@@ -141,6 +141,7 @@ export const me = async (req, res) => {
         "organizations",
         "organizations.organization",
         "organizations.role",
+        "organizations.organization.verification",
       ],
       select: ["id", "name", "email", "organizations"],
     });

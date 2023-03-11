@@ -10,7 +10,7 @@ import { useAppContext } from "@/contexts/AppProvider";
 const { Content } = Layout;
 
 const OnBoardingLayout = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading, getUser, organization } = useAppContext();
+  const { user, loading, getUser } = useAppContext();
 
   useEffect(() => {
     getUser();

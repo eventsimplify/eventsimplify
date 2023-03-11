@@ -34,10 +34,74 @@ const removeStaff = async (id: string) => {
   }
 };
 
+const skipVerification = async () => {
+  try {
+    const { data } = await axios.put(`${API_URL}/onboarding/skip-verification`);
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
+const onboarding = async () => {
+  try {
+    const { data } = await axios.get(`${API_URL}/onboarding`);
+
+    return data?.data;
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
+const saveBusinessDetails = async (formData: Partial<IOrganization>) => {
+  try {
+    const { data } = await axios.put(
+      `${API_URL}/onboarding/business-details`,
+      formData
+    );
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
+const saveRepresentativeDetails = async (formData: Partial<IOrganization>) => {
+  try {
+    const { data } = await axios.put(
+      `${API_URL}/onboarding/representative-details`,
+      formData
+    );
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
+const saveBusinessDocuments = async (formData: any) => {
+  try {
+    const { data } = await axios.put(
+      `${API_URL}/onboarding/business-documents`,
+      formData
+    );
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
 const exportedObject = {
   create,
   getStaff,
   removeStaff,
+  skipVerification,
+  onboarding,
+  saveBusinessDetails,
+  saveRepresentativeDetails,
+  saveBusinessDocuments,
 };
 
 export default exportedObject;

@@ -358,8 +358,4 @@ export const onBoardingSteps = [
     title: "Business documents",
     description: "Provide your business documents",
   },
-  {
-    title: "Business bank account details",
-    description: "Provide your business bank account details",
-  },
 ];

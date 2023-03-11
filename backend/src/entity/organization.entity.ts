@@ -44,16 +44,10 @@ export default class Organization extends BaseEntity {
   @OneToMany(() => Settings, (settings) => settings.organization)
   settings: Settings[];
 
-  @Column("text", { nullable: true })
-  verification_id: string;
-
   @OneToOne(
     () => OrganizationVerification,
     (verification) => verification.organization
   )
-  @JoinColumn({
-    name: "verification_id",
-  })
   verification: OrganizationVerification;
 
   // default columns

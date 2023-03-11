@@ -26,7 +26,12 @@ export default class OrganizationVerification extends BaseEntity {
     nullable: false,
     default: "not_started",
   })
-  status: "not_started" | "pending" | "approved" | "rejected";
+  status:
+    | "not_started"
+    | "verify_later"
+    | "in_progress"
+    | "verified"
+    | "rejected";
 
   @Column()
   organization_id: number;
@@ -36,6 +41,12 @@ export default class OrganizationVerification extends BaseEntity {
     name: "organization_id",
   })
   organization: Organization;
+
+  @Column("int", {
+    nullable: false,
+    default: 0,
+  })
+  current_step: number;
 
   @Column("jsonb", {
     nullable: false,

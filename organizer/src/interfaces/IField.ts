@@ -18,7 +18,8 @@ export default interface IField {
     | "number"
     | "phone"
     | "banner"
-    | "datetime";
+    | "datetime"
+    | "file";
   label: string;
   placeholder?: string;
   options?: IQuestionOption[];

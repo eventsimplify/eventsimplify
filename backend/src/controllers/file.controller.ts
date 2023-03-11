@@ -8,6 +8,7 @@ import {
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { File } from "../entity";
+import MulterFile from "../interfaces/IFile";
 
 const s3client = new S3Client({
   endpoint: process.env.DO_SPACES_ENDPOINT,
@@ -51,7 +52,7 @@ export const uploadBanner = async (req, res) => {
     // upload file to the bucket
     await s3client.send(new PutObjectCommand(params));
 
-    const file = await File.create({
+    await File.create({
       name: originalname,
       mimetype: mimetype,
       size: size,
@@ -154,5 +155,49 @@ export const remove = async (req, res) => {
     });
   } catch (err) {
     errorHandler(res, err);
+  }
+};
+
+// @desc Upload File by relation_id and relation_type
+
+export const uploadFile = async ({
+  file,
+  relation_id,
+  relation_type,
+  field,
+  folder,
+}: {
+  file: MulterFile;
+  relation_id: number;
+  relation_type: string;
+  field: string;
+  folder?: string;
+}) => {
+  try {
+    const { originalname, size, mimetype, path, filename } = file;
+
+    const key = folder ? `${folder}/${filename}` : filename;
+
+    const params = {
+      Bucket: process.env.DO_SPACES_NAME,
+      Key: key,
+      Body: fs.createReadStream(path),
+    };
+
+    // upload file to the bucket
+    await s3client.send(new PutObjectCommand(params));
+
+    await File.create({
+      name: originalname,
+      mimetype: mimetype,
+      size: size,
+      key: key,
+      relation_id: relation_id,
+      relation_type: relation_type,
+      field: field,
+    }).save();
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
   }
 };

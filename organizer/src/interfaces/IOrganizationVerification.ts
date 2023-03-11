@@ -1,13 +1,16 @@
 import IBase from "./IBase";
-import IOrganization from "./IOrganization";
 
 export default interface IOrganizationVerification extends IBase {
-  status: "not_started" | "verify_later" | "pending" | "verified" | "rejected";
-  organization: IOrganization;
-  organization_id: number;
+  status:
+    | "not_started"
+    | "verify_later"
+    | "in_progress"
+    | "verified"
+    | "rejected";
   current_step: number;
   business_details: IBusinessDetails;
   representative_details: IRepresentativeDetails;
+  organization_id: number;
 }
 
 export interface IBusinessDetails {
@@ -25,8 +28,8 @@ export interface IBusinessDetails {
 
 export interface IRepresentativeDetails {
   name: string;
-  job_title: string;
-  date_of_birth: string;
+  email: string;
+  jobTitle: string;
+  dob: string;
   phone: string;
-  id_type: string;
 }
