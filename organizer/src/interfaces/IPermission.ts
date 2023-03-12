@@ -1,5 +1,12 @@
-import IBase from "./IBase";
+export default interface IPermission {
+  [key: string]: IPermissionItem;
+}
 
-export default interface IPermission extends IBase {
+export interface IPermissionItem {
+  name: string;
   action: string;
+}
+
+export interface ISelectedPermission {
+  [key: string]: string[];
 }

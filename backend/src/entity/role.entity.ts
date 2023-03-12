@@ -10,7 +10,8 @@ import {
 } from "typeorm";
 
 import { IPermission } from "../interfaces";
-import { OrganizationUser, User } from "./index";
+
+import { OrganizationUser } from "./index";
 
 @Entity({ name: "roles" })
 export default class Role extends BaseEntity {
@@ -23,14 +24,14 @@ export default class Role extends BaseEntity {
   @Column("text", { nullable: false, default: "created" })
   type: string;
 
-  @Column("jsonb", { nullable: false, default: [] })
-  permissions: IPermission[];
+  @Column("jsonb", { nullable: true, default: {} })
+  permissions: IPermission;
 
   @Column({ nullable: true })
   organization_id: number;
 
   @OneToMany(() => OrganizationUser, (user) => user.role)
-  users: User[];
+  users: OrganizationUser[];
 
   // default columns
   @CreateDateColumn()

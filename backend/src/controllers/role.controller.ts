@@ -11,9 +11,6 @@ export const getAll = async (req, res) => {
     const roles = await Role.find({
       where: [
         {
-          type: "default",
-        },
-        {
           organization_id: req.organization.id,
         },
       ],
@@ -38,7 +35,7 @@ export const create = async (req, res) => {
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is a required field"),
-    permissions: Yup.array().required("Permissions is a required field"),
+    permissions: Yup.object().required("Permissions is a required field"),
   });
 
   try {
