@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { Button, Result, Typography, Modal } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
+
 import { OrganizationService } from "@/services";
-import { useRouter } from "next/router";
 
 const { Paragraph, Text } = Typography;
 
 const SkipModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState("");
-  const router = useRouter();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -21,7 +20,7 @@ const SkipModal = () => {
 
     if (response) {
       setIsModalOpen(false);
-      router.push("/admin/dashboard");
+      window.location.href = "/admin/dashboard";
     }
     setLoading("");
   };

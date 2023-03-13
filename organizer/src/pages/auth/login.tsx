@@ -1,6 +1,10 @@
 import React, { ReactElement, useState } from "react";
-import { Button, Form } from "antd";
+import { Button, Checkbox, Divider, Form, Space, Typography } from "antd";
 import { useRouter } from "next/router";
+import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
+import { GoogleOutlined } from "@ant-design/icons";
+
+const { Link } = Typography;
 
 import { AuthService } from "@/services";
 import AuthPageLayout from "@/layouts/auth-page";
@@ -23,7 +27,6 @@ const Login = () => {
     if (response) {
       if (router.query.redirect) {
         window.location.href = router.query.redirect as string;
-
         return;
       }
 
@@ -39,6 +42,40 @@ const Login = () => {
 
     return;
   };
+
+  const onGoogleSuccess = async (googleResponse: TokenResponse) => {
+    setLoading("google");
+
+    const { access_token } = googleResponse;
+
+    console.log(googleResponse);
+
+    const response = await AuthService.socialLogin({
+      access_token,
+      provider: "google",
+    });
+
+    if (response) {
+      if (router.query.redirect) {
+        window.location.href = router.query.redirect as string;
+        return;
+      }
+
+      window.location.href = "/admin/dashboard";
+    }
+
+    setLoading("");
+  };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: (credentialResponse) => onGoogleSuccess(credentialResponse),
+    onError: (response) => {
+      console.log(response);
+    },
+    onNonOAuthError: (response) => {
+      console.log(response);
+    },
+  });
 
   return (
     <Form
@@ -65,20 +102,48 @@ const Login = () => {
         placeholder="Enter your password"
       />
 
+      <Form.Item>
+        <Form.Item name="remember" valuePropName="checked" noStyle>
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+
+        <a
+          href=""
+          style={{
+            float: "right",
+          }}
+        >
+          Forgot password
+        </a>
+      </Form.Item>
+
       <Button
         type="primary"
         htmlType="submit"
         style={{
           width: "100%",
-          marginBottom: "2rem",
         }}
         loading={loading === "login"}
       >
         Login
       </Button>
-      <Button onClick={onRegiser} type="link">
-        Dont have an account? Register here
-      </Button>
+
+      <Divider plain>OR</Divider>
+
+      <Space direction="vertical" size="large">
+        <Button
+          type="primary"
+          danger
+          shape="round"
+          icon={<GoogleOutlined />}
+          onClick={() => googleLogin()}
+          loading={loading === "google"}
+        >
+          Login with Google
+        </Button>
+
+        <Link onClick={onRegiser}>Dont have an account? Register here</Link>
+      </Space>
     </Form>
   );
 };

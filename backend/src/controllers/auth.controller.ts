@@ -10,6 +10,7 @@ import {
   setCookie,
   removeCookie,
 } from "../utils";
+import { getDataFromAuthProvidersUsingToken } from "../utils/provider.utils";
 
 // @desc    User login
 // @route   POST /users/login
@@ -71,6 +72,91 @@ export const login = async (req, res) => {
   }
 };
 
+// @desc    User Social login
+// @route   POST /users/social-login
+// @access  Public
+export const socialLogin = async (req, res) => {
+  const { access_token, provider } = req.body;
+
+  const schema = Yup.object().shape({
+    access_token: Yup.string().required("Access token is a required field"),
+    provider: Yup.string()
+      .oneOf(["google"], "Provider is not valid.")
+      .required("Type is a required field"),
+  });
+
+  try {
+    await schema.validate({
+      access_token,
+      provider,
+    });
+
+    const { email, name } = await getDataFromAuthProvidersUsingToken({
+      token: access_token,
+      provider,
+    });
+
+    let userExists = await User.findOne({
+      where: { email },
+    });
+
+    if (userExists && userExists?.provider !== "google") {
+      //TODO: Add logic to update user details if user is already registered with facebook
+
+      return sendError({
+        res,
+        status: 404,
+        message: "Your email is already registered with another provider.",
+      });
+    }
+
+    // if user exists, login user
+    if (userExists) {
+      let user = await User.findOne({
+        where: { email },
+        select: ["name", "email", "provider_id"],
+      });
+
+      const token = generateToken(user.provider_id);
+
+      await setCookie(res, token);
+
+      return sendSuccess({
+        res,
+        message: "User has been logged in successfully.",
+        data: user,
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(access_token, 10);
+
+    const user = await User.create({
+      name,
+      email,
+      provider: "google",
+      provider_id: access_token,
+      password: hashedPassword,
+    });
+
+    await user.save();
+
+    const token = generateToken(user.provider_id);
+
+    await setCookie(res, token);
+
+    return sendSuccess({
+      res,
+      message: "User has been register successfully.",
+      data: {
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};
+
 // @desc    User register
 // @route   POST /users/register
 // @access  Public
@@ -103,7 +189,7 @@ export const register = async (req, res) => {
       });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 20);
 
     const user = await User.create({
       name,

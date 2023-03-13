@@ -45,11 +45,31 @@ const logout = async () => {
   }
 };
 
+const socialLogin = async ({
+  provider,
+  access_token,
+}: {
+  provider: string;
+  access_token: string;
+}) => {
+  try {
+    const { data } = await axios.post(`${API_URL}/social-login`, {
+      provider,
+      access_token,
+    });
+
+    return handleSuccess(data?.message);
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
 const exportedObject = {
   login,
   getUser,
   register,
   logout,
+  socialLogin,
 };
 
 export default exportedObject;

@@ -26,6 +26,8 @@ const BusinessDocuments = ({
 
     if (response) {
       setCurrentStep(4);
+      window.location.href = "/admin/dashboard";
+      return;
     }
     setLoading("");
   };

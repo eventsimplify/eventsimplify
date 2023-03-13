@@ -51,6 +51,16 @@ const Details = () => {
           type="rich-text"
         />
       </Col>
+      <Col span={24}>
+        <Field
+          name="address"
+          label="Event address"
+          extra="Enter the address where your event will take place. This will be displayed on your event page."
+          required
+          placeholder="Please input your event address!"
+          type="address"
+        />
+      </Col>
     </Row>
   );
 };

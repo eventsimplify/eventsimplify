@@ -2,7 +2,7 @@ import { ReactElement, ReactNode, useEffect } from "react";
 import Router from "next/router";
 import type { AppProps } from "next/app";
 import NProgress from "nprogress";
-import locale from "antd/es/date-picker/locale/zh_CN";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 // import css
 import "@/styles/globals.css";
@@ -45,18 +45,20 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <ConfigProvider
-      theme={{
-        algorithm: theme.defaultAlgorithm,
-      }}
-    >
-      <AntDesignApp>
-        <AppProvider>
-          <AntDMessage />
-          {getLayout(<Component {...pageProps} />)}
-          <HelpButton />
-        </AppProvider>
-      </AntDesignApp>
-    </ConfigProvider>
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+      <ConfigProvider
+        theme={{
+          algorithm: theme.defaultAlgorithm,
+        }}
+      >
+        <AntDesignApp>
+          <AppProvider>
+            <AntDMessage />
+            {getLayout(<Component {...pageProps} />)}
+            <HelpButton />
+          </AppProvider>
+        </AntDesignApp>
+      </ConfigProvider>
+    </GoogleOAuthProvider>
   );
 }

@@ -19,7 +19,8 @@ export default interface IField {
     | "phone"
     | "banner"
     | "datetime"
-    | "file";
+    | "file"
+    | "address";
   label: string;
   placeholder?: string;
   options?: IQuestionOption[];

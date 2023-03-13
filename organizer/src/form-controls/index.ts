@@ -12,6 +12,7 @@ import PhoneInput from "./PhoneInput";
 import Banner from "./Banner";
 import DateTimePicker from "./DateTimePicker";
 import FileUpload from "./FileUpload";
+import AddressInput from "./Address";
 
 export {
   TextInput,
@@ -28,4 +29,5 @@ export {
   DateTimePicker,
   PasswordInput,
   FileUpload,
+  AddressInput,
 };
