@@ -11,8 +11,6 @@ const Details = () => {
   const [loading, setLoading] = useState("");
   const [form] = Form.useForm();
 
-  console.log(event);
-
   const onFinish = async (values: any) => {
     setLoading("create");
 

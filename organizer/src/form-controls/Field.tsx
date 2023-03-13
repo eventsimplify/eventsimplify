@@ -16,6 +16,7 @@ import {
   DateTimePicker,
   PasswordInput,
   FileUpload,
+  AddressInput,
 } from "./index";
 
 const Field = ({ ...field }: IField) => {
@@ -121,6 +122,10 @@ const Field = ({ ...field }: IField) => {
 
     case "file": {
       return <FileUpload key={name} {...props} />;
+    }
+
+    case "address": {
+      return <AddressInput key={name} {...props} />;
     }
 
     default:

@@ -76,7 +76,6 @@ const OnBoarding = () => {
             size="small"
             current={currentStep}
             items={onBoardingSteps}
-            // onChange={onChange}
           />
           <Divider />
           {currentStep !== 0 && <SkipModal />}

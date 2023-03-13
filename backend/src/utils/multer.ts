@@ -11,11 +11,26 @@ const upload = multer({
 
     // TODO: work on making validation properly
     if (
-      ext !== "jpg" &&
-      ext !== "jpeg" &&
-      ext !== "png" &&
-      ext !== "webp" &&
-      ext !== "avif"
+      ext === "zip" ||
+      ext === "rar" ||
+      ext === "7z" ||
+      ext === "tar" ||
+      ext === "gz" ||
+      ext === "bz2" ||
+      ext === "xz" ||
+      ext === "iso" ||
+      ext === "dmg" ||
+      ext === "apk" ||
+      ext === "exe" ||
+      ext === "msi" ||
+      ext === "deb" ||
+      ext === "pkg" ||
+      ext === "rpm" ||
+      ext === "jar" ||
+      ext === "war" ||
+      ext === "ear" ||
+      ext === "bin" ||
+      ext === "swf"
     ) {
       cb(new Error("File type is not supported"), false);
       return;
