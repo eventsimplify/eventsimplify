@@ -1,7 +1,7 @@
 name: Droplet Pipeline
 on:
   push:
-    branches: [final_deployment,addingdockerto_dev]
+    branches: [final_deployment]
 jobs:
   push_to_droplet:
     runs-on: self-hosted
@@ -9,7 +9,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-          ref: final_deployment
+          ref: addingdockerto_dev
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
