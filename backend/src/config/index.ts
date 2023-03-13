@@ -213,6 +213,7 @@ export const defaultCategories = [
 ];
 
 export const defaultPermissions = [
+  "owner.all",
   "events.create",
   "events.list",
   "events.edit",

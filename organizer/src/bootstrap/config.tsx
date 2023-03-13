@@ -1,16 +1,13 @@
 import {
   DashboardOutlined,
   DatabaseOutlined,
-  MoneyCollectOutlined,
   DiffOutlined,
   FileDoneOutlined,
   TeamOutlined,
   CalendarOutlined,
-  BarChartOutlined,
   IdcardOutlined,
   ProfileOutlined,
   BookOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
 
 import type { MenuProps } from "antd";
@@ -91,71 +88,6 @@ export const sidebarItems: any[] = [
       {
         label: "Create manual order",
         key: "/admin/events/[eventId]/orders/create",
-      },
-    ],
-  },
-  {
-    label: "Analytics",
-    key: "/admin/events/[eventId]/analytics",
-    icon: <BarChartOutlined />,
-    children: [
-      {
-        label: "Demographics",
-        key: "/admin/events/[eventId]/demographics",
-      },
-      {
-        label: "Sales",
-        key: "sales",
-      },
-      {
-        label: "Feedback and reviews",
-        key: "feedback-and-reviews",
-      },
-    ],
-  },
-  {
-    label: "Payments and Taxes",
-    key: "payments-and-taxes",
-    icon: <MoneyCollectOutlined />,
-    children: [
-      {
-        label: "Payment options",
-        key: "payment-options",
-      },
-      {
-        label: "Payout methods",
-        key: "payout-methods",
-      },
-      {
-        label: "Refund settings",
-        key: "refund-settings",
-      },
-      {
-        label: "Tax settings",
-        key: "tax-settings",
-      },
-    ],
-  },
-  {
-    label: "Manage",
-    key: "manage",
-    icon: <SettingOutlined />,
-    children: [
-      {
-        label: "Attendees",
-        key: "attendees",
-      },
-      {
-        label: "Speakers",
-        key: "speakers",
-      },
-      {
-        label: "Sponsors",
-        key: "sponsors",
-      },
-      {
-        label: "Volunteers",
-        key: "volunteers",
       },
     ],
   },

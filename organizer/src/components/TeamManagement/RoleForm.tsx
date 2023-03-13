@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import { Button, Drawer, Form, Space } from "antd";
 
 import Field from "@/form-controls/Field";
-import Permissions from "@/components/Permissions";
 import { RoleService } from "@/services";
 
 import { message as messageApi } from "@/components/AntDMessage";
+import Permissions from "./Permissions";
+import { useTeamManagementContext } from "@/contexts/TeamManagementProvider";
 
 const RoleForm = ({ getRoles }: { getRoles: () => void }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { selectedPermissions, setSelectedPermissions } =
+    useTeamManagementContext();
 
   const showModal = () => {
     setIsOpen(true);
@@ -23,15 +26,18 @@ const RoleForm = ({ getRoles }: { getRoles: () => void }) => {
 
       const formData = {
         name: values.name,
-        permissions: [],
+        permissions: selectedPermissions,
       };
 
-      const data = await RoleService.create(formData);
+      const response = await RoleService.create(formData);
 
-      if (data) {
+      if (response) {
         await getRoles();
         setIsOpen(false);
         form.resetFields();
+        setSelectedPermissions({
+          events: ["list"],
+        });
       }
 
       setLoading(false);
@@ -63,10 +69,10 @@ const RoleForm = ({ getRoles }: { getRoles: () => void }) => {
         }
         destroyOnClose
         maskClosable={false}
-        width={720}
+        width={900}
         onClose={handleCancel}
       >
-        <Form form={form} name="basic" layout="vertical" autoComplete="off">
+        <Form form={form} name="basic" layout="vertical" size="large">
           <Field
             name="name"
             label="Role name"
@@ -74,7 +80,6 @@ const RoleForm = ({ getRoles }: { getRoles: () => void }) => {
             placeholder="Enter a role name"
             type="text"
           />
-
           <Permissions />
         </Form>
       </Drawer>

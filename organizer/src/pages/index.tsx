@@ -10,6 +10,8 @@ const Index = () => {
     router.push("/admin/dashboard");
   };
 
+  // embed code from canva
+
   return (
     <div
       style={{
@@ -24,6 +26,7 @@ const Index = () => {
       <Button onClick={goToDashboard} type="primary">
         Go to admin dashboard
       </Button>
+      <img src="logo.png" height={200} alt="logo" />
     </div>
   );
 };

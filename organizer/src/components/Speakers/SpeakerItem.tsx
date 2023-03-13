@@ -8,7 +8,7 @@ import { useEventContext } from "@/contexts/EventProvider";
 const { Text } = Typography;
 
 const SpeakerItem = ({ speaker }: { speaker: ISpeaker }) => {
-  const { id, name, jobTitle } = speaker;
+  const { id, name, job_title } = speaker;
 
   const { setSpeaker, deleteSpeaker, loading } = useEventContext();
 
@@ -60,10 +60,9 @@ const SpeakerItem = ({ speaker }: { speaker: ISpeaker }) => {
             <Avatar size={40} src="https://joesch.moe/api/v1/random?key=2" />
             <Space direction="vertical" size={0}>
               <Text strong>{name}</Text>
-              <Text>{jobTitle}</Text>
+              <Text>{job_title}</Text>
             </Space>
           </Space>
-          {/* <ShowRichText text={description} /> */}
         </Space>
       </Card>
     </Col>

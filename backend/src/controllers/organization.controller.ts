@@ -1,16 +1,63 @@
 import * as Yup from "yup";
+import { ownerPermissions, permissions } from "../config/permissions";
 
 import {
   Invitations,
   OrganizationUser,
   Organization,
   Role,
-  Permission,
   OrganizationVerification,
+  Event,
+  Order,
+  Attendee,
 } from "../entity";
-import MulterFile from "../interfaces/IFile";
 import { errorHandler, sendError, sendSuccess } from "../utils";
 import { uploadFile } from "./file.controller";
+
+//@desc Event dashboard
+//@route GET /organizations/dashboard/
+//@access Private
+
+export const dashboard = async (req, res) => {
+  try {
+    // get event
+    const totalEvents = await Event.count({
+      where: { organization_id: req.organization.id },
+    });
+
+    // get total orders
+    const totalOrders = await Order.count({
+      where: {
+        organization_id: req.organization.id,
+      },
+    });
+
+    // get recent 5 orders
+    const recentOrders = await Order.find({
+      where: { organization_id: req.organization.id },
+      relations: [
+        "order_details",
+        "order_details.attendees",
+        "order_details.tickets",
+        "order_details.tickets.ticket",
+        "payment_details",
+      ],
+      order: { created_at: "DESC" },
+      take: 5,
+    });
+
+    return sendSuccess({
+      res,
+      data: {
+        totalEvents,
+        totalOrders,
+        recentOrders,
+      },
+    });
+  } catch (err) {
+    errorHandler(res, err);
+  }
+};
 
 // @desc    Organization create
 // @route   POST /organizations/create
@@ -52,19 +99,17 @@ export const create = async (req, res) => {
 
     await organization.save();
 
-    // get owner role
-    const ownerRole = await Role.findOne({
-      where: {
-        name: "owner",
-        type: "default",
-      },
-    });
+    const role = await Role.create({
+      name: "Owner",
+      organization_id: organization.id,
+      permissions: ownerPermissions,
+    }).save();
 
     // create organization user role
     await OrganizationUser.create({
       organization_id: organization.id,
       user_id: req.user.id,
-      role_id: ownerRole.id,
+      role_id: role.id,
     }).save();
 
     return sendSuccess({
@@ -99,16 +144,11 @@ export const getStaff = async (req, res) => {
     const roles = await Role.find({
       where: [
         {
-          type: "default",
-        },
-        {
           organization_id: req.organization.id,
         },
       ],
       relations: ["users"],
     });
-
-    const permissions = await Permission.find({});
 
     return sendSuccess({
       res,
@@ -116,7 +156,7 @@ export const getStaff = async (req, res) => {
         invitations,
         staffs: organization.users,
         roles,
-        permissions,
+        permissions: permissions,
       },
       message: "Staff fetched successfully!",
     });

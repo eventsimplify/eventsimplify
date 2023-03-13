@@ -39,6 +39,9 @@ const EventForm = ({
           <Col span={14}>
             <DateInfo />
           </Col>
+          <Col span={14}>
+            <Details />
+          </Col>
         </Card>
       </Col>
     </Row>

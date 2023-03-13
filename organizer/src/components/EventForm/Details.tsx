@@ -1,20 +1,34 @@
 import React from "react";
-
-import { Col, Row } from "antd";
-import RichText from "@/form-controls/RichText";
+import { Col, Divider, Row, Typography } from "antd";
 
 import Field from "@/form-controls/Field";
+
+const { Title, Paragraph } = Typography;
 
 const Details = () => {
   return (
     <Row gutter={[16, 0]}>
+      <Divider />
+      <Col
+        span={24}
+        style={{
+          marginBottom: "2rem",
+        }}
+      >
+        <Title level={4}>Event details</Title>
+        <Paragraph>
+          Tell us more about your event. This is the main body of your event
+          page.
+        </Paragraph>
+      </Col>
       <Col span={24}>
         <Field
           name="banner"
           label="Event banner"
           extra="Upload a banner for your event. This will be the first thing attendees see when they visit your event page."
           placeholder="Please input your event banner!"
-          type="banner"
+          type="file"
+          required
         />
       </Col>
       <Col span={24}>
@@ -28,13 +42,13 @@ const Details = () => {
         />
       </Col>
       <Col span={24}>
-        <RichText
+        <Field
           name="description"
           label="Event description"
+          extra="Tell attendees all about your event. This is the main body of your event page. You can use this space to share details about your event, including the agenda, speakers, and more."
+          required
           placeholder="Please input your event description!"
-          rules={[
-            { required: true, message: "Please input your event description!" },
-          ]}
+          type="rich-text"
         />
       </Col>
     </Row>

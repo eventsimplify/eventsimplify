@@ -28,7 +28,7 @@ const columns: ColumnsType<IOrder> = [
     title: "Order date",
     width: 200,
     render: (_, record) =>
-      record?.createdAt && format(new Date(record?.createdAt), "dd/MM/yyyy"),
+      record?.created_at && format(new Date(record?.created_at), "dd/MM/yyyy"),
   },
   {
     title: "Attendee email",

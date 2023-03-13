@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Divider,
-  Space,
-  Switch,
-  Table,
-  Tooltip,
-  Typography,
-} from "antd";
+import { Button, Divider, Space, Switch, Table, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { UpOutlined, DownOutlined } from "@ant-design/icons";
 import { IQuestion } from "@/interfaces";

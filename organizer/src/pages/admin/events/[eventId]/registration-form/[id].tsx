@@ -55,7 +55,7 @@ const Detail = () => {
     const formData = {
       name: values.name,
       questions,
-      additionalQuestions,
+      additional_questions: additionalQuestions,
       eventId: router.query.eventId as string,
     };
 

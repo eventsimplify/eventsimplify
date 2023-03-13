@@ -170,6 +170,7 @@ export const me = async (req, res) => {
     const organizationId = req.headers["organization"];
 
     let organization = null;
+    let permissions = null;
 
     if (!organizationId) {
       organization = user.organizations[0].organization;
@@ -181,6 +182,7 @@ export const me = async (req, res) => {
           organization: organization,
           totalOrganizations: user.organizations.length,
           organizations: user.organizations,
+          permissions: permissions,
         },
       });
     }
@@ -207,6 +209,7 @@ export const me = async (req, res) => {
         organization: organization,
         totalOrganizations: user.organizations.length,
         organizations: user.organizations,
+        permissions: permissions,
       },
     });
   } catch (err) {

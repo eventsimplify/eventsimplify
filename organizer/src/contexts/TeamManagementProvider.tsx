@@ -14,7 +14,7 @@ import {
 } from "@/interfaces";
 import { OrganizationService, RoleService } from "@/services";
 import { useAppContext } from "./AppProvider";
-import IPermission from "@/interfaces/IPermission";
+import IPermission, { ISelectedPermission } from "@/interfaces/IPermission";
 
 export const TeamManagementContext = createContext(
   {} as ITeamManagementContext
@@ -36,9 +36,10 @@ const TeamManagementProvider = (props: any) => {
   const [roles, setRoles] = useState<IRole[]>([]);
   const [permissions, setPermissions] = useState<IPermission[]>([]);
 
-  const [selectedPermissions, setSelectedPermissions] = useState<IPermission[]>(
-    []
-  );
+  const [selectedPermissions, setSelectedPermissions] =
+    useState<ISelectedPermission>({
+      events: ["list"],
+    });
 
   const getStaffs = async () => {
     setLoading("team-management");
@@ -78,7 +79,7 @@ const TeamManagementProvider = (props: any) => {
       selectedPermissions,
       setSelectedPermissions,
     }),
-    [staffs, invitations, loading]
+    [staffs, invitations, roles, permissions, loading, selectedPermissions]
   );
 
   return (

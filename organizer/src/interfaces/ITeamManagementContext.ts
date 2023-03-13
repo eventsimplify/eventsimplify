@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import IInvitation from "./IInvitation";
-import IPermission from "./IPermission";
+import IPermission, { ISelectedPermission } from "./IPermission";
 import IRole from "./IRole";
 import IUser from "./IUser";
 
@@ -19,6 +19,6 @@ export default interface ITeamManagementContext {
 
   permissions: IPermission[];
 
-  selectedPermissions: IPermission[];
-  setSelectedPermissions: Dispatch<SetStateAction<IPermission[]>>;
+  selectedPermissions: ISelectedPermission;
+  setSelectedPermissions: Dispatch<SetStateAction<ISelectedPermission>>;
 }
