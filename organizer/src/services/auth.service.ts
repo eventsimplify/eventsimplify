@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { handleAxiosError, handleSuccess } from "@/utils";
-import { IUser } from "@/interfaces";
+import { handleAxiosError, handleSuccess } from '@/utils';
+import { IUser } from '@/interfaces';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL + "/auth";
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL + '/auth';
+console.log(API_URL);
 const login = async (formData: Partial<IUser>) => {
   try {
     const { data } = await axios.post(`${API_URL}/login`, formData);
