@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  nginx:
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+      - organizer
+    restart: always
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    
+
+  organizer:
+    build: 
+      context: ./organizer
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./organizer:/app
+      - /app/node_modules
+    

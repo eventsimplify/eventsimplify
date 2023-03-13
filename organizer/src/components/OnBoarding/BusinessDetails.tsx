@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Button, Col, Divider, Form, Row, Typography } from "antd";
+import React, { useState } from 'react';
+import { Button, Col, Divider, Form, Row, Typography } from 'antd';
 
-import Field from "@/form-controls/Field";
-import { OrganizationService } from "@/services";
+import Field from '@/form-controls/Field';
+import { OrganizationService } from '@/services';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -11,10 +11,10 @@ const BusinessDetails = ({
 }: {
   setCurrentStep: (step: number) => void;
 }) => {
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState('');
 
   const onFinish = async (values: any) => {
-    setLoading("business-details");
+    setLoading('business-details');
 
     const formData = {
       name: values.name,
@@ -34,16 +34,16 @@ const BusinessDetails = ({
     if (response) {
       setCurrentStep(2);
     }
-    setLoading("");
+    setLoading('');
   };
 
   return (
     <Form
       layout="vertical"
       initialValues={{
-        country: "Nepal",
-        type: "individual",
-        structure: "sole-proprietorship",
+        country: 'Nepal',
+        type: 'individual',
+        structure: 'sole-proprietorship',
       }}
       validateTrigger="onBlur"
       onFinish={onFinish}
@@ -56,7 +56,7 @@ const BusinessDetails = ({
           </Paragraph>
           <Text strong type="danger">
             Fill out the details below matching your business documents. If the
-            information doesn't match, your account may not be verified.
+            information doesn&apos;t match, your account may not be verified.
           </Text>
         </Col>
         <Col span={24}>
@@ -80,9 +80,9 @@ const BusinessDetails = ({
             type="dropdown"
             required
             options={[
-              { label: "Individual", value: "individual" },
-              { label: "Company", value: "company" },
-              { label: "Non-profit organization", value: "non-profit" },
+              { label: 'Individual', value: 'individual' },
+              { label: 'Company', value: 'company' },
+              { label: 'Non-profit organization', value: 'non-profit' },
             ]}
           />
         </Col>
@@ -93,11 +93,11 @@ const BusinessDetails = ({
             type="dropdown"
             required
             options={[
-              { label: "Sole proprietorship", value: "sole-proprietorship" },
-              { label: "Partnership", value: "partnership" },
-              { label: "Limited liability company", value: "llc" },
-              { label: "Corporation", value: "corporation" },
-              { label: "Not sure", value: "not-sure" },
+              { label: 'Sole proprietorship', value: 'sole-proprietorship' },
+              { label: 'Partnership', value: 'partnership' },
+              { label: 'Limited liability company', value: 'llc' },
+              { label: 'Corporation', value: 'corporation' },
+              { label: 'Not sure', value: 'not-sure' },
             ]}
           />
         </Col>
@@ -105,7 +105,7 @@ const BusinessDetails = ({
         <Col
           span={24}
           style={{
-            marginBottom: "1rem",
+            marginBottom: '1rem',
           }}
         >
           <Text strong>Legal business address (where you receive mail)</Text>
@@ -159,15 +159,15 @@ const BusinessDetails = ({
         </Col>
         <Col
           style={{
-            display: "flex",
-            justifyContent: "flex-end",
+            display: 'flex',
+            justifyContent: 'flex-end',
           }}
           span={24}
         >
           <Button
             type="primary"
             htmlType="submit"
-            loading={loading === "business-details"}
+            loading={loading === 'business-details'}
           >
             Confirm business details and continue
           </Button>

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Button, Col, Divider, Form, Row, Typography } from "antd";
+import React, { useState } from 'react';
+import { Button, Col, Divider, Form, Row, Typography } from 'antd';
 
-import Field from "@/form-controls/Field";
-import { OrganizationService } from "@/services";
+import Field from '@/form-controls/Field';
+import { OrganizationService } from '@/services';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -11,10 +11,10 @@ const BusinessRepresentative = ({
 }: {
   setCurrentStep: (step: number) => void;
 }) => {
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState('');
 
   const onFinish = async (values: any) => {
-    setLoading("representative-details");
+    setLoading('representative-details');
 
     const formData = {
       name: values.name,
@@ -31,7 +31,7 @@ const BusinessRepresentative = ({
     if (response) {
       setCurrentStep(3);
     }
-    setLoading("");
+    setLoading('');
   };
 
   return (
@@ -40,7 +40,7 @@ const BusinessRepresentative = ({
       validateTrigger="onBlur"
       onFinish={onFinish}
       initialValues={{
-        id_type: "citizenship",
+        id_type: 'citizenship',
       }}
     >
       <Row gutter={[16, 0]}>
@@ -53,7 +53,7 @@ const BusinessRepresentative = ({
           </Paragraph>
           <Text strong type="danger">
             Fill out the details below matching your documents. If the
-            information doesn't match, your account may not be verified.
+            information doesn&apos;t match, your account may not be verified.
           </Text>
         </Col>
         <Col span={24}>
@@ -93,7 +93,7 @@ const BusinessRepresentative = ({
         <Col
           span={24}
           style={{
-            marginBottom: "1rem",
+            marginBottom: '1rem',
           }}
         >
           <Text strong>
@@ -120,16 +120,16 @@ const BusinessRepresentative = ({
             placeholder="Select your ID type"
             options={[
               {
-                label: "Citizenship ID",
-                value: "citizenship",
+                label: 'Citizenship ID',
+                value: 'citizenship',
               },
               {
-                label: "Driving License",
-                value: "driving-license",
+                label: 'Driving License',
+                value: 'driving-license',
               },
               {
-                label: "Passport",
-                value: "passport",
+                label: 'Passport',
+                value: 'passport',
               },
             ]}
           />
@@ -147,15 +147,15 @@ const BusinessRepresentative = ({
 
         <Col
           style={{
-            display: "flex",
-            justifyContent: "flex-end",
+            display: 'flex',
+            justifyContent: 'flex-end',
           }}
           span={24}
         >
           <Button
             type="primary"
             htmlType="submit"
-            loading={loading === "representative-details"}
+            loading={loading === 'representative-details'}
           >
             Confirm representative details and continue
           </Button>

@@ -1,0 +1,20 @@
+name: Droplet Pipeline
+on:
+  push:
+    branches: [final_deployment]
+jobs:
+  push_to_droplet:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          ref: final_deployment
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.0.0
+      - name: Run Docker compose down before
+        run : docker-compose down
+      - name: Run Docker Compose
+        run: docker-compose up --build -d

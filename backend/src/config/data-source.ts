@@ -1,17 +1,24 @@
-import "reflect-metadata";
-import { DataSource } from "typeorm";
-
+import 'reflect-metadata';
+import { DataSource } from 'typeorm';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 // entity imports
-import Entities from "../entity";
+import Entities from '../entity';
 //subscribers imports
 import {
   EventEntitySubscriber,
   FileEntitySubscriber,
   OrganizationSubscriber,
-} from "../subscribers";
+} from '../subscribers';
+
+// add ssl
+const ssl = {
+  rejectUnauthorized: true,
+  ca: readFileSync(join(__dirname, 'ca-certificate.crt')),
+};
 
 export const AppDataSource = new DataSource({
-  type: "postgres",
+  type: 'postgres',
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
   username: process.env.DB_USERNAME,

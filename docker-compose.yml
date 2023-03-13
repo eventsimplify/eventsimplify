@@ -1,34 +1,29 @@
-version: "3.8"
+version: '3'
+
 services:
-  postgres:
-    build:
-      context: ./postgres
-      dockerfile: ./Dockerfile
-    container_name: postgres
+  nginx:
+    build: ./nginx
     ports:
-      - "5432:5432"
+      - "3000:80"
+    depends_on:
+      - backend
+      - organizer
     restart: always
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: ./Dockerfile
-    container_name: backend
-    ports:
-      - "9000:9000"
+    build: ./backend
     restart: always
-    volumes:
-      - ./backend:/backend
-    depends_on:
-      - postgres
+    
 
   organizer:
-    build:
-      context: ./organizer
-      dockerfile: ./Dockerfile
-    container_name: organizer
-    ports:
-      - "3000:3000"
+    build: ./organizer
     restart: always
-    depends_on:
-      - backend
+   
+  
+
+
+
+
+
+ 
+
