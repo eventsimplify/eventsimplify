@@ -33,4 +33,5 @@ export const AppDataSource = new DataSource({
     FileEntitySubscriber,
     OrganizationSubscriber,
   ],
+  ssl,
 });
