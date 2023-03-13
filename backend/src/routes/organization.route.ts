@@ -1,6 +1,7 @@
 import express from "express";
 
 import {
+  dashboard,
   create,
   getOnboarding,
   getStaff,
@@ -20,6 +21,7 @@ import upload from "../utils/multer";
 
 const router = express.Router();
 
+router.route("/dashboard").get(protectWithOrganization, dashboard);
 router.route("/create").post(protect, create);
 router.route("/get-staff").get(protectWithOrganization, getStaff);
 router.route("/remove-staff/:id").delete(protectWithOrganization, removeStaff);

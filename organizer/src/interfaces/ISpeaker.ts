@@ -2,7 +2,7 @@ import IBase from "./IBase";
 
 export default interface ISpeaker extends IBase {
   name: string;
-  jobTitle: string;
+  job_title: string;
   description: string;
   company: string;
   socials: {

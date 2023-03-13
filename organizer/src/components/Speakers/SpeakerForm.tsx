@@ -30,7 +30,7 @@ const SpeakerForm = () => {
       form.setFieldsValue({
         name: speaker.name,
         company: speaker.company,
-        jobTitle: speaker.jobTitle,
+        job_title: speaker.job_title,
         description: speaker.description,
       });
     }
@@ -62,7 +62,7 @@ const SpeakerForm = () => {
         </Col>
         <Col span={12}>
           <Field
-            name="jobTitle"
+            name="job_title"
             label="Job title"
             type="text"
             required

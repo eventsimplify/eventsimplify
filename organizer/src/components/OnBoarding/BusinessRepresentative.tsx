@@ -134,6 +134,16 @@ const BusinessRepresentative = ({
             ]}
           />
         </Col>
+        <Col span={12} />
+        <Col span={12}>
+          <Field
+            name="id"
+            label="ID attachment"
+            type="file"
+            required
+            placeholder="Upload your ID"
+          />
+        </Col>
 
         <Col
           style={{

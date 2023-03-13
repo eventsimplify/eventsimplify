@@ -4,6 +4,16 @@ import { handleAxiosError, handleSuccess } from "@/utils";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL + "/organizations";
 
+const dashboard = async () => {
+  try {
+    const { data } = await axios.get(`${API_URL}/dashboard`);
+
+    return data?.data;
+  } catch (err: any) {
+    handleAxiosError(err);
+  }
+};
+
 const create = async (formData: Partial<IOrganization>) => {
   try {
     const { data } = await axios.post(`${API_URL}/create`, formData);
@@ -94,6 +104,7 @@ const saveBusinessDocuments = async (formData: any) => {
 };
 
 const exportedObject = {
+  dashboard,
   create,
   getStaff,
   removeStaff,

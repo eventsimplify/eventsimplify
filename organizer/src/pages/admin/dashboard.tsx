@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 
-import { Row, Col, Card, Statistic, Space, Button, Typography } from "antd";
+import { Row, Col, Card, Statistic, Space, Typography } from "antd";
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -13,22 +13,43 @@ import {
   LinkedinIcon,
 } from "react-share";
 
-//component imports
-import RecentOrders from "@/components/EventDashboard/RecentOrders";
-
 //layout imports
 import DashboardLayout from "@/layouts/dashboard";
+import RecentOrders from "@/components/AdminDashboard/RecentOrders";
+import { IOrder } from "@/interfaces";
+import { OrganizationService } from "@/services";
 
 const { Paragraph, Title } = Typography;
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState("");
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [totalEvents, setTotalEvents] = useState(0);
+  const [recentOrders, setRecentOrders] = useState<IOrder[]>([]);
+
+  const getDashboardData = async () => {
+    const reponse = await OrganizationService.dashboard();
+
+    if (reponse) {
+      setRecentOrders(reponse.recentOrders || []);
+      setTotalOrders(reponse.totalOrders || 0);
+      setTotalEvents(reponse.totalEvents || 0);
+    }
+
+    setLoading("");
+  };
+
+  useEffect(() => {
+    getDashboardData();
+  }, []);
+
   return (
     <Row gutter={[16, 16]}>
       <Col span={6}>
         <Card>
           <Statistic
-            title="Active Users"
-            value={112893}
+            title="Total Orders"
+            value={totalOrders}
             prefix={<UserOutlined />}
           />
         </Card>
@@ -36,8 +57,8 @@ const Dashboard = () => {
       <Col span={6}>
         <Card>
           <Statistic
-            title="Active Users"
-            value={112893}
+            title="Total Events"
+            value={totalEvents}
             prefix={<UserOutlined />}
           />
         </Card>
@@ -92,12 +113,7 @@ const Dashboard = () => {
         </Card>
       </Col>
       <Col span={24}>
-        <Card
-          title="Recent orders"
-          extra={<Button type="link">All orders</Button>}
-        >
-          <RecentOrders />
-        </Card>
+        <RecentOrders />
       </Col>
     </Row>
   );
