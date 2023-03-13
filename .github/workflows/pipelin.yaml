@@ -1,7 +1,7 @@
 name: Droplet Pipeline
 on:
   push:
-    branches: [final_deployment]
+    branches: [final_deployment,addingdockerto_dev]
 jobs:
   push_to_droplet:
     runs-on: self-hosted
