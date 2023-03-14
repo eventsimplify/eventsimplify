@@ -40,6 +40,7 @@ const EventProvider = (props: any) => {
   const getEvent = async () => {
     const data = await EventService.detail(router.query.eventId as string);
     setEvent(data);
+    console.log("data", data);
     setLoading("");
   };
 

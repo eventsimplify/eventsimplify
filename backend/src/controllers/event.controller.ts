@@ -113,6 +113,7 @@ export const detail = async (req, res) => {
   try {
     const event = await Event.createQueryBuilder("event")
       .leftJoinAndSelect("event.tickets", "tickets")
+      .leftJoinAndSelect("event.venue", "venue")
       .where("event.id = :id", { id: req.event.id })
       .leftJoinAndMapMany(
         "event.banner",

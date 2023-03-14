@@ -27,7 +27,7 @@ const Details = () => {
           label="Event banner"
           extra="Upload a banner for your event. This will be the first thing attendees see when they visit your event page."
           placeholder="Please input your event banner!"
-          type="file"
+          type="banner"
           required
         />
       </Col>

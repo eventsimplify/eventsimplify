@@ -9,6 +9,7 @@ const FileUpload = ({ name, label, extra, rules, form }: IFieldProps) => {
   const [file, setFile] = useState<UploadFile | null>(null);
 
   const props: UploadProps = {
+    listType: "picture",
     onRemove: () => {
       setFile(null);
       form?.setFieldValue(name, null);

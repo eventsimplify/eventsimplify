@@ -32,6 +32,7 @@ const Create = () => {
         city: values.city,
         state: values.state,
         postal_code: values.postal_code,
+        country: values.country,
       },
     };
 

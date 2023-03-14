@@ -21,6 +21,7 @@ import IPaymentInformation from "./IPaymentInformation";
 import IOrder from "./IOrder";
 import IFile from "./IFile";
 import IOrganizationVerification from "./IOrganizationVerification";
+import IVenue from "./IVenue";
 
 export type {
   IField,
@@ -46,4 +47,5 @@ export type {
   IOrder,
   IFile,
   IOrganizationVerification,
+  IVenue,
 };

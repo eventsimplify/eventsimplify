@@ -15,12 +15,13 @@ const DateTimePicker = ({
     <Form.Item name={name} label={label} rules={rules} extra={extra}>
       <Datepicker
         use12Hours
-        minuteStep={15}
         showTime
-        format="MMMM DD YYYY hh:mm A"
+        showSecond={false}
+        minuteStep={15}
         style={{ width: "100%" }}
         placeholder={placeholder}
         disabled={disabled}
+        format="DD MMM YYYY hh:mm A"
       />
     </Form.Item>
   );
