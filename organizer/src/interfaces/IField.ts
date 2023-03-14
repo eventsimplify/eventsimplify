@@ -31,6 +31,5 @@ export default interface IField {
   extra?: string;
   optionType?: "button" | "default";
   setOptions?: (options: IQuestionOption[]) => void;
-  form?: FormInstance;
   defaultValue?: string;
 }

@@ -22,8 +22,8 @@ const Create = () => {
       name: values.name,
       type: values.type,
       category: values.category,
-      start_date: new Date(values.start_date),
-      end_date: new Date(values.end_date),
+      start_date: values.start_date,
+      end_date: values.end_date,
       venue: {
         type: values.venue_type,
         name: values.venue_name,
@@ -35,6 +35,8 @@ const Create = () => {
         country: values.country,
       },
     };
+
+    console.log("formData", formData.start_date);
 
     const response = await EventService.create(formData);
 

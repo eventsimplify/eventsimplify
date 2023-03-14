@@ -11,9 +11,14 @@ const DateTimePicker = ({
   disabled,
   extra,
 }: IFieldProps) => {
+  const form = Form.useFormInstance();
+
+  console.log("DateTimePicker", form.getFieldValue(name));
+
   return (
     <Form.Item name={name} label={label} rules={rules} extra={extra}>
       <Datepicker
+        defaultValue={form.getFieldValue(name)}
         use12Hours
         showTime
         showSecond={false}

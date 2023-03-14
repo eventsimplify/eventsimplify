@@ -5,7 +5,7 @@ import { EventService } from "@/services";
 import { useEventContext } from "@/contexts/EventProvider";
 import EventLayoutWithContext from "@/layouts/event";
 import CreateEventForm from "@/components/EventForm/Create";
-import moment from "moment";
+import dayjs from "dayjs";
 
 const Details = () => {
   const { event } = useEventContext();
@@ -13,7 +13,7 @@ const Details = () => {
   const [form] = Form.useForm();
   const [locationType, setLocationType] = useState("online");
 
-  const { name, type, end_date, category, venue } = event!;
+  const { name, type, start_date, end_date, category, venue } = event!;
 
   useEffect(() => {
     if (venue) {
@@ -53,8 +53,6 @@ const Details = () => {
       initialValues={{
         name: name,
         type: type,
-        start_date: moment("2020-06-09T12:40:14+0000"),
-        end_date: moment(end_date),
         category: category,
         venue_name: venue.name,
         venue_type: venue.type,
@@ -64,6 +62,8 @@ const Details = () => {
         state: venue.state,
         country: venue.country,
         postal_code: venue.postal_code,
+        start_date: start_date ? dayjs(start_date) : null,
+        end_date: end_date ? dayjs(end_date) : null,
       }}
     >
       <CreateEventForm loading={loading} locationType={locationType} />

@@ -31,7 +31,6 @@ const Field = ({ ...field }: IField) => {
     extra,
     optionType = "button",
     setOptions,
-    form,
     defaultValue,
   } = field;
 
@@ -61,7 +60,6 @@ const Field = ({ ...field }: IField) => {
     extra,
     optionType,
     setOptions,
-    form,
     defaultValue,
   };
 
