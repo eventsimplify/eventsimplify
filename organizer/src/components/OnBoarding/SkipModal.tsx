@@ -43,7 +43,7 @@ const SkipModal = () => {
         okType="danger"
         width={700}
         okButtonProps={{
-          loading: loading !== "",
+          loading: loading === "skip",
           type: "primary",
         }}
       >

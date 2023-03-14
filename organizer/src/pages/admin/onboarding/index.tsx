@@ -2,17 +2,18 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { Card, Col, Divider, Row, Steps } from "antd";
 
 import BusinessDetails from "@/components/OnBoarding/BusinessDetails";
-
-import { onBoardingSteps } from "@/bootstrap/config";
 import OnBoardingLayout from "@/layouts/onboarding";
 import BusinessRepresentative from "@/components/OnBoarding/BusinessRepresentative";
 import BusinessInformation from "@/components/OnBoarding";
+import BusinessDocuments from "@/components/OnBoarding/BusinessDocuments";
 import SkipModal from "@/components/OnBoarding/SkipModal";
+import VerificationDetails from "@/components/OnBoarding/VerificationDetails";
+import Loader from "@/components/Loader";
+
+import { onBoardingSteps } from "@/bootstrap/config";
 import { OrganizationService } from "@/services";
 import { useAppContext } from "@/contexts/AppProvider";
-import BusinessDocuments from "@/components/OnBoarding/BusinessDocuments";
 import { IOrganizationVerification } from "@/interfaces";
-import VerificationDetails from "@/components/OnBoarding/VerificationDetails";
 
 const OnBoarding = () => {
   const { organization } = useAppContext();
@@ -28,7 +29,6 @@ const OnBoarding = () => {
       setCurrentStep(response.current_step);
       setVerificationDetails(response);
     }
-
     setLoading("");
   };
 
@@ -39,6 +39,10 @@ const OnBoarding = () => {
       setLoading("");
     }
   }, [organization]);
+
+  if (loading === "onboarding") {
+    return <Loader fullPage={false} />;
+  }
 
   const showStep = () => {
     switch (currentStep) {
@@ -55,7 +59,7 @@ const OnBoarding = () => {
         return <BusinessDocuments setCurrentStep={setCurrentStep} />;
 
       default:
-        return <BusinessInformation setCurrentStep={setCurrentStep} />;
+        return <Loader />;
     }
   };
 
@@ -68,7 +72,7 @@ const OnBoarding = () => {
   }
 
   return (
-    <Card loading={loading === "onboarding"}>
+    <Card>
       <Row>
         <Col span={6}>
           <Steps

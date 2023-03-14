@@ -59,6 +59,9 @@ export const create = async (req, res) => {
       latitude,
     }).save();
 
+    console.log(start_date);
+    console.log(end_date);
+
     const event = await Event.create({
       name,
       type,
@@ -113,6 +116,7 @@ export const detail = async (req, res) => {
   try {
     const event = await Event.createQueryBuilder("event")
       .leftJoinAndSelect("event.tickets", "tickets")
+      .leftJoinAndSelect("event.venue", "venue")
       .where("event.id = :id", { id: req.event.id })
       .leftJoinAndMapMany(
         "event.banner",

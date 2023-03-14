@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "antd";
-import EventForm from "@/components/EventForm";
 
 import { EventService } from "@/services";
 import { useEventContext } from "@/contexts/EventProvider";
 import EventLayoutWithContext from "@/layouts/event";
+import CreateEventForm from "@/components/EventForm/Create";
+import dayjs from "dayjs";
 
 const Details = () => {
   const { event } = useEventContext();
   const [loading, setLoading] = useState("");
   const [form] = Form.useForm();
+  const [locationType, setLocationType] = useState("online");
+
+  const { name, type, start_date, end_date, category, venue } = event!;
+
+  useEffect(() => {
+    if (venue) {
+      setLocationType(venue?.type!);
+    }
+  }, [venue]);
 
   const onFinish = async (values: any) => {
     setLoading("create");
@@ -34,18 +44,29 @@ const Details = () => {
       name="eventForm"
       onFinish={onFinish}
       layout="vertical"
-      validateTrigger="onSubmit"
+      validateTrigger="onBlur"
+      onValuesChange={(changedValues) => {
+        if (changedValues.venue_type) {
+          setLocationType(changedValues.venue_type);
+        }
+      }}
       initialValues={{
-        name: event?.name,
-        type: event?.type,
-        category: event?.category,
-        summary: event?.summary,
-        description: event?.description,
-        banner: event?.banner || [],
-        locationType: "online",
+        name: name,
+        type: type,
+        category: category,
+        venue_name: venue.name,
+        venue_type: venue.type,
+        address1: venue.address1,
+        address2: venue.address2,
+        city: venue.city,
+        state: venue.state,
+        country: venue.country,
+        postal_code: venue.postal_code,
+        start_date: start_date ? dayjs(start_date) : null,
+        end_date: end_date ? dayjs(end_date) : null,
       }}
     >
-      <EventForm loading={""} locationType={"online"} />
+      <CreateEventForm loading={loading} locationType={locationType} />
     </Form>
   );
 };
